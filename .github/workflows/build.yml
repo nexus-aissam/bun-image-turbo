@@ -178,16 +178,66 @@ jobs:
           echo "=== Files in root ==="
           ls -la *.node
 
+      - name: Create npm directories and move binaries
+        run: |
+          # Create npm directories for each platform
+          declare -A PLATFORMS=(
+            ["darwin-arm64"]="image-turbo.darwin-arm64.node"
+            ["darwin-x64"]="image-turbo.darwin-x64.node"
+            ["linux-arm64-gnu"]="image-turbo.linux-arm64-gnu.node"
+            ["linux-x64-gnu"]="image-turbo.linux-x64-gnu.node"
+            ["linux-x64-musl"]="image-turbo.linux-x64-musl.node"
+            ["win32-arm64-msvc"]="image-turbo.win32-arm64-msvc.node"
+            ["win32-x64-msvc"]="image-turbo.win32-x64-msvc.node"
+          )
+
+          for platform in "${!PLATFORMS[@]}"; do
+            binary="${PLATFORMS[$platform]}"
+            if [ -f "$binary" ]; then
+              mkdir -p "npm/$platform"
+              cp "$binary" "npm/$platform/"
+
+              # Create package.json for the platform package
+              cat > "npm/$platform/package.json" << EOF
+          {
+            "name": "bun-image-turbo-$platform",
+            "version": "1.0.1-beta",
+            "os": ["${platform%%-*}"],
+            "cpu": ["${platform#*-}"],
+            "main": "$binary",
+            "files": ["$binary"],
+            "description": "Platform-specific binary for bun-image-turbo ($platform)",
+            "license": "MIT",
+            "author": "Aissam Irhir <aissamirhir@gmail.com>",
+            "repository": {
+              "type": "git",
+              "url": "git+https://github.com/nexus-aissam/bun-image-turbo.git"
+            }
+          }
+          EOF
+              echo "Created npm/$platform with $binary"
+            fi
+          done
+
+          echo "=== npm directory structure ==="
+          ls -R npm/
+
       - name: Build TypeScript
         run: npm run build:ts
 
-      - name: Prepare packages
-        run: npx napi prepublish --skip-gh-release -t npm
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: List npm packages
-        run: ls -R npm/
+      - name: Update main package.json with optionalDependencies
+        run: |
+          node -e "
+          const fs = require('fs');
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          pkg.optionalDependencies = {};
+          const platforms = fs.readdirSync('npm').filter(f => fs.statSync('npm/' + f).isDirectory());
+          platforms.forEach(p => {
+            pkg.optionalDependencies['bun-image-turbo-' + p] = pkg.version;
+          });
+          fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          console.log('Updated optionalDependencies:', pkg.optionalDependencies);
+          "
 
       - name: Publish to npm
         run: |
