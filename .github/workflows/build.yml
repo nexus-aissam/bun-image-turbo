@@ -161,41 +161,24 @@ jobs:
       - name: List downloaded artifacts
         run: ls -R artifacts/
 
-      - name: Create npm package directories
-        run: npx napi create-npm-dir
-
-      - name: Move artifacts to npm packages
+      - name: Move artifacts to root
         run: |
-          npx napi artifacts --dir artifacts
-          echo "=== npm directory ==="
-          ls -R npm/
+          find artifacts -name "*.node" -exec cp {} . \;
+          ls -la *.node
 
       - name: Build TypeScript
         run: npm run build:ts
 
-      - name: Prepare packages for publish
-        run: npm run prepublishOnly
-
-      - name: Publish packages
+      - name: Prepare and publish
         run: |
           npm config set provenance true
+          npx napi prepublish --skip-gh-release
 
-          # Publish platform packages first
-          for dir in npm/*/; do
-            if [ -d "$dir" ]; then
-              echo "Publishing $dir"
-              cd "$dir"
-              npm publish --access public --tag beta || true
-              cd ../..
-            fi
-          done
-
-          # Publish main package
           if [[ "${{ github.ref }}" == *"beta"* ]] || [[ "${{ github.ref }}" == *"alpha"* ]]; then
-            echo "Publishing main package with beta tag"
+            echo "Publishing with beta tag"
             npm publish --access public --tag beta
           else
-            echo "Publishing main package with latest tag"
+            echo "Publishing with latest tag"
             npm publish --access public
           fi
         env:
