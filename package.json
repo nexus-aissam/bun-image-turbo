@@ -1,6 +1,6 @@
 {
   "name": "bun-image-turbo",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "description": "High-performance image processing for Bun and Node.js - resize, convert, compress with WebP, AVIF, PNG, JPEG support",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

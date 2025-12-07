@@ -20,23 +20,50 @@ High-performance image processing for Bun and Node.js, built with Rust and napi-
 
 Tested on Apple M1 Pro with Bun 1.3.3 (compared to sharp v0.34.5):
 
-| Operation | bun-image-turbo | sharp | Difference |
-|-----------|-----------------|-------|------------|
-| Resize (Thumbnail) | 2.95 ms | 4.88 ms | **1.65x faster** |
-| Transform Pipeline | 4.45 ms | 7.19 ms | **1.62x faster** |
-| WebP Encode | 19.68 ms | 20.21 ms | **1.03x faster** |
-| Stress Test (50 concurrent) | 26.12 ms | 128.47 ms | **4.92x faster** |
-| JPEG Encode | 4.50 ms | 3.58 ms | 1.26x slower |
-| PNG Encode | 5.36 ms | 4.39 ms | 1.22x slower |
-| Resize (Large) | 13.93 ms | 8.53 ms | 1.63x slower |
+### Metadata Extraction
+| Operation | bun-image-turbo | sharp | Speedup |
+|-----------|-----------------|-------|---------|
+| 1MB JPEG Metadata | 0.003ms | 0.1ms | **38x faster** |
+| 10MB JPEG Metadata | 0.003ms | 0.1ms | **37x faster** |
+| 10MB WebP Metadata | 0.003ms | 3.0ms | **950x faster** |
+
+### JPEG Resize (Real-world thumbnail generation)
+| Operation | bun-image-turbo | sharp | Speedup |
+|-----------|-----------------|-------|---------|
+| 1MB JPEG → 800px | 12.4ms | 20.0ms | **1.61x faster** |
+| 1MB JPEG → 400px | 9.9ms | 12.3ms | **1.24x faster** |
+| 1MB JPEG → 200px | 8.7ms | 10.5ms | **1.20x faster** |
+| 10MB JPEG → 800px | 96.9ms | 102.5ms | **1.06x faster** |
+
+### Format Conversion
+| Operation | bun-image-turbo | sharp | Speedup |
+|-----------|-----------------|-------|---------|
+| 1MB JPEG → WebP | 37.1ms | 45.8ms | **1.23x faster** |
+| 10MB JPEG → WebP | 114.9ms | 119.3ms | **1.04x faster** |
+
+### Complex Transform Pipeline
+| Operation | bun-image-turbo | sharp | Speedup |
+|-----------|-----------------|-------|---------|
+| Resize + Grayscale | 11.9ms | 18.1ms | **1.53x faster** |
+| Resize + Rotate + Grayscale | 12.3ms | 19.3ms | **1.57x faster** |
+
+### Concurrent Operations (High Load)
+| Concurrency | bun-image-turbo | sharp | Speedup |
+|-------------|-----------------|-------|---------|
+| 10 parallel | 16ms | 30ms | **1.85x faster** |
+| 25 parallel | 42ms | 82ms | **1.96x faster** |
+| 50 parallel | 67ms | 156ms | **2.33x faster** |
+| 100 parallel | 129ms | 303ms | **2.34x faster** |
 
 **Key Strengths:**
-- **4.92x faster** under concurrent load (stress test)
-- **1.65x faster** for thumbnail generation
-- **1.62x faster** for transform pipelines (resize + rotate + grayscale)
-- Built-in **blurhash** generation (4,318 ops/sec)
+- **950x faster** metadata extraction (header-only parsing)
+- **2.3x faster** under concurrent load
+- **1.6x faster** for thumbnail generation
+- **1.5x faster** for transform pipelines
+- Built-in **blurhash** generation
+- Uses **TurboJPEG** (libjpeg-turbo) with SIMD acceleration
 
-> Run benchmarks yourself: `bun run benchmarks/bench.ts`
+> Run benchmarks yourself: `bun run benchmarks/final_comparison.ts`
 
 ## Installation
 
@@ -293,6 +320,7 @@ Aissam Irhir ([@nexus-aissam](https://github.com/nexus-aissam))
 
 ## Acknowledgments
 
+- [turbojpeg](https://crates.io/crates/turbojpeg) - libjpeg-turbo bindings with SIMD
 - [image](https://crates.io/crates/image) - Rust image processing library
 - [fast_image_resize](https://crates.io/crates/fast_image_resize) - Fast image resizing
 - [webp](https://crates.io/crates/webp) - WebP encoding/decoding
