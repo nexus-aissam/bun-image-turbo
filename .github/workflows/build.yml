@@ -180,6 +180,10 @@ jobs:
 
       - name: Create npm directories and move binaries
         run: |
+          # Get version from package.json
+          VERSION=$(node -p "require('./package.json').version")
+          echo "Using version: $VERSION"
+
           # Create npm directories for each platform
           declare -A PLATFORMS=(
             ["darwin-arm64"]="image-turbo.darwin-arm64.node"
@@ -201,7 +205,7 @@ jobs:
               cat > "npm/$platform/package.json" << EOF
           {
             "name": "bun-image-turbo-$platform",
-            "version": "1.0.1-beta",
+            "version": "$VERSION",
             "os": ["${platform%%-*}"],
             "cpu": ["${platform#*-}"],
             "main": "$binary",
