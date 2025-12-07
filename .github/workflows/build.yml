@@ -167,24 +167,52 @@ jobs:
       - name: List downloaded artifacts
         run: ls -R artifacts/
 
-      - name: Move artifacts to root
+      - name: Move and rename artifacts
         run: |
-          find artifacts -name "*.node" -exec cp {} . \;
+          echo "=== Downloaded artifacts ==="
+          find artifacts -name "*.node" -type f
+
+          # Move and rename from index.*.node to image-turbo.*.node
+          for f in artifacts/*/index.*.node; do
+            if [ -f "$f" ]; then
+              newname=$(basename "$f" | sed 's/^index\./image-turbo./')
+              cp "$f" "./$newname"
+              echo "Copied $f -> ./$newname"
+            fi
+          done
+
+          echo "=== Files in root ==="
           ls -la *.node
 
       - name: Build TypeScript
         run: npm run build:ts
 
-      - name: Prepare and publish
+      - name: Prepare packages
+        run: npx napi prepublish --skip-gh-release -t npm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: List npm packages
+        run: ls -R npm/
+
+      - name: Publish to npm
         run: |
           npm config set provenance true
-          npx napi prepublish --skip-gh-release
 
+          # Publish platform packages first
+          for pkg in npm/*/; do
+            if [ -d "$pkg" ] && [ -f "$pkg/package.json" ]; then
+              echo "Publishing $pkg"
+              (cd "$pkg" && npm publish --access public --tag beta) || true
+            fi
+          done
+
+          # Publish main package
           if [[ "${{ github.ref }}" == *"beta"* ]] || [[ "${{ github.ref }}" == *"alpha"* ]]; then
-            echo "Publishing with beta tag"
+            echo "Publishing main package with beta tag"
             npm publish --access public --tag beta
           else
-            echo "Publishing with latest tag"
+            echo "Publishing main package with latest tag"
             npm publish --access public
           fi
         env:
