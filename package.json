@@ -21,6 +21,7 @@
     "dist"
   ],
   "napi": {
+    "name": "image-turbo",
     "binaryName": "image-turbo",
     "packageName": "bun-image-turbo",
     "targets": [

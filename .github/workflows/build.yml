@@ -3,12 +3,12 @@ name: Build & Publish
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
 
 env:
   DEBUG: napi:*
-  MACOSX_DEPLOYMENT_TARGET: '10.13'
+  MACOSX_DEPLOYMENT_TARGET: "10.13"
 
 permissions:
   contents: write
@@ -133,7 +133,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bindings-${{ matrix.settings.target }}
-          path: '*.node'
+          path: "*.node"
           if-no-files-found: error
 
   publish:
@@ -161,7 +161,10 @@ jobs:
       - name: List downloaded artifacts
         run: ls -R artifacts/
 
-      - name: Create npm directories
+      - name: Create npm package directories
+        run: npx napi create-npm-dirs
+
+      - name: Move artifacts to npm packages
         run: |
           npx napi artifacts --dir artifacts
           echo "=== npm directory ==="
