@@ -161,28 +161,11 @@ jobs:
       - name: List downloaded artifacts
         run: ls -R artifacts/
 
-      - name: Move artifacts to root
-        run: |
-          echo "=== Artifacts structure ==="
-          find artifacts -name "*.node" -type f
-          echo "=== Moving files ==="
-          for dir in artifacts/*/; do
-            if ls "$dir"*.node 1> /dev/null 2>&1; then
-              mv "$dir"*.node .
-              echo "Moved from $dir"
-            fi
-          done
-          echo "=== Files in root ==="
-          ls -la *.node || echo "No .node files found"
-
       - name: Create npm directories
         run: |
-          npm run artifacts
-          echo "=== npm directory created ==="
-          ls -la npm/ || echo "npm directory not created"
-
-      - name: List packages
-        run: ls -R npm/
+          npx napi artifacts --dir artifacts
+          echo "=== npm directory ==="
+          ls -R npm/
 
       - name: Build TypeScript
         run: npm run build:ts
