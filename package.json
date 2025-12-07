@@ -89,13 +89,13 @@
     "typescript": "^5.9.0"
   },
   "optionalDependencies": {
-    "bun-image-turbo-darwin-arm64": "1.0.1-beta",
+    "bun-image-turbo-win32-x64-msvc": "1.0.1-beta",
     "bun-image-turbo-darwin-x64": "1.0.1-beta",
     "bun-image-turbo-linux-x64-gnu": "1.0.1-beta",
-    "bun-image-turbo-linux-x64-musl": "1.0.1-beta",
+    "bun-image-turbo-darwin-arm64": "1.0.1-beta",
     "bun-image-turbo-linux-arm64-gnu": "1.0.1-beta",
     "bun-image-turbo-linux-arm64-musl": "1.0.1-beta",
-    "bun-image-turbo-win32-x64-msvc": "1.0.1-beta",
+    "bun-image-turbo-linux-x64-musl": "1.0.1-beta",
     "bun-image-turbo-win32-arm64-msvc": "1.0.1-beta"
   }
 }
