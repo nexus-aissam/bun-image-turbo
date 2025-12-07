@@ -81,6 +81,14 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install NASM (macOS)
+        if: ${{ runner.os == 'macOS' }}
+        run: brew install nasm
+
+      - name: Install NASM (Windows)
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/setup-nasm@v1
+
       - name: Install Rust
         if: ${{ !matrix.settings.docker }}
         uses: dtolnay/rust-toolchain@stable
