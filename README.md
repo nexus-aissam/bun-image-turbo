@@ -20,50 +20,57 @@ High-performance image processing for Bun and Node.js, built with Rust and napi-
 
 Tested on Apple M1 Pro with Bun 1.3.3 (compared to sharp v0.34.5):
 
-### Metadata Extraction
-| Operation | bun-image-turbo | sharp | Speedup |
-|-----------|-----------------|-------|---------|
-| 1MB JPEG Metadata | 0.003ms | 0.1ms | **38x faster** |
-| 10MB JPEG Metadata | 0.003ms | 0.1ms | **37x faster** |
-| 10MB WebP Metadata | 0.003ms | 3.0ms | **950x faster** |
+### Performance Summary
 
-### JPEG Resize (Real-world thumbnail generation)
-| Operation | bun-image-turbo | sharp | Speedup |
-|-----------|-----------------|-------|---------|
-| 1MB JPEG → 800px | 12.4ms | 20.0ms | **1.61x faster** |
-| 1MB JPEG → 400px | 9.9ms | 12.3ms | **1.24x faster** |
-| 1MB JPEG → 200px | 8.7ms | 10.5ms | **1.20x faster** |
-| 10MB JPEG → 800px | 96.9ms | 102.5ms | **1.06x faster** |
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    bun-image-turbo vs sharp Performance                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Metadata Extraction     ████████████████████████████████████  36x faster    │
+│ Transform Pipeline      ████████████████████                   3.4x faster  │
+│ Concurrent (50 ops)     ██████████████████████████             4.5x faster  │
+│ JPEG Encode             ██████████████                         1.9x faster  │
+│ Thumbnail Resize        ████████████                           1.9x faster  │
+│ Blurhash Generation     ████████████████████ (4,283 ops/sec)   N/A in sharp │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
-### Format Conversion
-| Operation | bun-image-turbo | sharp | Speedup |
-|-----------|-----------------|-------|---------|
-| 1MB JPEG → WebP | 37.1ms | 45.8ms | **1.23x faster** |
-| 10MB JPEG → WebP | 114.9ms | 119.3ms | **1.04x faster** |
+### Detailed Benchmarks (ops/sec - higher is better)
 
-### Complex Transform Pipeline
-| Operation | bun-image-turbo | sharp | Speedup |
-|-----------|-----------------|-------|---------|
-| Resize + Grayscale | 11.9ms | 18.1ms | **1.53x faster** |
-| Resize + Rotate + Grayscale | 12.3ms | 19.3ms | **1.57x faster** |
+| Operation | bun-image-turbo | sharp | Winner |
+|-----------|---------------:|------:|:------:|
+| **Metadata Extraction** | 350,000 ops/sec | 9,600 ops/sec | **36x faster** |
+| **Transform Pipeline** | 454 ops/sec | 134 ops/sec | **3.4x faster** |
+| **JPEG Encode** | 553 ops/sec | 287 ops/sec | **1.9x faster** |
+| **Thumbnail (200px)** | 386 ops/sec | 201 ops/sec | **1.9x faster** |
+| **PNG Encode** | 235 ops/sec | 221 ops/sec | **1.06x faster** |
+| **Blurhash** | 4,283 ops/sec | N/A | - |
 
 ### Concurrent Operations (High Load)
-| Concurrency | bun-image-turbo | sharp | Speedup |
-|-------------|-----------------|-------|---------|
-| 10 parallel | 16ms | 30ms | **1.85x faster** |
-| 25 parallel | 42ms | 82ms | **1.96x faster** |
-| 50 parallel | 67ms | 156ms | **2.33x faster** |
-| 100 parallel | 129ms | 303ms | **2.34x faster** |
 
-**Key Strengths:**
-- **950x faster** metadata extraction (header-only parsing)
-- **2.3x faster** under concurrent load
-- **1.6x faster** for thumbnail generation
-- **1.5x faster** for transform pipelines
-- Built-in **blurhash** generation
-- Uses **TurboJPEG** (libjpeg-turbo) with SIMD acceleration
+| Concurrency | bun-image-turbo | sharp | Throughput |
+|------------:|----------------:|------:|:----------:|
+| 50 parallel | 30ms total | 137ms total | **4.5x faster** |
+| **Ops/sec** | **1,653 ops/sec** | 364 ops/sec | - |
 
-> Run benchmarks yourself: `bun run benchmarks/final_comparison.ts`
+### Real-World File Tests
+
+| Operation | bun-image-turbo | sharp | Speedup |
+|-----------|---------------:|------:|:-------:|
+| 1MB JPEG Metadata | 0.003ms | 0.10ms | **36x faster** |
+| 1MB JPEG Transform | 25.3ms | 30.5ms | **1.2x faster** |
+| 10MB JPEG Metadata | 0.003ms | 0.10ms | **37x faster** |
+
+### Key Strengths
+
+- **36x faster** metadata extraction (header-only parsing)
+- **4.5x faster** under concurrent load (server workloads)
+- **3.4x faster** transform pipelines (resize + rotate + grayscale)
+- **1.9x faster** JPEG encoding with TurboJPEG (libjpeg-turbo SIMD)
+- Built-in **Blurhash** generation (4,283 ops/sec)
+- Zero-copy buffer handling with Rust
+
+> Run benchmarks yourself: `bun run bench`
 
 ## Installation
 
