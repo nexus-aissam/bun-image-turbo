@@ -94,6 +94,12 @@ jobs:
         if: ${{ runner.os == 'macOS' }}
         run: |
           brew install nasm cmake
+          echo "NASM version:"
+          nasm --version
+          echo "CMAKE version:"
+          cmake --version
+          echo "NASM path:"
+          which nasm
 
       - name: Install build tools (Windows)
         if: ${{ runner.os == 'Windows' }}
