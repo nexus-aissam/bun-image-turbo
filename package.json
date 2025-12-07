@@ -21,17 +21,18 @@
     "dist"
   ],
   "napi": {
-    "name": "image-turbo",
-    "triples": {
-      "defaults": true,
-      "additional": [
-        "aarch64-apple-darwin",
-        "aarch64-unknown-linux-gnu",
-        "aarch64-unknown-linux-musl",
-        "x86_64-unknown-linux-musl",
-        "aarch64-pc-windows-msvc"
-      ]
-    }
+    "binaryName": "image-turbo",
+    "packageName": "bun-image-turbo",
+    "targets": [
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-pc-windows-msvc",
+      "aarch64-pc-windows-msvc",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-musl"
+    ]
   },
   "scripts": {
     "build": "napi build --platform --release",
@@ -87,15 +88,5 @@
     "sharp": "^0.34.5",
     "tsup": "^8.4.0",
     "typescript": "^5.9.0"
-  },
-  "optionalDependencies": {
-    "bun-image-turbo-win32-x64-msvc": "1.0.1-beta",
-    "bun-image-turbo-darwin-x64": "1.0.1-beta",
-    "bun-image-turbo-linux-x64-gnu": "1.0.1-beta",
-    "bun-image-turbo-darwin-arm64": "1.0.1-beta",
-    "bun-image-turbo-linux-arm64-gnu": "1.0.1-beta",
-    "bun-image-turbo-linux-arm64-musl": "1.0.1-beta",
-    "bun-image-turbo-linux-x64-musl": "1.0.1-beta",
-    "bun-image-turbo-win32-arm64-msvc": "1.0.1-beta"
   }
 }

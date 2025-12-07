@@ -10,6 +10,10 @@ env:
   DEBUG: napi:*
   MACOSX_DEPLOYMENT_TARGET: '10.13'
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   build:
     strategy:
@@ -85,11 +89,13 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install NASM (macOS)
+      # Install build dependencies for turbojpeg
+      - name: Install build tools (macOS)
         if: ${{ runner.os == 'macOS' }}
-        run: brew install nasm
+        run: |
+          brew install nasm cmake
 
-      - name: Install NASM (Windows)
+      - name: Install build tools (Windows)
         if: ${{ runner.os == 'Windows' }}
         uses: ilammy/setup-nasm@v1
 
@@ -103,12 +109,12 @@ jobs:
         if: ${{ !matrix.settings.docker }}
         run: npm install --ignore-scripts --no-optional
 
-      - name: Build
+      - name: Build (native)
         if: ${{ !matrix.settings.docker }}
         run: ${{ matrix.settings.build }}
         shell: bash
 
-      - name: Build in Docker
+      - name: Build (Docker)
         if: ${{ matrix.settings.docker }}
         uses: addnab/docker-run-action@v3
         with:
@@ -147,7 +153,7 @@ jobs:
         with:
           path: artifacts
 
-      - name: Move artifacts
+      - name: Create npm directories
         run: npm run artifacts
 
       - name: List packages
@@ -156,14 +162,29 @@ jobs:
       - name: Build TypeScript
         run: npm run build:ts
 
-      - name: Publish
+      - name: Prepare packages for publish
+        run: npm run prepublishOnly
+
+      - name: Publish packages
         run: |
           npm config set provenance true
+
+          # Publish platform packages first
+          for dir in npm/*/; do
+            if [ -d "$dir" ]; then
+              echo "Publishing $dir"
+              cd "$dir"
+              npm publish --access public --tag beta || true
+              cd ../..
+            fi
+          done
+
+          # Publish main package
           if [[ "${{ github.ref }}" == *"beta"* ]] || [[ "${{ github.ref }}" == *"alpha"* ]]; then
-            echo "Publishing with beta tag"
+            echo "Publishing main package with beta tag"
             npm publish --access public --tag beta
           else
-            echo "Publishing with latest tag"
+            echo "Publishing main package with latest tag"
             npm publish --access public
           fi
         env:
