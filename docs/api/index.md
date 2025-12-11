@@ -44,7 +44,7 @@ import {
 } from 'bun-image-turbo';
 
 // Check version
-console.log(version()); // "1.2.1"
+console.log(version()); // "1.2.2"
 
 // Get metadata (returns many fields - see metadata docs)
 const info = await metadata(buffer);
@@ -73,6 +73,7 @@ const { hash } = await blurhash(buffer, 4, 3);
 
 ::: warning Case Sensitivity
 All enum values are **PascalCase**:
+
 - Formats: `'Jpeg'`, `'Png'`, `'WebP'`, `'Gif'`, `'Bmp'`
 - Fit modes: `'Cover'`, `'Contain'`, `'Fill'`, `'Inside'`, `'Outside'`
 - Filters: `'Nearest'`, `'Bilinear'`, `'CatmullRom'`, `'Mitchell'`, `'Lanczos3'`
