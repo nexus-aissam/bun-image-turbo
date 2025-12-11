@@ -179,6 +179,8 @@ function toNapiFormat(format: string): string {
     bmp: "Bmp",
     ico: "Ico",
     tiff: "Tiff",
+    heic: "Heic",
+    avif: "Avif",
   };
   return formatMap[format.toLowerCase()] || format;
 }

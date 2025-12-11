@@ -11,7 +11,9 @@ export const enum ImageFormat {
   Gif = 'Gif',
   Bmp = 'Bmp',
   Ico = 'Ico',
-  Tiff = 'Tiff'
+  Tiff = 'Tiff',
+  Heic = 'Heic',
+  Avif = 'Avif'
 }
 /** Resize filter/algorithm */
 export const enum ResizeFilter {

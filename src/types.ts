@@ -3,7 +3,7 @@
  */
 
 /** Supported image formats */
-export type ImageFormat = 'jpeg' | 'png' | 'webp' | 'gif' | 'bmp' | 'ico' | 'tiff' | 'avif';
+export type ImageFormat = 'jpeg' | 'png' | 'webp' | 'gif' | 'bmp' | 'ico' | 'tiff' | 'heic' | 'avif';
 
 /** Resize filter/algorithm */
 export type ResizeFilter =

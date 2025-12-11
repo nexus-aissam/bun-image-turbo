@@ -12,7 +12,8 @@ High-performance image processing for Bun and Node.js, built with Rust and napi-
 ## Features
 
 - **Fast** - Built with Rust for maximum performance
-- **Modern Formats** - JPEG, PNG, WebP, GIF, BMP support
+- **Modern Formats** - JPEG, PNG, WebP, GIF, BMP, **HEIC/HEIF** support
+- **HEIC Support** - Read iPhone photos and HEIC/HEIF files natively
 - **Resize** - High-quality resizing with multiple algorithms (Lanczos3, Mitchell, etc.)
 - **Transform** - Rotate, flip, blur, sharpen, grayscale, brightness, contrast
 - **Blurhash** - Generate compact image placeholders
@@ -26,55 +27,60 @@ Tested on Apple M1 Pro with Bun 1.3.3 (compared to sharp v0.34.5):
 
 ### Performance Summary
 
+```text
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                     bun-image-turbo vs sharp Performance                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ WebP Metadata           ████████████████████████████████████  950x faster    │
+│ JPEG Metadata           ████████████████████████████████████  38x faster     │
+│ Concurrent (50 ops)     ██████████████████████████             2.6x faster   │
+│ Transform Pipeline      ████████████████████                   1.6x faster   │
+│ Thumbnail Resize        ████████████████                       1.2x faster   │
+│ HEIC Support            ████████████████████ EXCLUSIVE         N/A in sharp  │
+│ Blurhash Generation     ████████████████████ EXCLUSIVE         N/A in sharp  │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    bun-image-turbo vs sharp Performance                     │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ Metadata Extraction     ████████████████████████████████████  36x faster    │
-│ Transform Pipeline      ████████████████████                   3.4x faster  │
-│ Concurrent (50 ops)     ██████████████████████████             4.5x faster  │
-│ JPEG Encode             ██████████████                         1.9x faster  │
-│ Thumbnail Resize        ████████████                           1.9x faster  │
-│ Blurhash Generation     ████████████████████ (4,283 ops/sec)   N/A in sharp │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
 
-### Detailed Benchmarks (ops/sec - higher is better)
-
-| Operation | bun-image-turbo | sharp | Winner |
-|-----------|---------------:|------:|:------:|
-| **Metadata Extraction** | 350,000 ops/sec | 9,600 ops/sec | **36x faster** |
-| **Transform Pipeline** | 454 ops/sec | 134 ops/sec | **3.4x faster** |
-| **JPEG Encode** | 553 ops/sec | 287 ops/sec | **1.9x faster** |
-| **Thumbnail (200px)** | 386 ops/sec | 201 ops/sec | **1.9x faster** |
-| **PNG Encode** | 235 ops/sec | 221 ops/sec | **1.06x faster** |
-| **Blurhash** | 4,283 ops/sec | N/A | - |
-
-### Concurrent Operations (High Load)
-
-| Concurrency | bun-image-turbo | sharp | Throughput |
-|------------:|----------------:|------:|:----------:|
-| 50 parallel | 30ms total | 137ms total | **4.5x faster** |
-| **Ops/sec** | **1,653 ops/sec** | 364 ops/sec | - |
-
-### Real-World File Tests
+### Detailed Benchmarks
 
 | Operation | bun-image-turbo | sharp | Speedup |
 |-----------|---------------:|------:|:-------:|
-| 1MB JPEG Metadata | 0.003ms | 0.10ms | **36x faster** |
-| 1MB JPEG Transform | 25.3ms | 30.5ms | **1.2x faster** |
-| 10MB JPEG Metadata | 0.003ms | 0.10ms | **37x faster** |
+| **10MB WebP Metadata** | 0.004ms | 3.4ms | **950x faster** |
+| **10MB JPEG Metadata** | 0.003ms | 0.1ms | **38x faster** |
+| **1MB JPEG Metadata** | 0.003ms | 0.1ms | **30x faster** |
+| **50 Concurrent Ops** | 62ms | 160ms | **2.6x faster** |
+| **Transform Pipeline** | 12.2ms | 19.1ms | **1.6x faster** |
+| **1MB JPEG → 800px** | 12.6ms | 20.3ms | **1.6x faster** |
+| **1MB JPEG → WebP** | 36.4ms | 46.1ms | **1.3x faster** |
+| **Thumbnail (200px)** | 8.8ms | 10.7ms | **1.2x faster** |
+
+### HEIC/HEIF Support (Exclusive)
+
+bun-image-turbo is the **only** high-performance image library with native HEIC support:
+
+| Operation | Time | Notes |
+|-----------|-----:|:------|
+| **HEIC Metadata** | 0.1ms | Instant metadata extraction |
+| **HEIC → JPEG** | 169ms | Full quality conversion |
+| **HEIC → 800px JPEG** | 138ms | Optimized shrink-on-decode |
+| **HEIC → 200px thumbnail** | 137ms | Fast thumbnail generation |
+| **HEIC → WebP** | 798ms | Modern format conversion |
+| **HEIC Blurhash** | 301ms | Placeholder generation |
+
+> sharp does **NOT** support HEIC/HEIF files!
 
 ### Key Strengths
 
-- **36x faster** metadata extraction (header-only parsing)
-- **4.5x faster** under concurrent load (server workloads)
-- **3.4x faster** transform pipelines (resize + rotate + grayscale)
-- **1.9x faster** JPEG encoding with TurboJPEG (libjpeg-turbo SIMD)
-- Built-in **Blurhash** generation (4,283 ops/sec)
+- **950x faster** WebP metadata extraction
+- **38x faster** JPEG metadata (header-only parsing)
+- **2.6x faster** under concurrent load (server workloads)
+- **1.6x faster** transform pipelines (resize + rotate + grayscale)
+- **Native HEIC/HEIF support** - Read iPhone photos directly
+- **Shrink-on-decode** optimization for JPEG and HEIC
+- Built-in **Blurhash** generation
 - Zero-copy buffer handling with Rust
 
-> Run benchmarks yourself: `bun run bench`
+> Run benchmarks yourself: `bun run benchmarks/final_comparison.ts`
 
 ## Installation
 
@@ -121,6 +127,11 @@ const result = await transform(buffer, {
 
 // Save result
 await Bun.write('output.webp', result);
+
+// Convert HEIC (iPhone photo) to JPEG
+const heicInput = await Bun.file('photo.heic').arrayBuffer();
+const jpeg = await toJpeg(Buffer.from(heicInput), { quality: 90 });
+await Bun.write('photo.jpg', jpeg);
 ```
 
 ## API Reference
@@ -274,15 +285,17 @@ console.log(version()); // "1.0.0"
 
 ## Supported Formats
 
-| Format | Read | Write |
-|--------|------|-------|
-| JPEG | Yes | Yes |
-| PNG | Yes | Yes |
-| WebP | Yes | Yes |
-| GIF | Yes | Yes |
-| BMP | Yes | Yes |
-| ICO | Yes | No |
-| TIFF | Yes | No |
+| Format | Read | Write | Notes |
+|--------|------|-------|-------|
+| JPEG | Yes | Yes | TurboJPEG with SIMD |
+| PNG | Yes | Yes | Adaptive compression |
+| WebP | Yes | Yes | Lossy & lossless |
+| HEIC/HEIF | Yes | No | iPhone photos, via libheif |
+| AVIF | Yes | No | Via libheif |
+| GIF | Yes | Yes | Animated support |
+| BMP | Yes | Yes | - |
+| ICO | Yes | No | Multi-size icons |
+| TIFF | Yes | No | Multi-page support |
 
 ## Supported Platforms
 
@@ -335,5 +348,6 @@ Aissam Irhir ([@nexus-aissam](https://github.com/nexus-aissam))
 - [image](https://crates.io/crates/image) - Rust image processing library
 - [fast_image_resize](https://crates.io/crates/fast_image_resize) - Fast image resizing
 - [webp](https://crates.io/crates/webp) - WebP encoding/decoding
+- [libheif-rs](https://crates.io/crates/libheif-rs) - HEIC/HEIF decoding via libheif
 - [blurhash](https://crates.io/crates/blurhash) - Blurhash generation
 - [napi-rs](https://napi.rs/) - Rust bindings for Node.js

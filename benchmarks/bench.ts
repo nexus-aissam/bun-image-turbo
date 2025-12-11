@@ -609,7 +609,11 @@ async function main() {
       const file = Bun.file(path);
       if (await file.exists()) {
         loadedFiles[name] = Buffer.from(await file.arrayBuffer());
-        console.log(`   ✓ ${name}: ${(loadedFiles[name].length / 1024 / 1024).toFixed(2)} MB`);
+        console.log(
+          `   ✓ ${name}: ${(loadedFiles[name].length / 1024 / 1024).toFixed(
+            2
+          )} MB`
+        );
       }
     } catch (e) {
       // Skip missing files
@@ -630,7 +634,9 @@ async function main() {
     console.log("\n📊 Metadata (1MB JPEG)\n");
     const turbo1mbMeta = benchmarkSync(
       "bun-image-turbo metadata",
-      () => { imageTurbo.metadataSync(jpeg1mb); },
+      () => {
+        imageTurbo.metadataSync(jpeg1mb);
+      },
       50
     );
     console.log(formatResult(turbo1mbMeta));
@@ -638,7 +644,9 @@ async function main() {
     if (sharp) {
       const sharp1mbMeta = await benchmark(
         "sharp metadata",
-        async () => { await sharp!(jpeg1mb).metadata(); },
+        async () => {
+          await sharp!(jpeg1mb).metadata();
+        },
         50
       );
       console.log(formatResult(sharp1mbMeta));
@@ -649,7 +657,9 @@ async function main() {
     console.log("\n📊 Resize 1MB JPEG → 800px\n");
     const turbo1mbResize = await benchmark(
       "bun-image-turbo resize",
-      async () => { await imageTurbo.resize(jpeg1mb, { width: 800 }); },
+      async () => {
+        await imageTurbo.resize(jpeg1mb, { width: 800 });
+      },
       20
     );
     console.log(formatResult(turbo1mbResize));
@@ -657,7 +667,9 @@ async function main() {
     if (sharp) {
       const sharp1mbResize = await benchmark(
         "sharp resize",
-        async () => { await sharp!(jpeg1mb).resize(800).toBuffer(); },
+        async () => {
+          await sharp!(jpeg1mb).resize(800).toBuffer();
+        },
         20
       );
       console.log(formatResult(sharp1mbResize));
@@ -683,12 +695,18 @@ async function main() {
       const sharp1mbTransform = await benchmark(
         "sharp transform",
         async () => {
-          await sharp!(jpeg1mb).resize(600).grayscale().webp({ quality: 80 }).toBuffer();
+          await sharp!(jpeg1mb)
+            .resize(600)
+            .grayscale()
+            .webp({ quality: 80 })
+            .toBuffer();
         },
         20
       );
       console.log(formatResult(sharp1mbTransform));
-      console.log("\n" + formatComparison(turbo1mbTransform, sharp1mbTransform));
+      console.log(
+        "\n" + formatComparison(turbo1mbTransform, sharp1mbTransform)
+      );
     }
   }
 
@@ -706,7 +724,9 @@ async function main() {
     console.log("\n📊 Metadata (1MB PNG)\n");
     const turboPngMeta = benchmarkSync(
       "bun-image-turbo metadata",
-      () => { imageTurbo.metadataSync(png1mb); },
+      () => {
+        imageTurbo.metadataSync(png1mb);
+      },
       50
     );
     console.log(formatResult(turboPngMeta));
@@ -714,7 +734,9 @@ async function main() {
     if (sharp) {
       const sharpPngMeta = await benchmark(
         "sharp metadata",
-        async () => { await sharp!(png1mb).metadata(); },
+        async () => {
+          await sharp!(png1mb).metadata();
+        },
         50
       );
       console.log(formatResult(sharpPngMeta));
@@ -725,7 +747,9 @@ async function main() {
     console.log("\n📊 Resize 1MB PNG → 400px\n");
     const turboPngResize = await benchmark(
       "bun-image-turbo resize",
-      async () => { await imageTurbo.resize(png1mb, { width: 400 }); },
+      async () => {
+        await imageTurbo.resize(png1mb, { width: 400 });
+      },
       20
     );
     console.log(formatResult(turboPngResize));
@@ -733,7 +757,9 @@ async function main() {
     if (sharp) {
       const sharpPngResize = await benchmark(
         "sharp resize",
-        async () => { await sharp!(png1mb).resize(400).toBuffer(); },
+        async () => {
+          await sharp!(png1mb).resize(400).toBuffer();
+        },
         20
       );
       console.log(formatResult(sharpPngResize));
@@ -755,7 +781,9 @@ async function main() {
     console.log("\n📊 Metadata (10MB JPEG)\n");
     const turbo10mbMeta = benchmarkSync(
       "bun-image-turbo metadata",
-      () => { imageTurbo.metadataSync(jpeg10mb); },
+      () => {
+        imageTurbo.metadataSync(jpeg10mb);
+      },
       50
     );
     console.log(formatResult(turbo10mbMeta));
@@ -763,7 +791,9 @@ async function main() {
     if (sharp) {
       const sharp10mbMeta = await benchmark(
         "sharp metadata",
-        async () => { await sharp!(jpeg10mb).metadata(); },
+        async () => {
+          await sharp!(jpeg10mb).metadata();
+        },
         50
       );
       console.log(formatResult(sharp10mbMeta));
@@ -774,7 +804,9 @@ async function main() {
     console.log("\n📊 Resize 10MB JPEG → 800px\n");
     const turbo10mbResize = await benchmark(
       "bun-image-turbo resize",
-      async () => { await imageTurbo.resize(jpeg10mb, { width: 800 }); },
+      async () => {
+        await imageTurbo.resize(jpeg10mb, { width: 800 });
+      },
       10
     );
     console.log(formatResult(turbo10mbResize));
@@ -782,7 +814,9 @@ async function main() {
     if (sharp) {
       const sharp10mbResize = await benchmark(
         "sharp resize",
-        async () => { await sharp!(jpeg10mb).resize(800).toBuffer(); },
+        async () => {
+          await sharp!(jpeg10mb).resize(800).toBuffer();
+        },
         10
       );
       console.log(formatResult(sharp10mbResize));
@@ -793,7 +827,9 @@ async function main() {
     console.log("\n📊 Convert 10MB JPEG → WebP\n");
     const turbo10mbWebp = await benchmark(
       "bun-image-turbo toWebp",
-      async () => { await imageTurbo.toWebp(jpeg10mb, { quality: 80 }); },
+      async () => {
+        await imageTurbo.toWebp(jpeg10mb, { quality: 80 });
+      },
       3
     );
     console.log(formatResult(turbo10mbWebp));
@@ -801,7 +837,9 @@ async function main() {
     if (sharp) {
       const sharp10mbWebp = await benchmark(
         "sharp webp",
-        async () => { await sharp!(jpeg10mb).webp({ quality: 80 }).toBuffer(); },
+        async () => {
+          await sharp!(jpeg10mb).webp({ quality: 80 }).toBuffer();
+        },
         3
       );
       console.log(formatResult(sharp10mbWebp));
@@ -823,7 +861,9 @@ async function main() {
     console.log("\n📊 Metadata (10MB PNG)\n");
     const turboPng10mbMeta = benchmarkSync(
       "bun-image-turbo metadata",
-      () => { imageTurbo.metadataSync(png10mb); },
+      () => {
+        imageTurbo.metadataSync(png10mb);
+      },
       50
     );
     console.log(formatResult(turboPng10mbMeta));
@@ -831,7 +871,9 @@ async function main() {
     if (sharp) {
       const sharpPng10mbMeta = await benchmark(
         "sharp metadata",
-        async () => { await sharp!(png10mb).metadata(); },
+        async () => {
+          await sharp!(png10mb).metadata();
+        },
         50
       );
       console.log(formatResult(sharpPng10mbMeta));
@@ -842,7 +884,9 @@ async function main() {
     console.log("\n📊 Resize 10MB PNG → 800px\n");
     const turboPng10mbResize = await benchmark(
       "bun-image-turbo resize",
-      async () => { await imageTurbo.resize(png10mb, { width: 800 }); },
+      async () => {
+        await imageTurbo.resize(png10mb, { width: 800 });
+      },
       5
     );
     console.log(formatResult(turboPng10mbResize));
@@ -850,11 +894,15 @@ async function main() {
     if (sharp) {
       const sharpPng10mbResize = await benchmark(
         "sharp resize",
-        async () => { await sharp!(png10mb).resize(800).toBuffer(); },
+        async () => {
+          await sharp!(png10mb).resize(800).toBuffer();
+        },
         5
       );
       console.log(formatResult(sharpPng10mbResize));
-      console.log("\n" + formatComparison(turboPng10mbResize, sharpPng10mbResize));
+      console.log(
+        "\n" + formatComparison(turboPng10mbResize, sharpPng10mbResize)
+      );
     }
   }
 
@@ -872,7 +920,9 @@ async function main() {
     console.log("\n📊 Metadata (10MB WebP)\n");
     const turboWebp10mbMeta = benchmarkSync(
       "bun-image-turbo metadata",
-      () => { imageTurbo.metadataSync(webp10mb); },
+      () => {
+        imageTurbo.metadataSync(webp10mb);
+      },
       50
     );
     console.log(formatResult(turboWebp10mbMeta));
@@ -880,18 +930,24 @@ async function main() {
     if (sharp) {
       const sharpWebp10mbMeta = await benchmark(
         "sharp metadata",
-        async () => { await sharp!(webp10mb).metadata(); },
+        async () => {
+          await sharp!(webp10mb).metadata();
+        },
         50
       );
       console.log(formatResult(sharpWebp10mbMeta));
-      console.log("\n" + formatComparison(turboWebp10mbMeta, sharpWebp10mbMeta));
+      console.log(
+        "\n" + formatComparison(turboWebp10mbMeta, sharpWebp10mbMeta)
+      );
     }
 
     // Resize
     console.log("\n📊 Resize 10MB WebP → 800px\n");
     const turboWebp10mbResize = await benchmark(
       "bun-image-turbo resize",
-      async () => { await imageTurbo.resize(webp10mb, { width: 800 }); },
+      async () => {
+        await imageTurbo.resize(webp10mb, { width: 800 });
+      },
       5
     );
     console.log(formatResult(turboWebp10mbResize));
@@ -899,12 +955,129 @@ async function main() {
     if (sharp) {
       const sharpWebp10mbResize = await benchmark(
         "sharp resize",
-        async () => { await sharp!(webp10mb).resize(800).toBuffer(); },
+        async () => {
+          await sharp!(webp10mb).resize(800).toBuffer();
+        },
         5
       );
       console.log(formatResult(sharpWebp10mbResize));
-      console.log("\n" + formatComparison(turboWebp10mbResize, sharpWebp10mbResize));
+      console.log(
+        "\n" + formatComparison(turboWebp10mbResize, sharpWebp10mbResize)
+      );
     }
+  }
+
+  // ============================================
+  // HEIC TESTS
+  // ============================================
+  const heicFile = "./benchmarks/heic/image.heic";
+  let heicBuffer: Buffer | null = null;
+
+  try {
+    const heicFileObj = Bun.file(heicFile);
+    if (await heicFileObj.exists()) {
+      heicBuffer = Buffer.from(await heicFileObj.arrayBuffer());
+      console.log(`\n${"=".repeat(80)}`);
+      console.log("                    HEIC Tests (iPhone Photo)");
+      console.log("=".repeat(80));
+      console.log(
+        `   File size: ${(heicBuffer.length / 1024 / 1024).toFixed(2)} MB`
+      );
+
+      // HEIC Metadata
+      console.log("\n📊 Metadata (HEIC)\n");
+      const turboHeicMeta = benchmarkSync(
+        "bun-image-turbo metadata",
+        () => {
+          imageTurbo.metadataSync(heicBuffer!);
+        },
+        50
+      );
+      console.log(formatResult(turboHeicMeta));
+
+      // Show HEIC metadata details
+      const heicInfo = imageTurbo.metadataSync(heicBuffer);
+      console.log(
+        `   → Format: ${heicInfo.format}, ${heicInfo.width}x${heicInfo.height}, ${heicInfo.channels} channels`
+      );
+
+      // HEIC to JPEG
+      console.log("\n📊 Convert HEIC → JPEG\n");
+      const turboHeicJpeg = await benchmark(
+        "bun-image-turbo toJpeg",
+        async () => {
+          await imageTurbo.toJpeg(heicBuffer!, { quality: 85 });
+        },
+        20
+      );
+      console.log(formatResult(turboHeicJpeg));
+
+      // HEIC to WebP
+      console.log("\n📊 Convert HEIC → WebP\n");
+      const turboHeicWebp = await benchmark(
+        "bun-image-turbo toWebp",
+        async () => {
+          await imageTurbo.toWebp(heicBuffer!, { quality: 80 });
+        },
+        20
+      );
+      console.log(formatResult(turboHeicWebp));
+
+      // HEIC Resize
+      console.log("\n📊 Resize HEIC → 800px\n");
+      const turboHeicResize = await benchmark(
+        "bun-image-turbo resize",
+        async () => {
+          await imageTurbo.resize(heicBuffer!, { width: 800 });
+        },
+        20
+      );
+      console.log(formatResult(turboHeicResize));
+
+      // HEIC Transform Pipeline
+      console.log("\n📊 Transform HEIC (resize + grayscale → WebP)\n");
+      const turboHeicTransform = await benchmark(
+        "bun-image-turbo transform",
+        async () => {
+          await imageTurbo.transform(heicBuffer!, {
+            resize: { width: 600 },
+            grayscale: true,
+            output: { format: "webp", webp: { quality: 80 } },
+          });
+        },
+        20
+      );
+      console.log(formatResult(turboHeicTransform));
+
+      // HEIC Blurhash
+      console.log("\n📊 Blurhash from HEIC\n");
+      const turboHeicBlurhash = await benchmark(
+        "bun-image-turbo blurhash",
+        async () => {
+          await imageTurbo.blurhash(heicBuffer!, 4, 3);
+        },
+        10
+      );
+      console.log(formatResult(turboHeicBlurhash));
+
+      // HEIC Thumbnail generation (common use case)
+      console.log("\n📊 Generate Thumbnail from HEIC (200px)\n");
+      const turboHeicThumb = await benchmark(
+        "bun-image-turbo thumbnail",
+        async () => {
+          const resized = await imageTurbo.resize(heicBuffer!, { width: 200 });
+          await imageTurbo.toJpeg(resized, { quality: 80 });
+        },
+        20
+      );
+      console.log(formatResult(turboHeicThumb));
+
+      console.log(
+        "\n✨ HEIC support: Native decoding via libheif (no sharp equivalent)"
+      );
+    }
+  } catch (e) {
+    console.log("\n⚠️  HEIC test file not found, skipping HEIC benchmarks");
   }
 
   // ============================================

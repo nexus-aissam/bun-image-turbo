@@ -1,8 +1,9 @@
 //! Image decoding functions - optimized for performance
 //! Uses turbojpeg (libjpeg-turbo with SIMD) for fastest JPEG decode
 //! Uses mozjpeg for shrink-on-load when downscaling (decode at reduced resolution)
+//! Uses libheif for HEIC/HEIF decoding (iPhone photos)
 
-use image::{DynamicImage, ImageFormat, ImageReader, RgbImage};
+use image::{DynamicImage, ImageFormat, ImageReader, RgbImage, RgbaImage};
 use std::io::Cursor;
 
 use crate::error::ImageError;
@@ -11,12 +12,41 @@ use crate::ImageMetadata;
 /// Maximum pixel count before we require memory protection (100 megapixels)
 const MAX_PIXELS_DEFAULT: u64 = 100_000_000;
 
+/// Check if data is HEIC/HEIF format by examining ftyp box
+#[inline]
+pub fn is_heic(data: &[u8]) -> bool {
+  if data.len() < 12 {
+    return false;
+  }
+  // HEIC/HEIF files start with ftyp box
+  // Format: [4 bytes size][4 bytes "ftyp"][4 bytes brand]
+  // Common brands: heic, heix, hevc, hevx, mif1, msf1
+  if &data[4..8] == b"ftyp" {
+    let brand = &data[8..12];
+    return brand == b"heic"
+      || brand == b"heix"
+      || brand == b"hevc"
+      || brand == b"hevx"
+      || brand == b"mif1"
+      || brand == b"msf1"
+      || brand == b"avif"; // AVIF is also supported by libheif
+  }
+  false
+}
+
 /// Detect image format from bytes (fast - only reads magic bytes)
 #[inline]
 pub fn detect_format(data: &[u8]) -> Result<ImageFormat, ImageError> {
+  // Check for HEIC first (not detected by image crate)
+  if is_heic(data) {
+    // Return a placeholder - we'll handle HEIC specially
+    return Ok(ImageFormat::Avif); // Use Avif as marker for HEIC (both are similar)
+  }
+
   image::guess_format(data)
     .map_err(|e| ImageError::DecodeError(format!("Cannot detect format: {}", e)))
 }
+
 
 /// Decode image from bytes - uses optimized decoders per format
 #[inline]
@@ -32,6 +62,11 @@ pub fn decode_image_with_target(
   target_width: Option<u32>,
   target_height: Option<u32>,
 ) -> Result<DynamicImage, ImageError> {
+  // Check for HEIC first - use shrink-on-decode if target provided
+  if is_heic(data) {
+    return decode_heic_with_target(data, target_width, target_height);
+  }
+
   let format = detect_format(data)?;
 
   match format {
@@ -207,6 +242,131 @@ fn decode_jpeg_fast(data: &[u8]) -> Result<DynamicImage, ImageError> {
   Ok(DynamicImage::ImageRgb8(img))
 }
 
+/// Decode HEIC/HEIF with optional target dimensions for shrink-on-decode optimization
+/// When target dimensions are provided, the image is scaled during decode for better performance
+#[inline]
+pub fn decode_heic_with_target(
+  data: &[u8],
+  target_width: Option<u32>,
+  target_height: Option<u32>,
+) -> Result<DynamicImage, ImageError> {
+  use libheif_rs::{HeifContext, LibHeif, RgbChroma, ColorSpace};
+
+  // Create libheif instance
+  let lib_heif = LibHeif::new();
+
+  // Create context from memory
+  let ctx = HeifContext::read_from_bytes(data)
+    .map_err(|e| ImageError::DecodeError(format!("HEIC context error: {}", e)))?;
+
+  // Get primary image handle
+  let handle = ctx.primary_image_handle()
+    .map_err(|e| ImageError::DecodeError(format!("HEIC handle error: {}", e)))?;
+
+  let src_width = handle.width();
+  let src_height = handle.height();
+
+  // Check image size limit
+  let pixel_count = src_width as u64 * src_height as u64;
+  if pixel_count > MAX_PIXELS_DEFAULT {
+    return Err(ImageError::DecodeError(format!(
+      "HEIC image too large: {}x{} ({} megapixels) exceeds limit of {} megapixels",
+      src_width, src_height, pixel_count / 1_000_000, MAX_PIXELS_DEFAULT / 1_000_000
+    )));
+  }
+
+  // Check if image has alpha channel
+  let has_alpha = handle.has_alpha_channel();
+
+  // Decode to RGB or RGBA
+  let decoded = if has_alpha {
+    lib_heif.decode(&handle, ColorSpace::Rgb(RgbChroma::Rgba), None)
+      .map_err(|e| ImageError::DecodeError(format!("HEIC decode error: {}", e)))?
+  } else {
+    lib_heif.decode(&handle, ColorSpace::Rgb(RgbChroma::Rgb), None)
+      .map_err(|e| ImageError::DecodeError(format!("HEIC decode error: {}", e)))?
+  };
+
+  // Apply shrink-on-decode if target dimensions are significantly smaller
+  let image = if let (Some(tw), Some(th)) = (target_width, target_height) {
+    // Only scale if target is at least 2x smaller in both dimensions
+    if tw < src_width / 2 && th < src_height / 2 {
+      decoded.scale(tw, th, None)
+        .map_err(|e| ImageError::DecodeError(format!("HEIC scale error: {}", e)))?
+    } else {
+      decoded
+    }
+  } else if let Some(tw) = target_width {
+    if tw < src_width / 2 {
+      let th = (src_height as f64 * tw as f64 / src_width as f64) as u32;
+      decoded.scale(tw, th, None)
+        .map_err(|e| ImageError::DecodeError(format!("HEIC scale error: {}", e)))?
+    } else {
+      decoded
+    }
+  } else if let Some(th) = target_height {
+    if th < src_height / 2 {
+      let tw = (src_width as f64 * th as f64 / src_height as f64) as u32;
+      decoded.scale(tw, th, None)
+        .map_err(|e| ImageError::DecodeError(format!("HEIC scale error: {}", e)))?
+    } else {
+      decoded
+    }
+  } else {
+    decoded
+  };
+
+  // Get final dimensions after potential scaling
+  let width = image.width();
+  let height = image.height();
+
+  // Get interleaved RGB(A) data
+  let planes = image.planes();
+  let interleaved = planes.interleaved
+    .ok_or_else(|| ImageError::DecodeError("HEIC: No interleaved data".to_string()))?;
+
+  let stride = interleaved.stride;
+  let pixel_data = interleaved.data;
+  let bytes_per_pixel = if has_alpha { 4 } else { 3 };
+  let row_bytes = width as usize * bytes_per_pixel;
+
+  // Optimized pixel extraction - use memcpy when stride matches row width
+  if stride == row_bytes {
+    // Fast path: contiguous memory, direct copy
+    let total_bytes = (width * height) as usize * bytes_per_pixel;
+    let pixels = pixel_data[..total_bytes].to_vec();
+
+    if has_alpha {
+      let img = RgbaImage::from_raw(width, height, pixels)
+        .ok_or_else(|| ImageError::DecodeError("Failed to create RGBA image from HEIC".to_string()))?;
+      Ok(DynamicImage::ImageRgba8(img))
+    } else {
+      let img = RgbImage::from_raw(width, height, pixels)
+        .ok_or_else(|| ImageError::DecodeError("Failed to create RGB image from HEIC".to_string()))?;
+      Ok(DynamicImage::ImageRgb8(img))
+    }
+  } else {
+    // Slow path: stride doesn't match, need row-by-row copy
+    let mut pixels = Vec::with_capacity((width * height) as usize * bytes_per_pixel);
+
+    for y in 0..height as usize {
+      let row_start = y * stride;
+      let row_end = row_start + row_bytes;
+      pixels.extend_from_slice(&pixel_data[row_start..row_end]);
+    }
+
+    if has_alpha {
+      let img = RgbaImage::from_raw(width, height, pixels)
+        .ok_or_else(|| ImageError::DecodeError("Failed to create RGBA image from HEIC".to_string()))?;
+      Ok(DynamicImage::ImageRgba8(img))
+    } else {
+      let img = RgbImage::from_raw(width, height, pixels)
+        .ok_or_else(|| ImageError::DecodeError("Failed to create RGB image from HEIC".to_string()))?;
+      Ok(DynamicImage::ImageRgb8(img))
+    }
+  }
+}
+
 /// Fallback decoder using image crate for non-JPEG formats
 /// Includes memory protection for huge images
 #[inline]
@@ -241,8 +401,14 @@ fn decode_with_image_crate_safe(data: &[u8]) -> Result<DynamicImage, ImageError>
 /// Get image metadata WITHOUT fully decoding (reads headers only)
 /// Optimized for speed - only parses necessary header bytes
 pub fn get_metadata(data: &[u8]) -> Result<ImageMetadata, ImageError> {
-  let format = detect_format(data)?;
   let size = data.len() as u32;
+
+  // Check for HEIC first
+  if is_heic(data) {
+    return get_heic_metadata(data, size);
+  }
+
+  let format = detect_format(data)?;
 
   // For JPEG, use fast header-only parsing
   if matches!(format, ImageFormat::Jpeg) {
@@ -269,6 +435,53 @@ pub fn get_metadata(data: &[u8]) -> Result<ImageMetadata, ImageError> {
   };
 
   Ok(metadata)
+}
+
+/// Get HEIC/HEIF metadata using libheif (fast - header only)
+fn get_heic_metadata(data: &[u8], size: u32) -> Result<ImageMetadata, ImageError> {
+  use libheif_rs::HeifContext;
+
+  let ctx = HeifContext::read_from_bytes(data)
+    .map_err(|e| ImageError::DecodeError(format!("HEIC context error: {}", e)))?;
+
+  let handle = ctx.primary_image_handle()
+    .map_err(|e| ImageError::DecodeError(format!("HEIC handle error: {}", e)))?;
+
+  let width = handle.width();
+  let height = handle.height();
+  let has_alpha = handle.has_alpha_channel();
+  let bit_depth = handle.luma_bits_per_pixel();
+
+  // Determine format string (heic or avif)
+  let format_str = if data.len() >= 12 && &data[8..12] == b"avif" {
+    "avif"
+  } else {
+    "heic"
+  };
+
+  let channels = if has_alpha { 4 } else { 3 };
+
+  Ok(ImageMetadata {
+    width,
+    height,
+    format: format_str.to_string(),
+    size: Some(size),
+    space: "srgb".to_string(),
+    channels,
+    depth: if bit_depth > 8 { "ushort".to_string() } else { "uchar".to_string() },
+    has_alpha,
+    bits_per_sample: bit_depth,
+    is_progressive: false,
+    is_palette: false,
+    has_profile: handle.color_profile_raw().is_some(),
+    orientation: None, // HEIC handles orientation internally
+    pages: None,
+    loop_count: None,
+    delay: None,
+    background: None,
+    compression: Some("hevc".to_string()),
+    density: None,
+  })
 }
 
 /// Fast JPEG metadata extraction - only reads first few KB of headers

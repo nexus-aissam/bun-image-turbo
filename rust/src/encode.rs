@@ -147,5 +147,11 @@ pub fn encode_to_format(
     crate::ImageFormat::Tiff => {
       Err(ImageError::UnsupportedFormat("TIFF encoding not supported in this context".to_string()))
     }
+    crate::ImageFormat::Heic => {
+      Err(ImageError::UnsupportedFormat("HEIC encoding not supported - convert to JPEG, PNG, or WebP instead".to_string()))
+    }
+    crate::ImageFormat::Avif => {
+      Err(ImageError::UnsupportedFormat("AVIF encoding not supported - convert to JPEG, PNG, or WebP instead".to_string()))
+    }
   }
 }

@@ -23,6 +23,8 @@ pub enum ImageFormat {
   Bmp,
   Ico,
   Tiff,
+  Heic,
+  Avif,
 }
 
 /// Resize filter/algorithm
