@@ -46,9 +46,6 @@ blurhash = "0.2"
 # Only enabled on macOS and Linux (not Windows due to complex build requirements)
 libheif-rs = { version = "2.5", optional = true }
 
-# Pin moxcms to version that doesn't require edition2024 (for CI compatibility)
-moxcms = "=0.7.8"
-
 [features]
 default = []
 heic = ["libheif-rs"]

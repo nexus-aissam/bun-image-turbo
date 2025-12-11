@@ -47,7 +47,9 @@ jobs:
             build: |
               set -e
               apt-get update && apt-get install -y nasm cmake libheif-dev pkg-config
-              rustup update stable
+              # Update to latest stable Rust (need 1.85+ for image crate)
+              rustup default stable
+              rustup update
               ./node_modules/.bin/napi build --platform --release --target x86_64-unknown-linux-gnu --features heic
               strip *.node
 
@@ -57,6 +59,9 @@ jobs:
             setup: |
               sudo apt-get update
               sudo apt-get install -y nasm cmake libheif-dev pkg-config
+              # Ensure latest Rust
+              rustup default stable
+              rustup update
             build: |
               ./node_modules/.bin/napi build --platform --release --target aarch64-unknown-linux-gnu --features heic
               strip *.node
@@ -67,9 +72,12 @@ jobs:
             docker: alpine:latest
             build: |
               set -e
-              apk add --no-cache nodejs npm nasm cmake make gcc g++ musl-dev libc-dev curl bash perl linux-headers libheif-dev pkgconfig
+              # Use Node 20 for styleText support
+              apk add --no-cache nodejs-current npm nasm cmake make gcc g++ musl-dev libc-dev curl bash perl linux-headers libheif-dev pkgconfig
+              # Install latest stable Rust (need 1.85+ for image crate)
               curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
               . "$HOME/.cargo/env"
+              rustup update
               npm install --ignore-scripts
               ./node_modules/.bin/napi build --platform --release --target x86_64-unknown-linux-musl --features heic
               strip *.node
