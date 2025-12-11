@@ -69,11 +69,10 @@ jobs:
           # Linux musl x86_64 - native build in Alpine container (with HEIC support)
           - host: ubuntu-latest
             target: x86_64-unknown-linux-musl
-            docker: alpine:latest
+            docker: node:20-alpine
             build: |
               set -e
-              # Use Node 20 for styleText support
-              apk add --no-cache nodejs-current npm nasm cmake make gcc g++ musl-dev libc-dev curl bash perl linux-headers libheif-dev pkgconfig
+              apk add --no-cache nasm cmake make gcc g++ musl-dev libc-dev curl bash perl linux-headers libheif-dev pkgconfig
               # Install latest stable Rust (need 1.85+ for image crate)
               curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
               . "$HOME/.cargo/env"
