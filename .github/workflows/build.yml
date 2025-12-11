@@ -102,14 +102,15 @@ jobs:
         if: ${{ runner.os == 'macOS' }}
         run: |
           brew install nasm cmake libheif pkg-config
+          # Add nasm to PATH for cmake to find it
+          NASM_PATH=$(brew --prefix nasm)/bin
+          echo "$NASM_PATH" >> $GITHUB_PATH
+          echo "CMAKE_ASM_NASM_COMPILER=$NASM_PATH/nasm" >> $GITHUB_ENV
           echo "NASM version:"
           nasm --version
+          echo "NASM path: $(which nasm)"
           echo "CMAKE version:"
           cmake --version
-          echo "libheif version:"
-          pkg-config --modversion libheif || echo "libheif installed"
-          echo "PKG_CONFIG_PATH:"
-          echo $PKG_CONFIG_PATH
 
       - name: Install build tools (Windows)
         if: ${{ runner.os == 'Windows' }}
