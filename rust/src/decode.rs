@@ -1,7 +1,7 @@
 //! Image decoding functions - optimized for performance
 //! Uses turbojpeg (libjpeg-turbo with SIMD) for fastest JPEG decode
 //! Uses mozjpeg for shrink-on-load when downscaling (decode at reduced resolution)
-//! Uses libheif for HEIC/HEIF decoding (iPhone photos)
+//! Uses libheif for HEIC/HEIF decoding (iPhone photos) - optional feature
 
 use image::{DynamicImage, ImageFormat, ImageReader, RgbImage, RgbaImage};
 use std::io::Cursor;
@@ -34,6 +34,12 @@ pub fn is_heic(data: &[u8]) -> bool {
   false
 }
 
+/// Check if HEIC support is available at runtime
+#[inline]
+pub fn heic_supported() -> bool {
+  cfg!(feature = "heic")
+}
+
 /// Detect image format from bytes (fast - only reads magic bytes)
 #[inline]
 pub fn detect_format(data: &[u8]) -> Result<ImageFormat, ImageError> {
@@ -63,8 +69,16 @@ pub fn decode_image_with_target(
   target_height: Option<u32>,
 ) -> Result<DynamicImage, ImageError> {
   // Check for HEIC first - use shrink-on-decode if target provided
+  #[cfg(feature = "heic")]
   if is_heic(data) {
     return decode_heic_with_target(data, target_width, target_height);
+  }
+
+  #[cfg(not(feature = "heic"))]
+  if is_heic(data) {
+    return Err(ImageError::UnsupportedFormat(
+      "HEIC/HEIF support not available. Install with 'heic' feature enabled.".to_string()
+    ));
   }
 
   let format = detect_format(data)?;
@@ -244,6 +258,7 @@ fn decode_jpeg_fast(data: &[u8]) -> Result<DynamicImage, ImageError> {
 
 /// Decode HEIC/HEIF with optional target dimensions for shrink-on-decode optimization
 /// When target dimensions are provided, the image is scaled during decode for better performance
+#[cfg(feature = "heic")]
 #[inline]
 pub fn decode_heic_with_target(
   data: &[u8],
@@ -404,8 +419,16 @@ pub fn get_metadata(data: &[u8]) -> Result<ImageMetadata, ImageError> {
   let size = data.len() as u32;
 
   // Check for HEIC first
+  #[cfg(feature = "heic")]
   if is_heic(data) {
     return get_heic_metadata(data, size);
+  }
+
+  #[cfg(not(feature = "heic"))]
+  if is_heic(data) {
+    return Err(ImageError::UnsupportedFormat(
+      "HEIC/HEIF support not available. Install with 'heic' feature enabled.".to_string()
+    ));
   }
 
   let format = detect_format(data)?;
@@ -438,6 +461,7 @@ pub fn get_metadata(data: &[u8]) -> Result<ImageMetadata, ImageError> {
 }
 
 /// Get HEIC/HEIF metadata using libheif (fast - header only)
+#[cfg(feature = "heic")]
 fn get_heic_metadata(data: &[u8], size: u32) -> Result<ImageMetadata, ImageError> {
   use libheif_rs::HeifContext;
 

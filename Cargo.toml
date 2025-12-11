@@ -43,10 +43,15 @@ thiserror = "2"
 blurhash = "0.2"
 
 # HEIC/HEIF support via libheif (uses system-installed libheif)
-libheif-rs = "2.5"
+# Only enabled on macOS and Linux (not Windows due to complex build requirements)
+libheif-rs = { version = "2.5", optional = true }
 
 # Pin moxcms to version that doesn't require edition2024 (for CI compatibility)
 moxcms = "=0.7.8"
+
+[features]
+default = []
+heic = ["libheif-rs"]
 
 [build-dependencies]
 napi-build = "2"
