@@ -110,7 +110,7 @@ bun run basic
 ## Output
 
 ```text
-bun-image-turbo v1.2.2
+bun-image-turbo v1.2.0
 
 Downloading test image...
 
