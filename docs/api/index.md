@@ -44,7 +44,7 @@ import {
 } from 'bun-image-turbo';
 
 // Check version
-console.log(version()); // "1.2.0"
+console.log(version()); // "1.2.2"
 
 // Get metadata (returns many fields - see metadata docs)
 const info = await metadata(buffer);

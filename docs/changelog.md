@@ -2,7 +2,7 @@
 
 All notable changes to bun-image-turbo.
 
-## [1.2.0] - 2025-12-12
+## [1.2.2] - 2025-12-12
 
 ### Documentation
 

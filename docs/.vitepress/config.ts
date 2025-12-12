@@ -62,7 +62,7 @@ export default defineConfig({
       { text: "API", link: "/api/", activeMatch: "/api/" },
       { text: "Examples", link: "/examples/", activeMatch: "/examples/" },
       {
-        text: "v1.2.0",
+        text: "v1.2.2",
         items: [
           { text: "Changelog", link: "/changelog" },
           {
@@ -168,7 +168,7 @@ export default defineConfig({
       message:
         'Released under the <a href="https://github.com/nexus-aissam/bun-image-turbo/blob/main/LICENSE">MIT License</a>.',
       copyright:
-        'Copyright © 2024 <a href="https://github.com/nexus-aissam">Aissam Irhir</a>',
+        'Copyright © 2025 <a href="https://github.com/nexus-aissam">Aissam Irhir</a>',
     },
 
     search: {
