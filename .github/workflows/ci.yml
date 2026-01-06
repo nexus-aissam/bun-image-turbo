@@ -20,50 +20,84 @@ jobs:
       fail-fast: false
       matrix:
         settings:
+          # macOS x86_64 - no HEIC (avoid moxcms edition2024 requirement)
           - host: macos-latest
             target: x86_64-apple-darwin
-            build: bun run build --target x86_64-apple-darwin
+            build: |-
+              set -e
+              bun x napi build --platform --release --target x86_64-apple-darwin
 
+          # macOS ARM64 - with HEIC support (requires Rust nightly for moxcms)
           - host: macos-latest
             target: aarch64-apple-darwin
-            build: bun run build --target aarch64-apple-darwin
+            rust: nightly
+            build: |-
+              set -e
+              bun x napi build --platform --release --target aarch64-apple-darwin --features heic
 
+          # Linux glibc x86_64
           - host: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian
             build: |-
-              set -e &&
-              npm install -g @napi-rs/cli &&
+              set -e
+              # Install latest stable Rust (need 1.85+ for moxcms crate)
+              curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+              . "$HOME/.cargo/env"
+              rustc --version
+              npm install -g @napi-rs/cli
               napi build --platform --release --target x86_64-unknown-linux-gnu
+              strip *.node
 
+          # Linux musl x86_64
           - host: ubuntu-latest
             target: x86_64-unknown-linux-musl
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
             build: |-
-              set -e &&
-              npm install -g @napi-rs/cli &&
+              set -e
+              apk add --no-cache curl bash
+              # Install latest stable Rust (need 1.85+ for moxcms crate)
+              curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+              . "$HOME/.cargo/env"
+              rustc --version
+              npm install -g @napi-rs/cli
               napi build --platform --release --target x86_64-unknown-linux-musl
+              strip *.node
 
+          # Linux glibc aarch64
           - host: ubuntu-latest
             target: aarch64-unknown-linux-gnu
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian-aarch64
             build: |-
-              set -e &&
-              npm install -g @napi-rs/cli &&
+              set -e
+              # Install latest stable Rust (need 1.85+ for moxcms crate)
+              curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+              . "$HOME/.cargo/env"
+              rustc --version
+              npm install -g @napi-rs/cli
               napi build --platform --release --target aarch64-unknown-linux-gnu
+              strip *.node
 
+          # Linux musl aarch64
           - host: ubuntu-latest
             target: aarch64-unknown-linux-musl
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
             build: |-
-              set -e &&
-              rustup target add aarch64-unknown-linux-musl &&
-              npm install -g @napi-rs/cli &&
+              set -e
+              apk add --no-cache curl bash
+              # Install latest stable Rust (need 1.85+ for moxcms crate)
+              curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+              . "$HOME/.cargo/env"
+              rustup target add aarch64-unknown-linux-musl
+              rustc --version
+              npm install -g @napi-rs/cli
               napi build --platform --release --target aarch64-unknown-linux-musl
+              strip *.node
 
+          # Windows x64
           - host: windows-latest
             target: x86_64-pc-windows-msvc
-            build: bun run build --target x86_64-pc-windows-msvc
+            build: bun x napi build --platform --release --target x86_64-pc-windows-msvc
 
     name: Build - ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
@@ -77,9 +111,10 @@ jobs:
           bun-version: latest
 
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@master
         if: ${{ !matrix.settings.docker }}
         with:
+          toolchain: ${{ matrix.settings.rust || 'stable' }}
           targets: ${{ matrix.settings.target }}
 
       - name: Cache cargo
