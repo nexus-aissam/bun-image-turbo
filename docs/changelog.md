@@ -2,7 +2,7 @@
 
 All notable changes to bun-image-turbo.
 
-## [1.7.0] - 2026-01-13
+## [1.7.1] - 2026-01-13
 
 ### Added
 

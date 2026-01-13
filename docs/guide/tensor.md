@@ -1,6 +1,6 @@
 # ML Tensor Conversion
 
-bun-image-turbo v1.7.0 introduces `toTensor` - the **first JavaScript package** to offer native SIMD-accelerated image-to-tensor conversion with built-in normalization presets.
+bun-image-turbo v1.7.1 introduces `toTensor` - the **first JavaScript package** to offer native SIMD-accelerated image-to-tensor conversion with built-in normalization presets.
 
 ## What is a Tensor?
 
@@ -46,6 +46,7 @@ const tensor = new ort.Tensor('float32', float32, [1, 3, 224, 224]);
 ```
 
 **Problems:**
+
 - Multiple function calls
 - Manual pixel manipulation in JavaScript (slow)
 - Easy to make mistakes with normalization
@@ -70,6 +71,7 @@ const ortTensor = new ort.Tensor('float32', tensor.toFloat32Array(), tensor.shap
 ```
 
 **Benefits:**
+
 - Single function call
 - Native Rust SIMD processing
 - Built-in normalization presets
@@ -185,6 +187,7 @@ const tensor = await toTensor(buffer, {
 ## Common Model Configurations
 
 ### ResNet / EfficientNet (ImageNet)
+
 ```typescript
 const tensor = await toTensor(buffer, {
   width: 224,
@@ -196,6 +199,7 @@ const tensor = await toTensor(buffer, {
 ```
 
 ### Vision Transformer (ViT)
+
 ```typescript
 const tensor = await toTensor(buffer, {
   width: 384,
@@ -207,6 +211,7 @@ const tensor = await toTensor(buffer, {
 ```
 
 ### CLIP / BLIP
+
 ```typescript
 const tensor = await toTensor(buffer, {
   width: 224,
@@ -218,6 +223,7 @@ const tensor = await toTensor(buffer, {
 ```
 
 ### YOLO Object Detection
+
 ```typescript
 const tensor = await toTensor(buffer, {
   width: 640,
