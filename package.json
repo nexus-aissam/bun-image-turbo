@@ -1,6 +1,6 @@
 {
   "name": "bun-image-turbo",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "author": "Aissam Irhir <aissamirhir@gmail.com>",
   "repository": {
     "type": "git",
@@ -65,13 +65,13 @@
   ],
   "license": "MIT",
   "optionalDependencies": {
-    "bun-image-turbo-darwin-x64": "^1.8.0",
-    "bun-image-turbo-darwin-arm64": "^1.8.0",
-    "bun-image-turbo-win32-x64-msvc": "^1.8.0",
-    "bun-image-turbo-win32-arm64-msvc": "^1.8.0",
-    "bun-image-turbo-linux-x64-gnu": "^1.8.0",
-    "bun-image-turbo-linux-arm64-gnu": "^1.8.0",
-    "bun-image-turbo-linux-x64-musl": "^1.8.0"
+    "bun-image-turbo-darwin-x64": "^1.9.0",
+    "bun-image-turbo-darwin-arm64": "^1.9.0",
+    "bun-image-turbo-win32-x64-msvc": "^1.9.0",
+    "bun-image-turbo-win32-arm64-msvc": "^1.9.0",
+    "bun-image-turbo-linux-x64-gnu": "^1.9.0",
+    "bun-image-turbo-linux-arm64-gnu": "^1.9.0",
+    "bun-image-turbo-linux-x64-musl": "^1.9.0"
   },
   "napi": {
     "binaryName": "image-turbo",

@@ -26,3 +26,13 @@ export {
   imageHashDistance,
   imageHashDistanceSync,
 } from "./image-hash";
+export {
+  smartCrop,
+  smartCropSync,
+  smartCropAnalyze,
+  smartCropAnalyzeSync,
+} from "./smart-crop";
+export {
+  dominantColors,
+  dominantColorsSync,
+} from "./dominant-colors";

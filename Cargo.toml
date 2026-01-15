@@ -1,6 +1,6 @@
 [package]
 name = "image-turbo"
-version = "1.8.0"
+version = "1.9.0"
 edition = "2021"
 license = "MIT"
 authors = ["Aissam Irhir <aissamirhir@gmail.com>"]
@@ -51,6 +51,12 @@ thumbhash = "0.1"
 
 # For perceptual hashing (pHash, dHash, aHash) - image similarity detection
 image_hasher = "2.0"
+
+# For smart cropping (content-aware, saliency detection)
+smartcrop2 = "0.4"
+
+# For dominant color extraction (palette generation)
+dominant_color = "0.4"
 
 # For EXIF/metadata writing (WebP, JPEG, PNG)
 img-parts = "0.3"

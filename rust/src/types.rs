@@ -380,6 +380,55 @@ pub struct ImageHashResult {
   pub algorithm: String,
 }
 
+// ============================================
+// SMART CROP TYPES
+// ============================================
+
+/// Boost region for smart crop (prioritize specific areas)
+#[napi(object)]
+#[derive(Clone)]
+pub struct SmartCropBoostRegion {
+  /// X coordinate of the region
+  pub x: u32,
+  /// Y coordinate of the region
+  pub y: u32,
+  /// Width of the region
+  pub width: u32,
+  /// Height of the region
+  pub height: u32,
+  /// Weight of the boost (0.0 - 1.0)
+  pub weight: f64,
+}
+
+/// Smart crop options
+#[napi(object)]
+#[derive(Clone)]
+pub struct SmartCropOptions {
+  /// Target width
+  pub width: Option<u32>,
+  /// Target height
+  pub height: Option<u32>,
+  /// Aspect ratio string (e.g., "16:9", "1:1", "4:3")
+  pub aspect_ratio: Option<String>,
+  /// Boost regions (areas to prioritize)
+  pub boost: Option<Vec<SmartCropBoostRegion>>,
+}
+
+/// Smart crop analysis result (crop coordinates without actual cropping)
+#[napi(object)]
+pub struct SmartCropAnalysis {
+  /// X coordinate of the best crop
+  pub x: u32,
+  /// Y coordinate of the best crop
+  pub y: u32,
+  /// Width of the best crop
+  pub width: u32,
+  /// Height of the best crop
+  pub height: u32,
+  /// Score of the best crop (higher is better)
+  pub score: f64,
+}
+
 /// EXIF metadata options for writing
 #[napi(object)]
 #[derive(Clone)]
@@ -404,4 +453,31 @@ pub struct ExifOptions {
   pub model: Option<String>,
   /// Orientation (1-8)
   pub orientation: Option<u16>,
+}
+
+// ============================================
+// DOMINANT COLOR TYPES
+// ============================================
+
+/// A single dominant color
+#[napi(object)]
+#[derive(Clone)]
+pub struct DominantColor {
+  /// Red component (0-255)
+  pub r: u8,
+  /// Green component (0-255)
+  pub g: u8,
+  /// Blue component (0-255)
+  pub b: u8,
+  /// Hex color string (e.g., "#FF5733")
+  pub hex: String,
+}
+
+/// Dominant colors extraction result
+#[napi(object)]
+pub struct DominantColorsResult {
+  /// Array of dominant colors (sorted by prominence)
+  pub colors: Vec<DominantColor>,
+  /// The most dominant color (same as colors[0])
+  pub primary: DominantColor,
 }

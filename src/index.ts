@@ -51,6 +51,12 @@ export type {
   HashSize,
   ImageHashOptions,
   ImageHashResult,
+  AspectRatio,
+  SmartCropBoostRegion,
+  SmartCropOptions,
+  SmartCropAnalysis,
+  DominantColor,
+  DominantColorsResult,
 } from "./types";
 export type { EnhancedTensorResult } from "./api";
 
@@ -87,6 +93,12 @@ export {
   imageHashSync,
   imageHashDistance,
   imageHashDistanceSync,
+  smartCrop,
+  smartCropSync,
+  smartCropAnalyze,
+  smartCropAnalyzeSync,
+  dominantColors,
+  dominantColorsSync,
 } from "./api";
 
 // Import for version and default export
@@ -132,6 +144,12 @@ import {
   imageHashSync,
   imageHashDistance,
   imageHashDistanceSync,
+  smartCrop,
+  smartCropSync,
+  smartCropAnalyze,
+  smartCropAnalyzeSync,
+  dominantColors,
+  dominantColorsSync,
 } from "./api";
 
 // Default export for convenience
@@ -167,5 +185,11 @@ export default {
   imageHashSync,
   imageHashDistance,
   imageHashDistanceSync,
+  smartCrop,
+  smartCropSync,
+  smartCropAnalyze,
+  smartCropAnalyzeSync,
+  dominantColors,
+  dominantColorsSync,
   version,
 };

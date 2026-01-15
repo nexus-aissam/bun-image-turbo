@@ -491,6 +491,338 @@ pub fn version() -> String {
 }
 
 // ============================================
+// SMART CROP FUNCTIONS
+// ============================================
+
+/// Helper function to parse aspect ratio string (e.g., "16:9") to (width, height)
+fn parse_aspect_ratio(ratio: &str) -> std::result::Result<(u32, u32), String> {
+  let parts: Vec<&str> = ratio.split(':').collect();
+  if parts.len() != 2 {
+    return Err(format!("Invalid aspect ratio format: {}. Use format like '16:9'", ratio));
+  }
+  let w = parts[0].trim().parse::<u32>()
+    .map_err(|_| format!("Invalid width in aspect ratio: {}", parts[0]))?;
+  let h = parts[1].trim().parse::<u32>()
+    .map_err(|_| format!("Invalid height in aspect ratio: {}", parts[1]))?;
+  if w == 0 || h == 0 {
+    return Err("Aspect ratio values must be greater than 0".to_string());
+  }
+  Ok((w, h))
+}
+
+/// Analyze image and find the best crop region using content-aware detection
+/// Returns crop coordinates without actually cropping the image
+#[napi]
+pub fn smart_crop_analyze_sync(
+  input: Buffer,
+  options: SmartCropOptions,
+) -> Result<SmartCropAnalysis> {
+  let img = decode::decode_image(&input)?;
+  let (img_w, img_h) = image::GenericImageView::dimensions(&img);
+
+  // Determine target dimensions
+  let (target_w, target_h) = if let Some(ref ratio) = options.aspect_ratio {
+    // Calculate dimensions from aspect ratio
+    let (ratio_w, ratio_h) = parse_aspect_ratio(ratio)
+      .map_err(|e| Error::from_reason(e))?;
+
+    // Calculate the largest crop that fits the aspect ratio
+    let scale_w = img_w as f64 / ratio_w as f64;
+    let scale_h = img_h as f64 / ratio_h as f64;
+    let scale = scale_w.min(scale_h);
+
+    ((ratio_w as f64 * scale) as u32, (ratio_h as f64 * scale) as u32)
+  } else {
+    // Use explicit width/height
+    let w = options.width.unwrap_or(img_w);
+    let h = options.height.unwrap_or(img_h);
+    (w.min(img_w), h.min(img_h))
+  };
+
+  // Convert to RGB for smartcrop analysis
+  let rgb_img = img.to_rgb8();
+
+  // Find best crop using smartcrop2
+  let result = smartcrop::find_best_crop(
+    &rgb_img,
+    std::num::NonZeroU32::new(target_w).ok_or_else(|| Error::from_reason("Target width must be > 0"))?,
+    std::num::NonZeroU32::new(target_h).ok_or_else(|| Error::from_reason("Target height must be > 0"))?,
+  ).map_err(|e| Error::from_reason(format!("Smart crop analysis failed: {:?}", e)))?;
+
+  Ok(SmartCropAnalysis {
+    x: result.crop.x,
+    y: result.crop.y,
+    width: result.crop.width,
+    height: result.crop.height,
+    score: result.score.total,
+  })
+}
+
+/// Analyze image and find the best crop region asynchronously
+#[napi]
+pub async fn smart_crop_analyze(
+  input: Buffer,
+  options: SmartCropOptions,
+) -> Result<SmartCropAnalysis> {
+  tokio::task::spawn_blocking(move || {
+    let img = decode::decode_image(&input)?;
+    let (img_w, img_h) = image::GenericImageView::dimensions(&img);
+
+    // Determine target dimensions
+    let (target_w, target_h) = if let Some(ref ratio) = options.aspect_ratio {
+      let (ratio_w, ratio_h) = parse_aspect_ratio(ratio)
+        .map_err(|e| ImageError::ProcessingError(e))?;
+
+      let scale_w = img_w as f64 / ratio_w as f64;
+      let scale_h = img_h as f64 / ratio_h as f64;
+      let scale = scale_w.min(scale_h);
+
+      ((ratio_w as f64 * scale) as u32, (ratio_h as f64 * scale) as u32)
+    } else {
+      let w = options.width.unwrap_or(img_w);
+      let h = options.height.unwrap_or(img_h);
+      (w.min(img_w), h.min(img_h))
+    };
+
+    let rgb_img = img.to_rgb8();
+
+    let result = smartcrop::find_best_crop(
+      &rgb_img,
+      std::num::NonZeroU32::new(target_w).ok_or_else(|| ImageError::ProcessingError("Target width must be > 0".to_string()))?,
+      std::num::NonZeroU32::new(target_h).ok_or_else(|| ImageError::ProcessingError("Target height must be > 0".to_string()))?,
+    ).map_err(|e| ImageError::ProcessingError(format!("Smart crop analysis failed: {:?}", e)))?;
+
+    Ok::<SmartCropAnalysis, ImageError>(SmartCropAnalysis {
+      x: result.crop.x,
+      y: result.crop.y,
+      width: result.crop.width,
+      height: result.crop.height,
+      score: result.score.total,
+    })
+  })
+  .await
+  .map_err(|e| Error::from_reason(format!("Task error: {}", e)))?
+  .map_err(|e| e.into())
+}
+
+/// Smart crop an image using content-aware detection synchronously
+/// Automatically finds the most interesting region and crops to it
+#[napi]
+pub fn smart_crop_sync(
+  input: Buffer,
+  options: SmartCropOptions,
+) -> Result<Buffer> {
+  let img = decode::decode_image(&input)?;
+  let (img_w, img_h) = image::GenericImageView::dimensions(&img);
+
+  // Determine target dimensions
+  let (target_w, target_h) = if let Some(ref ratio) = options.aspect_ratio {
+    let (ratio_w, ratio_h) = parse_aspect_ratio(ratio)
+      .map_err(|e| Error::from_reason(e))?;
+
+    let scale_w = img_w as f64 / ratio_w as f64;
+    let scale_h = img_h as f64 / ratio_h as f64;
+    let scale = scale_w.min(scale_h);
+
+    ((ratio_w as f64 * scale) as u32, (ratio_h as f64 * scale) as u32)
+  } else {
+    let w = options.width.unwrap_or(img_w);
+    let h = options.height.unwrap_or(img_h);
+    (w.min(img_w), h.min(img_h))
+  };
+
+  let rgb_img = img.to_rgb8();
+
+  let result = smartcrop::find_best_crop(
+    &rgb_img,
+    std::num::NonZeroU32::new(target_w).ok_or_else(|| Error::from_reason("Target width must be > 0"))?,
+    std::num::NonZeroU32::new(target_h).ok_or_else(|| Error::from_reason("Target height must be > 0"))?,
+  ).map_err(|e| Error::from_reason(format!("Smart crop analysis failed: {:?}", e)))?;
+
+  // Apply the crop
+  let cropped = img.crop_imm(
+    result.crop.x,
+    result.crop.y,
+    result.crop.width,
+    result.crop.height,
+  );
+
+  // Encode to PNG
+  let output = encode::encode_png(&cropped, None)?;
+  Ok(Buffer::from(output))
+}
+
+/// Smart crop an image using content-aware detection asynchronously
+/// Automatically finds the most interesting region and crops to it
+#[napi]
+pub async fn smart_crop(
+  input: Buffer,
+  options: SmartCropOptions,
+) -> Result<Buffer> {
+  tokio::task::spawn_blocking(move || {
+    let img = decode::decode_image(&input)?;
+    let (img_w, img_h) = image::GenericImageView::dimensions(&img);
+
+    // Determine target dimensions
+    let (target_w, target_h) = if let Some(ref ratio) = options.aspect_ratio {
+      let (ratio_w, ratio_h) = parse_aspect_ratio(ratio)
+        .map_err(|e| ImageError::ProcessingError(e))?;
+
+      let scale_w = img_w as f64 / ratio_w as f64;
+      let scale_h = img_h as f64 / ratio_h as f64;
+      let scale = scale_w.min(scale_h);
+
+      ((ratio_w as f64 * scale) as u32, (ratio_h as f64 * scale) as u32)
+    } else {
+      let w = options.width.unwrap_or(img_w);
+      let h = options.height.unwrap_or(img_h);
+      (w.min(img_w), h.min(img_h))
+    };
+
+    let rgb_img = img.to_rgb8();
+
+    let result = smartcrop::find_best_crop(
+      &rgb_img,
+      std::num::NonZeroU32::new(target_w).ok_or_else(|| ImageError::ProcessingError("Target width must be > 0".to_string()))?,
+      std::num::NonZeroU32::new(target_h).ok_or_else(|| ImageError::ProcessingError("Target height must be > 0".to_string()))?,
+    ).map_err(|e| ImageError::ProcessingError(format!("Smart crop analysis failed: {:?}", e)))?;
+
+    // Apply the crop
+    let cropped = img.crop_imm(
+      result.crop.x,
+      result.crop.y,
+      result.crop.width,
+      result.crop.height,
+    );
+
+    // Encode to PNG
+    let output = encode::encode_png(&cropped, None)?;
+    Ok::<Buffer, ImageError>(Buffer::from(output))
+  })
+  .await
+  .map_err(|e| Error::from_reason(format!("Task error: {}", e)))?
+  .map_err(|e| e.into())
+}
+
+// ============================================
+// DOMINANT COLOR FUNCTIONS
+// ============================================
+
+/// Helper function to convert RGB bytes to hex string
+fn rgb_to_hex(r: u8, g: u8, b: u8) -> String {
+  format!("#{:02X}{:02X}{:02X}", r, g, b)
+}
+
+/// Extract dominant colors from an image synchronously
+/// Returns the most prominent colors sorted by frequency
+#[napi]
+pub fn dominant_colors_sync(
+  input: Buffer,
+  count: Option<u32>,
+) -> Result<DominantColorsResult> {
+  let img = decode::decode_image(&input)?;
+  let rgb_img = img.to_rgb8();
+
+  // Get raw RGB bytes
+  let pixels = rgb_img.as_raw();
+
+  // Extract colors using dominant_color crate
+  let color_bytes = dominant_color::get_colors(pixels, false);
+
+  // Convert to DominantColor structs (3 bytes per color: R, G, B)
+  let max_colors = count.unwrap_or(5) as usize;
+  let mut colors: Vec<DominantColor> = Vec::new();
+
+  for i in (0..color_bytes.len()).step_by(3) {
+    if colors.len() >= max_colors {
+      break;
+    }
+    if i + 2 < color_bytes.len() {
+      let r = color_bytes[i];
+      let g = color_bytes[i + 1];
+      let b = color_bytes[i + 2];
+      colors.push(DominantColor {
+        r,
+        g,
+        b,
+        hex: rgb_to_hex(r, g, b),
+      });
+    }
+  }
+
+  // If no colors found, return black as fallback
+  if colors.is_empty() {
+    colors.push(DominantColor {
+      r: 0,
+      g: 0,
+      b: 0,
+      hex: "#000000".to_string(),
+    });
+  }
+
+  let primary = colors[0].clone();
+
+  Ok(DominantColorsResult { colors, primary })
+}
+
+/// Extract dominant colors from an image asynchronously
+/// Returns the most prominent colors sorted by frequency
+#[napi]
+pub async fn dominant_colors(
+  input: Buffer,
+  count: Option<u32>,
+) -> Result<DominantColorsResult> {
+  tokio::task::spawn_blocking(move || {
+    let img = decode::decode_image(&input)?;
+    let rgb_img = img.to_rgb8();
+
+    // Get raw RGB bytes
+    let pixels = rgb_img.as_raw();
+
+    // Extract colors using dominant_color crate
+    let color_bytes = dominant_color::get_colors(pixels, false);
+
+    // Convert to DominantColor structs (3 bytes per color: R, G, B)
+    let max_colors = count.unwrap_or(5) as usize;
+    let mut colors: Vec<DominantColor> = Vec::new();
+
+    for i in (0..color_bytes.len()).step_by(3) {
+      if colors.len() >= max_colors {
+        break;
+      }
+      if i + 2 < color_bytes.len() {
+        let r = color_bytes[i];
+        let g = color_bytes[i + 1];
+        let b = color_bytes[i + 2];
+        colors.push(DominantColor {
+          r,
+          g,
+          b,
+          hex: rgb_to_hex(r, g, b),
+        });
+      }
+    }
+
+    // If no colors found, return black as fallback
+    if colors.is_empty() {
+      colors.push(DominantColor {
+        r: 0,
+        g: 0,
+        b: 0,
+        hex: "#000000".to_string(),
+      });
+    }
+
+    let primary = colors[0].clone();
+
+    Ok::<DominantColorsResult, ImageError>(DominantColorsResult { colors, primary })
+  })
+  .await
+  .map_err(|e| Error::from_reason(format!("Task error: {}", e)))?
+  .map_err(|e| e.into())
+}
+
+// ============================================
 // TENSOR FUNCTIONS
 // ============================================
 

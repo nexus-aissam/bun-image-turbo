@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-01-15
+
+### Added
+
+- **Native Smart Crop** - Content-aware image cropping using saliency detection
+  - `smartCrop()` / `smartCropSync()` - Automatically find and crop to the most interesting region
+  - `smartCropAnalyze()` / `smartCropAnalyzeSync()` - Get optimal crop coordinates without cropping
+  - **Aspect Ratio Support:**
+    - `1:1` - Square (Instagram, profile pictures)
+    - `16:9` - Landscape (YouTube, Twitter)
+    - `9:16` - Portrait (Stories, TikTok)
+    - `4:3`, `3:2`, `21:9` - And any custom ratio
+  - **Algorithm Features:**
+    - Saliency detection - Finds visually interesting areas
+    - Edge detection - Preserves important details
+    - Rule of thirds - Natural composition weighting
+  - **Use cases:** Social media thumbnails, profile pictures, e-commerce product images
+
+- **Dominant Color Extraction** - Extract the most prominent colors from any image
+  - `dominantColors()` / `dominantColorsSync()` - Get a palette of dominant colors
+  - Returns RGB values and hex strings for each color
+  - Configurable color count (default: 5 colors)
+  - **Result includes:**
+    - `colors[]` - Array of dominant colors sorted by prominence
+    - `primary` - The most dominant color (convenience accessor)
+    - Each color has: `r`, `g`, `b` (0-255) and `hex` ("#RRGGBB")
+  - **Use cases:** UI theming, image placeholders, color palettes, accessibility
+
+### Why These Features Matter
+
+**Smart Crop** automatically finds the best region - no manual coordinates needed:
+- Works with any aspect ratio
+- Finds faces, objects, and interesting content
+- Native Rust implementation using smartcrop2 crate
+
+**Dominant Colors** enables dynamic UI theming:
+- Auto-theme UI based on images (like Spotify album art)
+- Generate color placeholders while images load
+- Create color palettes from photos
+- Native Rust implementation using dominant_color crate
+
+### Test Results
+
+- **150 tests pass** (22 smart crop + 17 dominant colors)
+- All features verified with async and sync APIs
+- Works with JPEG, PNG, and WebP images
+
+---
+
 ## [1.8.0] - 2026-01-15
 
 ### Added

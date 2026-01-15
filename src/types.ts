@@ -387,3 +387,81 @@ export interface ImageHashResult {
   /** Algorithm used */
   algorithm: string;
 }
+
+// ============================================
+// SMART CROP TYPES
+// ============================================
+
+/** Common aspect ratios for smart crop */
+export type AspectRatio =
+  | '1:1'     // Square (Instagram, profile pics)
+  | '16:9'   // Landscape (YouTube, Twitter)
+  | '9:16'   // Portrait (Stories, TikTok)
+  | '4:3'    // Classic photo
+  | '3:2'    // DSLR standard
+  | '21:9'   // Ultrawide
+  | string;  // Custom ratio like "5:4"
+
+/** Boost region for smart crop (prioritize specific areas) */
+export interface SmartCropBoostRegion {
+  /** X coordinate of the region */
+  x: number;
+  /** Y coordinate of the region */
+  y: number;
+  /** Width of the region */
+  width: number;
+  /** Height of the region */
+  height: number;
+  /** Weight of the boost (0.0 - 1.0) */
+  weight: number;
+}
+
+/** Smart crop options */
+export interface SmartCropOptions {
+  /** Target width */
+  width?: number;
+  /** Target height */
+  height?: number;
+  /** Aspect ratio string (e.g., "16:9", "1:1", "4:3") */
+  aspectRatio?: AspectRatio;
+  /** Boost regions (areas to prioritize) */
+  boost?: SmartCropBoostRegion[];
+}
+
+/** Smart crop analysis result (crop coordinates without actual cropping) */
+export interface SmartCropAnalysis {
+  /** X coordinate of the best crop */
+  x: number;
+  /** Y coordinate of the best crop */
+  y: number;
+  /** Width of the best crop */
+  width: number;
+  /** Height of the best crop */
+  height: number;
+  /** Score of the best crop (higher is better) */
+  score: number;
+}
+
+// ============================================
+// DOMINANT COLOR TYPES
+// ============================================
+
+/** A single dominant color */
+export interface DominantColor {
+  /** Red component (0-255) */
+  r: number;
+  /** Green component (0-255) */
+  g: number;
+  /** Blue component (0-255) */
+  b: number;
+  /** Hex color string (e.g., "#FF5733") */
+  hex: string;
+}
+
+/** Dominant colors extraction result */
+export interface DominantColorsResult {
+  /** Array of dominant colors (sorted by prominence) */
+  colors: DominantColor[];
+  /** The most dominant color (same as colors[0]) */
+  primary: DominantColor;
+}

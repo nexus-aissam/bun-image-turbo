@@ -63,6 +63,38 @@ export interface CropOptions {
 /** Crop image synchronously - zero-copy operation */
 export declare function cropSync(input: Buffer, options: CropOptions): Buffer
 
+/** A single dominant color */
+export interface DominantColor {
+  /** Red component (0-255) */
+  r: number
+  /** Green component (0-255) */
+  g: number
+  /** Blue component (0-255) */
+  b: number
+  /** Hex color string (e.g., "#FF5733") */
+  hex: string
+}
+
+/**
+ * Extract dominant colors from an image asynchronously
+ * Returns the most prominent colors sorted by frequency
+ */
+export declare function dominantColors(input: Buffer, count?: number | undefined | null): Promise<DominantColorsResult>
+
+/** Dominant colors extraction result */
+export interface DominantColorsResult {
+  /** Array of dominant colors (sorted by prominence) */
+  colors: Array<DominantColor>
+  /** The most dominant color (same as colors[0]) */
+  primary: DominantColor
+}
+
+/**
+ * Extract dominant colors from an image synchronously
+ * Returns the most prominent colors sorted by frequency
+ */
+export declare function dominantColorsSync(input: Buffer, count?: number | undefined | null): DominantColorsResult
+
 /** EXIF metadata options for writing */
 export interface ExifOptions {
   /** Image description / caption / AI prompt */
@@ -281,6 +313,67 @@ export interface ResizeOptions {
 
 /** Resize image synchronously - uses scale-on-decode for JPEG optimization */
 export declare function resizeSync(input: Buffer, options: ResizeOptions): Buffer
+
+/**
+ * Smart crop an image using content-aware detection asynchronously
+ * Automatically finds the most interesting region and crops to it
+ */
+export declare function smartCrop(input: Buffer, options: SmartCropOptions): Promise<Buffer>
+
+/** Smart crop analysis result (crop coordinates without actual cropping) */
+export interface SmartCropAnalysis {
+  /** X coordinate of the best crop */
+  x: number
+  /** Y coordinate of the best crop */
+  y: number
+  /** Width of the best crop */
+  width: number
+  /** Height of the best crop */
+  height: number
+  /** Score of the best crop (higher is better) */
+  score: number
+}
+
+/** Analyze image and find the best crop region asynchronously */
+export declare function smartCropAnalyze(input: Buffer, options: SmartCropOptions): Promise<SmartCropAnalysis>
+
+/**
+ * Analyze image and find the best crop region using content-aware detection
+ * Returns crop coordinates without actually cropping the image
+ */
+export declare function smartCropAnalyzeSync(input: Buffer, options: SmartCropOptions): SmartCropAnalysis
+
+/** Boost region for smart crop (prioritize specific areas) */
+export interface SmartCropBoostRegion {
+  /** X coordinate of the region */
+  x: number
+  /** Y coordinate of the region */
+  y: number
+  /** Width of the region */
+  width: number
+  /** Height of the region */
+  height: number
+  /** Weight of the boost (0.0 - 1.0) */
+  weight: number
+}
+
+/** Smart crop options */
+export interface SmartCropOptions {
+  /** Target width */
+  width?: number
+  /** Target height */
+  height?: number
+  /** Aspect ratio string (e.g., "16:9", "1:1", "4:3") */
+  aspectRatio?: string
+  /** Boost regions (areas to prioritize) */
+  boost?: Array<SmartCropBoostRegion>
+}
+
+/**
+ * Smart crop an image using content-aware detection synchronously
+ * Automatically finds the most interesting region and crops to it
+ */
+export declare function smartCropSync(input: Buffer, options: SmartCropOptions): Buffer
 
 /** Strip EXIF metadata from an image asynchronously */
 export declare function stripExif(input: Buffer): Promise<Buffer>

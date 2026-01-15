@@ -38,6 +38,8 @@
 ### Features
 
 - **Native HEIC/HEIF** support
+- **Smart Crop** (content-aware)
+- **Dominant Colors** (UI theming)
 - **ThumbHash & BlurHash** placeholders
 - **Perceptual Hashing** (pHash/dHash)
 - **ML Tensor Conversion** (SIMD-accelerated)
@@ -80,6 +82,8 @@ import {
   metadata,
   resize,
   crop,
+  smartCrop,
+  dominantColors,
   transform,
   toWebp,
   thumbhash,
@@ -98,8 +102,17 @@ console.log(`${info.width}x${info.height} ${info.format}`);
 // Crop to aspect ratio (zero-copy, ultra-fast)
 const squared = await crop(buffer, { aspectRatio: "1:1" });
 
+// Smart crop - finds the most interesting region automatically
+const smartThumb = await smartCrop(buffer, { aspectRatio: "1:1" });
+// Perfect for social media thumbnails!
+
+// Extract dominant colors for UI theming (like Spotify)
+const colors = await dominantColors(buffer);
+console.log(colors.primary.hex); // "#3498DB"
+// Perfect for auto-theming UI based on images!
+
 // Resize with shrink-on-decode optimization
-const thumbnail = await resize(buffer, { width: 200 });
+const resized = await resize(buffer, { width: 200 });
 
 // Full pipeline: crop → resize → output
 const youtube = await transform(buffer, {
@@ -145,6 +158,8 @@ const distance = await imageHashDistance(hash1.hash, hash2.hash);
 <tr><td><code>metadata()</code></td><td>Get image dimensions, format, color info</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>resize()</code></td><td>Resize image with multiple algorithms</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>crop()</code></td><td>Crop image region (zero-copy, ultra-fast)</td><td align="center">✅</td><td align="center">✅</td></tr>
+<tr><td><code>smartCrop()</code></td><td>Content-aware crop (saliency detection)</td><td align="center">✅</td><td align="center">✅</td></tr>
+<tr><td><code>dominantColors()</code></td><td>Extract dominant colors for UI theming</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>transform()</code></td><td>Multi-operation pipeline with crop support</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>toJpeg()</code></td><td>Convert to JPEG</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>toPng()</code></td><td>Convert to PNG</td><td align="center">✅</td><td align="center">✅</td></tr>
@@ -433,6 +448,34 @@ if (distance < 5) {
 ```
 
 **Use cases:** Duplicate detection, content moderation, reverse image search, near-match finding.
+
+</details>
+
+<details>
+<summary><strong>Smart Crop (Content-Aware)</strong></summary>
+
+```typescript
+import { smartCrop, smartCropAnalyze } from 'bun-image-turbo';
+
+const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
+
+// Smart crop to square (Instagram)
+const square = await smartCrop(buffer, { aspectRatio: '1:1' });
+
+// Smart crop to landscape (YouTube)
+const youtube = await smartCrop(buffer, { aspectRatio: '16:9' });
+
+// Smart crop to portrait (Stories/TikTok)
+const portrait = await smartCrop(buffer, { aspectRatio: '9:16' });
+
+// Analyze without cropping (get coordinates)
+const analysis = await smartCropAnalyze(buffer, { aspectRatio: '1:1' });
+console.log(`Best crop at: ${analysis.x}, ${analysis.y}`);
+console.log(`Size: ${analysis.width}x${analysis.height}`);
+console.log(`Score: ${analysis.score}`);
+```
+
+**Use cases:** Social media thumbnails, profile pictures, e-commerce products, automatic galleries.
 
 </details>
 
