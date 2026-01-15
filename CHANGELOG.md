@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.9] - 2026-01-15
+
+### Changed
+
+- **Upgraded to napi-rs v3** - Major upgrade to the latest napi-rs framework
+  - `napi` upgraded from v2 to v3.8.2
+  - `napi-derive` upgraded from v2 to v3.5.1
+  - `napi-build` upgraded to v2.3.1
+  - `@napi-rs/cli` upgraded from v2.18.4 to v3.5.1
+  - Enables future streaming features (ReadableStream, AsyncGenerator)
+  - Better async/await patterns with improved lifetime management
+  - Enhanced Promise handling with new handle scope API
+
+### Fixed
+
+- Added explicit `#[derive(Clone)]` to all string enums for napi-rs v3 compatibility
+- Removed deprecated `napi.name` field from package.json (use `binaryName` only)
+
+### Test Results
+
+- **87 tests pass** - All existing functionality verified with napi-rs v3
+- Build time: ~90 seconds (release mode)
+
+---
+
 ## [1.7.1] - 2026-01-13
 
 ### Added

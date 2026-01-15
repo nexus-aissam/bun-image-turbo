@@ -1,6 +1,6 @@
 {
   "name": "bun-image-turbo",
-  "version": "1.7.1",
+  "version": "1.7.9",
   "author": "Aissam Irhir <aissamirhir@gmail.com>",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "devDependencies": {
-    "@napi-rs/cli": "^2.18.4",
+    "@napi-rs/cli": "^3.5.1",
     "@types/bun": "latest",
     "sharp": "^0.34.5",
     "tsup": "^8.4.0",
@@ -65,16 +65,15 @@
   ],
   "license": "MIT",
   "optionalDependencies": {
-    "bun-image-turbo-darwin-x64": "^1.7.1",
-    "bun-image-turbo-darwin-arm64": "^1.7.1",
-    "bun-image-turbo-win32-x64-msvc": "^1.7.1",
-    "bun-image-turbo-win32-arm64-msvc": "^1.7.1",
-    "bun-image-turbo-linux-x64-gnu": "^1.7.1",
-    "bun-image-turbo-linux-arm64-gnu": "^1.7.1",
-    "bun-image-turbo-linux-x64-musl": "^1.7.1"
+    "bun-image-turbo-darwin-x64": "^1.7.9",
+    "bun-image-turbo-darwin-arm64": "^1.7.9",
+    "bun-image-turbo-win32-x64-msvc": "^1.7.9",
+    "bun-image-turbo-win32-arm64-msvc": "^1.7.9",
+    "bun-image-turbo-linux-x64-gnu": "^1.7.9",
+    "bun-image-turbo-linux-arm64-gnu": "^1.7.9",
+    "bun-image-turbo-linux-x64-musl": "^1.7.9"
   },
   "napi": {
-    "name": "image-turbo",
     "binaryName": "image-turbo",
     "packageName": "bun-image-turbo",
     "targets": [

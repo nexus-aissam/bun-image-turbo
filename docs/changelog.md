@@ -2,6 +2,28 @@
 
 All notable changes to bun-image-turbo.
 
+## [1.7.9] - 2026-01-15
+
+### Changed
+
+- **Upgraded to napi-rs v3** - Major upgrade to the latest napi-rs framework
+  - `napi` upgraded from v2 to v3.8.2
+  - `napi-derive` upgraded from v2 to v3.5.1
+  - `@napi-rs/cli` upgraded from v2.18.4 to v3.5.1
+  - Enables future streaming features (ReadableStream, AsyncGenerator)
+  - Better async/await patterns with improved lifetime management
+
+### Fixed
+
+- Added explicit `#[derive(Clone)]` to all string enums for napi-rs v3 compatibility
+- Removed deprecated `napi.name` field from package.json
+
+### Test Results
+
+- **87 tests pass** - All existing functionality verified with napi-rs v3
+
+---
+
 ## [1.7.1] - 2026-01-13
 
 ### Added

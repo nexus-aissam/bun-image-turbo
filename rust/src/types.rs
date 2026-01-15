@@ -5,6 +5,7 @@
 use napi_derive::napi;
 
 /// Image format enum
+#[derive(Clone)]
 #[napi(string_enum)]
 pub enum ImageFormat {
   Jpeg,
@@ -19,6 +20,7 @@ pub enum ImageFormat {
 }
 
 /// Resize filter/algorithm
+#[derive(Clone)]
 #[napi(string_enum)]
 pub enum ResizeFilter {
   /// Nearest neighbor - fastest, lowest quality
@@ -34,6 +36,7 @@ pub enum ResizeFilter {
 }
 
 /// Image fit mode for resize
+#[derive(Clone)]
 #[napi(string_enum)]
 pub enum FitMode {
   /// Resize to cover the target dimensions (may crop)
@@ -49,6 +52,7 @@ pub enum FitMode {
 }
 
 /// Crop gravity/anchor point
+#[derive(Clone)]
 #[napi(string_enum)]
 pub enum CropGravity {
   /// Center of image (default)
@@ -259,6 +263,7 @@ pub struct TransformOptions {
 // ============================================
 
 /// Tensor data type
+#[derive(Clone)]
 #[napi(string_enum)]
 pub enum TensorDtype {
   /// 32-bit floating point (default)
@@ -268,6 +273,7 @@ pub enum TensorDtype {
 }
 
 /// Tensor memory layout
+#[derive(Clone)]
 #[napi(string_enum)]
 pub enum TensorLayout {
   /// Channel-Height-Width (PyTorch/ONNX default)
@@ -277,6 +283,7 @@ pub enum TensorLayout {
 }
 
 /// Normalization preset
+#[derive(Clone)]
 #[napi(string_enum)]
 pub enum TensorNormalization {
   /// ImageNet normalization (mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225])

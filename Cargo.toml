@@ -1,6 +1,6 @@
 [package]
 name = "image-turbo"
-version = "1.7.1"
+version = "1.7.9"
 edition = "2021"
 license = "MIT"
 authors = ["Aissam Irhir <aissamirhir@gmail.com>"]
@@ -11,9 +11,9 @@ crate-type = ["cdylib"]
 path = "rust/src/lib.rs"
 
 [dependencies]
-# napi-rs bindings
-napi = { version = "2", features = ["async", "napi8"] }
-napi-derive = "2"
+# napi-rs bindings (v3 - with streaming, better async, lifetime support)
+napi = { version = "3.8.2", features = ["async", "napi8"] }
+napi-derive = "3.5.1"
 
 # Image processing
 image = { version = "0.25", default-features = false, features = ["png", "gif", "webp", "bmp", "ico", "tiff"] }
@@ -62,7 +62,7 @@ default = []
 heic = ["libheif-rs"]
 
 [build-dependencies]
-napi-build = "2"
+napi-build = "2.3.1"
 
 [profile.release]
 lto = true

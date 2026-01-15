@@ -1,6 +1,6 @@
 # ML Tensor Conversion
 
-bun-image-turbo v1.7.1 introduces `toTensor` - the **first JavaScript package** to offer native SIMD-accelerated image-to-tensor conversion with built-in normalization presets.
+bun-image-turbo v1.7.9 introduces `toTensor` - the **first JavaScript package** to offer native SIMD-accelerated image-to-tensor conversion with built-in normalization presets.
 
 ## What is a Tensor?
 
