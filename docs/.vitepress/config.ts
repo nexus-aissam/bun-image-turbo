@@ -1,19 +1,16 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  title: "bun-image-turbo",
+  title: "imgkit",
   description:
     "High-performance image processing for Bun and Node.js. Up to 950x faster than alternatives.",
-  base: "/bun-image-turbo/",
+  base: "/imgkit/",
 
   head: [
-    [
-      "link",
-      { rel: "icon", type: "image/svg+xml", href: "/bun-image-turbo/logo.svg" },
-    ],
+    ["link", { rel: "icon", type: "image/svg+xml", href: "/imgkit/logo.svg" }],
     ["meta", { name: "theme-color", content: "#f97316" }],
     ["meta", { name: "og:type", content: "website" }],
-    ["meta", { name: "og:title", content: "bun-image-turbo" }],
+    ["meta", { name: "og:title", content: "imgkit" }],
     [
       "meta",
       {
@@ -22,9 +19,9 @@ export default defineConfig({
           "High-performance image processing for Bun and Node.js. Up to 950x faster than alternatives.",
       },
     ],
-    ["meta", { name: "og:site_name", content: "bun-image-turbo" }],
+    ["meta", { name: "og:site_name", content: "imgkit" }],
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
-    ["meta", { name: "twitter:title", content: "bun-image-turbo" }],
+    ["meta", { name: "twitter:title", content: "imgkit" }],
     [
       "meta",
       {
@@ -55,14 +52,14 @@ export default defineConfig({
 
   themeConfig: {
     logo: "/logo.svg",
-    siteTitle: "bun-image-turbo",
+    siteTitle: "imgkit",
 
     nav: [
       { text: "Guide", link: "/guide/", activeMatch: "/guide/" },
       { text: "API", link: "/api/", activeMatch: "/api/" },
       { text: "Examples", link: "/examples/", activeMatch: "/examples/" },
       {
-        text: "v1.9.0",
+        text: "v2.0.0",
         items: [
           { text: "Changelog", link: "/changelog" },
           {
@@ -70,11 +67,11 @@ export default defineConfig({
             items: [
               {
                 text: "npm",
-                link: "https://www.npmjs.com/package/bun-image-turbo",
+                link: "https://www.npmjs.com/package/imgkit",
               },
               {
                 text: "GitHub",
-                link: "https://github.com/nexus-aissam/bun-image-turbo",
+                link: "https://github.com/nexus-aissam/imgkit",
               },
             ],
           },
@@ -134,6 +131,7 @@ export default defineConfig({
             { text: "imageHash", link: "/api/image-hash" },
             { text: "smartCrop", link: "/api/smart-crop" },
             { text: "dominantColors", link: "/api/dominant-colors" },
+            { text: "thumbnail", link: "/api/thumbnail" },
             { text: "EXIF Metadata", link: "/api/exif" },
           ],
         },
@@ -158,6 +156,7 @@ export default defineConfig({
             { text: "Perceptual Hashing", link: "/examples/image-hash" },
             { text: "Smart Crop", link: "/examples/smart-crop" },
             { text: "Dominant Colors", link: "/examples/dominant-colors" },
+            { text: "Thumbnail Generation", link: "/examples/thumbnail" },
             { text: "API Endpoint", link: "/examples/api-endpoint" },
             { text: "Batch Processing", link: "/examples/batch-processing" },
           ],
@@ -174,14 +173,14 @@ export default defineConfig({
     socialLinks: [
       {
         icon: "github",
-        link: "https://github.com/nexus-aissam/bun-image-turbo",
+        link: "https://github.com/nexus-aissam/imgkit",
       },
-      { icon: "npm", link: "https://www.npmjs.com/package/bun-image-turbo" },
+      { icon: "npm", link: "https://www.npmjs.com/package/imgkit" },
     ],
 
     footer: {
       message:
-        'Released under the <a href="https://github.com/nexus-aissam/bun-image-turbo/blob/main/LICENSE">MIT License</a>.',
+        'Released under the <a href="https://github.com/nexus-aissam/imgkit/blob/main/LICENSE">MIT License</a>.',
       copyright:
         'Copyright © 2025 <a href="https://github.com/nexus-aissam">Aissam Irhir</a>',
     },
@@ -194,8 +193,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern:
-        "https://github.com/nexus-aissam/bun-image-turbo/edit/main/docs/:path",
+      pattern: "https://github.com/nexus-aissam/imgkit/edit/main/docs/:path",
       text: "Edit this page on GitHub",
     },
 

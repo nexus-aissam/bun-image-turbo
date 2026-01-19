@@ -57,7 +57,7 @@ The crop function supports three distinct modes:
 Specify exact pixel coordinates and dimensions:
 
 ```typescript
-import { crop } from 'bun-image-turbo';
+import { crop } from 'imgkit';
 
 // Crop a 400x300 region starting at (100, 50)
 const cropped = await crop(input, {
@@ -116,7 +116,7 @@ const topLeft = await crop(input, {
 ### Profile Picture (Square Crop)
 
 ```typescript
-import { crop, resize, toJpeg } from 'bun-image-turbo';
+import { crop, resize, toJpeg } from 'imgkit';
 
 async function createProfilePicture(input: Buffer): Promise<Buffer> {
   // Crop to square from center
@@ -163,7 +163,7 @@ const face = await crop(input, {
 Use with `transform()` for single-pass processing:
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 const result = await transform(input, {
   crop: { aspectRatio: "1:1" },      // Crop first

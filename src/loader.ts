@@ -1,5 +1,5 @@
 /**
- * Native binding loader for bun-image-turbo
+ * Native binding loader for imgkit
  *
  * Handles platform-specific binary loading for different OS/architectures.
  */
@@ -61,7 +61,7 @@ export function loadNativeBinding(): any {
 
   const currentDir = getCurrentDir();
   const binaryName = `image-turbo.${targetName}.node`;
-  const optionalPackageName = `bun-image-turbo-${targetName}`;
+  const optionalPackageName = `imgkit-${targetName}`;
 
   // Try loading from different locations
   const possiblePaths = [

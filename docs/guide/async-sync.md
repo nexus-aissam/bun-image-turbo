@@ -1,6 +1,6 @@
 # Async vs Sync
 
-bun-image-turbo provides both async and sync versions of all functions.
+imgkit provides both async and sync versions of all functions.
 
 ## Function Pairs
 
@@ -24,7 +24,7 @@ Use async functions for:
 - **Production code** - Better resource utilization
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 // Server endpoint
 app.post('/resize', async (req) => {
@@ -50,7 +50,7 @@ Use sync functions for:
 - **Testing** - Simpler test setup
 
 ```typescript
-import { transformSync } from 'bun-image-turbo';
+import { transformSync } from 'imgkit';
 
 // CLI tool
 const input = Bun.file(process.argv[2]).arrayBuffer();
@@ -66,7 +66,7 @@ Bun.write('output.jpg', result);
 ### Single Image
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 async function processImage(path: string) {
   const buffer = Buffer.from(await Bun.file(path).arrayBuffer());
@@ -82,7 +82,7 @@ const result = await processImage('photo.jpg');
 ### Multiple Images (Concurrent)
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 async function processMany(paths: string[]) {
   return Promise.all(
@@ -102,7 +102,7 @@ const results = await processMany(['a.jpg', 'b.jpg', 'c.jpg']);
 ### With Error Handling
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 async function safeProcess(buffer: Buffer) {
   try {
@@ -122,7 +122,7 @@ async function safeProcess(buffer: Buffer) {
 ### Single Image
 
 ```typescript
-import { transformSync } from 'bun-image-turbo';
+import { transformSync } from 'imgkit';
 
 const buffer = Buffer.from(Bun.file('photo.jpg').arrayBuffer());
 const result = transformSync(buffer, {
@@ -135,7 +135,7 @@ Bun.write('output.webp', result);
 ### Sequential Processing
 
 ```typescript
-import { metadataSync, transformSync } from 'bun-image-turbo';
+import { metadataSync, transformSync } from 'imgkit';
 
 const files = ['a.jpg', 'b.jpg', 'c.jpg'];
 
@@ -182,7 +182,7 @@ import {
   metadataSync,  // sync
   transform,     // async
   transformSync  // sync
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 // Quick sync check
 const info = metadataSync(buffer);

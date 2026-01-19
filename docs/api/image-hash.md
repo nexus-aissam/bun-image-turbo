@@ -21,7 +21,7 @@ const resized = hash(smallImage);  // "x9y8z7w6..." - Completely different!
 Perceptual hashes produce similar outputs for visually similar images:
 
 ```typescript
-import { imageHash, imageHashDistance } from 'bun-image-turbo';
+import { imageHash, imageHashDistance } from 'imgkit';
 
 const original = await imageHash(image);      // "AQID..."
 const resized = await imageHash(smallImage);  // "AQIE..." - Similar!
@@ -38,7 +38,7 @@ import {
   imageHashSync,
   imageHashDistance,
   imageHashDistanceSync
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -266,7 +266,7 @@ if (distance === 0) {
 ### Basic Hash Generation
 
 ```typescript
-import { imageHash } from 'bun-image-turbo';
+import { imageHash } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 const { hash, width, height } = await imageHash(buffer);
@@ -278,7 +278,7 @@ console.log(`Image: ${width}x${height}`);
 ### Duplicate Detection
 
 ```typescript
-import { imageHash, imageHashDistance } from 'bun-image-turbo';
+import { imageHash, imageHashDistance } from 'imgkit';
 
 async function isDuplicate(image1: Buffer, image2: Buffer): Promise<boolean> {
   const hash1 = await imageHash(image1);
@@ -291,7 +291,7 @@ async function isDuplicate(image1: Buffer, image2: Buffer): Promise<boolean> {
 ### Batch Processing with Sync
 
 ```typescript
-import { imageHashSync, imageHashDistanceSync } from 'bun-image-turbo';
+import { imageHashSync, imageHashDistanceSync } from 'imgkit';
 
 const images = [buffer1, buffer2, buffer3, buffer4];
 const hashes = images.map(img => imageHashSync(img).hash);
@@ -310,7 +310,7 @@ for (let i = 0; i < hashes.length; i++) {
 ### Custom Algorithm and Size
 
 ```typescript
-import { imageHash } from 'bun-image-turbo';
+import { imageHash } from 'imgkit';
 
 // High accuracy configuration
 const accurateHash = await imageHash(buffer, {

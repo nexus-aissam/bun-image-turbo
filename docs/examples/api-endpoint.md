@@ -17,7 +17,7 @@ Build an HTTP server for on-the-fly image processing.
  * - POST /blurhash
  */
 
-import { metadata, resize, toJpeg, toPng, toWebp, transform, blurhash } from 'bun-image-turbo';
+import { metadata, resize, toJpeg, toPng, toWebp, transform, blurhash } from 'imgkit';
 
 const PORT = 3000;
 

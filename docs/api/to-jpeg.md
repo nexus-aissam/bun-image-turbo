@@ -33,7 +33,7 @@ interface JpegOptions {
 ### Basic Conversion
 
 ```typescript
-import { toJpeg } from 'bun-image-turbo';
+import { toJpeg } from 'imgkit';
 
 const jpeg = await toJpeg(buffer);
 await Bun.write('output.jpg', jpeg);
@@ -55,7 +55,7 @@ const lq = await toJpeg(buffer, { quality: 60 });
 ### Sync Version
 
 ```typescript
-import { toJpegSync } from 'bun-image-turbo';
+import { toJpegSync } from 'imgkit';
 
 const jpeg = toJpegSync(buffer, { quality: 85 });
 ```

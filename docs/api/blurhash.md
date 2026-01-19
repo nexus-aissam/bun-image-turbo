@@ -41,7 +41,7 @@ interface BlurhashResult {
 ### Basic Usage
 
 ```typescript
-import { blurhash } from 'bun-image-turbo';
+import { blurhash } from 'imgkit';
 
 const result = await blurhash(buffer);
 console.log(result);
@@ -67,7 +67,7 @@ const simple = await blurhash(buffer, 2, 2);
 ### Sync Version
 
 ```typescript
-import { blurhashSync } from 'bun-image-turbo';
+import { blurhashSync } from 'imgkit';
 
 const result = blurhashSync(buffer, 4, 3);
 console.log(result.hash);
@@ -77,7 +77,7 @@ console.log(result.hash);
 
 ```typescript
 // Generate blurhash from thumbnail for speed
-import { transform, blurhash } from 'bun-image-turbo';
+import { transform, blurhash } from 'imgkit';
 
 const thumb = await transform(buffer, {
   resize: { width: 100 },
@@ -181,7 +181,7 @@ const result = await blurhash(thumb);
 - Components must be between 1 and 9
 - Higher components = more detail but longer hash
 - Generate from thumbnails for better performance
-- bun-image-turbo is the only high-performance library with built-in blurhash
+- imgkit is the only high-performance library with built-in blurhash
 
 ## See Also
 

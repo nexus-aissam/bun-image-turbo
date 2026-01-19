@@ -12,7 +12,7 @@
  *
  * @example
  * ```typescript
- * import { smartCrop, smartCropAnalyze } from 'bun-image-turbo';
+ * import { smartCrop, smartCropAnalyze } from 'imgkit';
  *
  * // Simple square crop
  * const thumbnail = await smartCrop(buffer, { aspectRatio: '1:1' });

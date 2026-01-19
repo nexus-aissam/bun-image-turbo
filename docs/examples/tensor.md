@@ -7,7 +7,7 @@ Real-world examples of using `toTensor` for machine learning workflows.
 ### Simple Tensor Conversion
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 
 const imageBuffer = await Bun.file('photo.jpg').arrayBuffer();
 
@@ -40,7 +40,7 @@ console.log('Shape:', tensor.shape); // [1, 3, 224, 224]
 ### ONNX Runtime - Image Classification
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as ort from 'onnxruntime-node';
 
 async function classifyImage(imagePath: string) {
@@ -82,7 +82,7 @@ console.log('Confidence:', result.confidence);
 ### TensorFlow.js - Feature Extraction
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as tf from '@tensorflow/tfjs-node';
 
 async function extractFeatures(imagePath: string) {
@@ -127,7 +127,7 @@ console.log('Feature vector length:', features.length);
 ### CLIP - Image Embeddings
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as ort from 'onnxruntime-node';
 
 async function getImageEmbedding(imagePath: string) {
@@ -178,7 +178,7 @@ async function findSimilarImages(queryPath: string, imagePaths: string[]) {
 ### Process Multiple Images
 
 ```typescript
-import { toTensorSync } from 'bun-image-turbo';
+import { toTensorSync } from 'imgkit';
 import * as ort from 'onnxruntime-node';
 
 async function batchClassify(imagePaths: string[]) {
@@ -225,7 +225,7 @@ const results = await batchClassify(['img1.jpg', 'img2.jpg', 'img3.jpg']);
 ### Streaming Batch Processing
 
 ```typescript
-import { toTensorSync } from 'bun-image-turbo';
+import { toTensorSync } from 'imgkit';
 
 async function* processImagesStream(imagePaths: string[], batchSize = 32) {
   for (let i = 0; i < imagePaths.length; i += batchSize) {
@@ -260,7 +260,7 @@ for await (const { batch, tensors } of processImagesStream(imageList)) {
 
 ```typescript
 import { Hono } from 'hono';
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as ort from 'onnxruntime-node';
 
 const app = new Hono();
@@ -315,7 +315,7 @@ export default app;
 ### Object Detection Preprocessing
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 
 async function preprocessForYOLO(imagePath: string) {
   const buffer = Buffer.from(await Bun.file(imagePath).arrayBuffer());
@@ -340,7 +340,7 @@ async function preprocessForYOLO(imagePath: string) {
 ### Face Recognition Pipeline
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as ort from 'onnxruntime-node';
 
 interface FaceEmbedding {
@@ -395,7 +395,7 @@ function compareFaces(emb1: Float32Array, emb2: Float32Array): number {
 ### Caching Converted Tensors
 
 ```typescript
-import { toTensorSync } from 'bun-image-turbo';
+import { toTensorSync } from 'imgkit';
 
 const tensorCache = new Map<string, Float32Array>();
 
@@ -423,7 +423,7 @@ async function getCachedTensor(imagePath: string): Promise<Float32Array> {
 
 ```typescript
 // worker.ts
-import { toTensorSync } from 'bun-image-turbo';
+import { toTensorSync } from 'imgkit';
 import { parentPort } from 'worker_threads';
 
 parentPort?.on('message', (buffer: Buffer) => {
@@ -453,7 +453,7 @@ function processInWorker(buffer: Buffer): Promise<Float32Array> {
 ## Error Handling
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 
 async function safeToTensor(buffer: Buffer) {
   try {

@@ -25,7 +25,7 @@ import {
   toWebp,
   transform,
   blurhash
-} from 'bun-image-turbo';
+} from 'imgkit';
 import { existsSync, mkdirSync } from 'fs';
 
 async function main() {
@@ -196,7 +196,7 @@ Convert all HEIC files in a folder:
 ```typescript
 import { readdir } from 'fs/promises';
 import { join } from 'path';
-import { toJpeg } from 'bun-image-turbo';
+import { toJpeg } from 'imgkit';
 
 async function convertFolder(inputDir: string, outputDir: string) {
   const files = await readdir(inputDir);

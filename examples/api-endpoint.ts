@@ -4,7 +4,7 @@
  * HTTP server for on-the-fly image processing
  */
 
-import { transform, metadata, toWebp, toJpeg } from 'bun-image-turbo';
+import { transform, metadata, toWebp, toJpeg } from 'imgkit';
 
 const imageCache = new Map<string, Buffer>();
 

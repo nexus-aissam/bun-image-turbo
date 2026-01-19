@@ -1,6 +1,6 @@
 # ML Tensor Conversion
 
-bun-image-turbo v1.8.0 introduces `toTensor` - the **first JavaScript package** to offer native SIMD-accelerated image-to-tensor conversion with built-in normalization presets.
+imgkit v1.8.0 introduces `toTensor` - the **first JavaScript package** to offer native SIMD-accelerated image-to-tensor conversion with built-in normalization presets.
 
 ## What is a Tensor?
 
@@ -56,8 +56,8 @@ const tensor = new ort.Tensor('float32', float32, [1, 3, 224, 224]);
 ### The Solution
 
 ```typescript
-// bun-image-turbo - FAST & SIMPLE
-import { toTensor } from 'bun-image-turbo';
+// imgkit - FAST & SIMPLE
+import { toTensor } from 'imgkit';
 
 const tensor = await toTensor(buffer, {
   width: 224,
@@ -85,7 +85,7 @@ const ortTensor = new ort.Tensor('float32', tensor.toFloat32Array(), tensor.shap
 PyTorch uses **CHW (Channel-First)** layout:
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as ort from 'onnxruntime-node';
 
 const tensor = await toTensor(imageBuffer, {
@@ -105,7 +105,7 @@ const ortTensor = new ort.Tensor('float32', tensor.toFloat32Array(), tensor.shap
 TensorFlow uses **HWC (Channel-Last)** layout:
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as tf from '@tensorflow/tfjs-node';
 
 const tensor = await toTensor(imageBuffer, {
@@ -125,7 +125,7 @@ const tfTensor = tf.tensor4d(tensor.toFloat32Array(), tensor.shape);
 Works great with Hugging Face's transformers.js:
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import { pipeline } from '@xenova/transformers';
 
 const tensor = await toTensor(imageBuffer, {
@@ -263,7 +263,7 @@ const tensor = await toTensor(buffer, {
 For very large images, resize first to reduce decode time:
 
 ```typescript
-import { resize, toTensor } from 'bun-image-turbo';
+import { resize, toTensor } from 'imgkit';
 
 // First resize to reasonable size
 const smaller = await resize(hugeImage, { width: 1024 });
@@ -292,7 +292,7 @@ Tested on Apple M3 Pro with 800x600 JPEG input:
 
 | Method | 224x224 ImageNet |
 |--------|------------------|
-| bun-image-turbo | **12.5ms** |
+| imgkit | **12.5ms** |
 | sharp + manual JS | ~150ms |
 | tfjs preprocessing | ~200ms |
 
@@ -302,7 +302,7 @@ Tested on Apple M3 Pro with 800x600 JPEG input:
 
 ```typescript
 import { Hono } from 'hono';
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as ort from 'onnxruntime-node';
 
 const app = new Hono();

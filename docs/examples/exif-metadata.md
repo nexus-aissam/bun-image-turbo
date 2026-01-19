@@ -7,7 +7,7 @@ Write and manage EXIF metadata in your images. Perfect for AI-generated content 
 Add metadata to a JPEG or WebP image:
 
 ```typescript
-import { writeExif, toJpeg } from 'bun-image-turbo';
+import { writeExif, toJpeg } from 'imgkit';
 
 // Load image
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
@@ -17,7 +17,7 @@ const withExif = await writeExif(buffer, {
   imageDescription: 'Sunset over the Pacific Ocean',
   artist: 'John Doe',
   copyright: 'Copyright 2026 John Doe. All rights reserved.',
-  software: 'bun-image-turbo v1.4.0',
+  software: 'imgkit v1.4.0',
   dateTime: '2026:01:07 14:30:00'
 });
 
@@ -30,7 +30,7 @@ console.log('Added EXIF metadata to photo');
 Store AI generation parameters for reproducibility:
 
 ```typescript
-import { writeExif, toWebp } from 'bun-image-turbo';
+import { writeExif, toWebp } from 'imgkit';
 
 // Your AI-generated image buffer
 const aiImage = Buffer.from(await Bun.file('generated.png').arrayBuffer());
@@ -68,7 +68,7 @@ console.log('Saved AI image with full generation metadata');
 Remove all EXIF data before sharing:
 
 ```typescript
-import { stripExif } from 'bun-image-turbo';
+import { stripExif } from 'imgkit';
 
 // Load image with sensitive metadata (GPS, camera info, etc.)
 const photo = Buffer.from(await Bun.file('vacation-photo.jpg').arrayBuffer());
@@ -85,7 +85,7 @@ console.log('Stripped all metadata - safe to share online');
 Add consistent branding to multiple images:
 
 ```typescript
-import { writeExif, toJpeg } from 'bun-image-turbo';
+import { writeExif, toJpeg } from 'imgkit';
 import { readdir } from 'fs/promises';
 
 const inputDir = './raw-images';
@@ -132,7 +132,7 @@ console.log(`Processed: ${results.join(', ')}`);
 Add metadata during image transformation:
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 const input = Buffer.from(await Bun.file('raw.png').arrayBuffer());
 
@@ -163,7 +163,7 @@ await Bun.write('hero-image.jpg', result);
 HTTP endpoint that processes uploads and adds metadata:
 
 ```typescript
-import { writeExif, toWebp, metadata } from 'bun-image-turbo';
+import { writeExif, toWebp, metadata } from 'imgkit';
 
 const server = Bun.serve({
   port: 3000,
@@ -260,7 +260,7 @@ import {
   toJpeg,
   toWebp,
   metadata
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 async function main() {
   console.log('=== EXIF Metadata Demo ===\n');
@@ -278,7 +278,7 @@ async function main() {
   const basic = await writeExif(input, {
     imageDescription: 'Test image with EXIF',
     artist: 'Demo User',
-    software: 'bun-image-turbo'
+    software: 'imgkit'
   });
   await Bun.write('output/basic-exif.jpg', basic);
   console.log('   Saved: output/basic-exif.jpg');

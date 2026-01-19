@@ -26,7 +26,7 @@ describe("EXIF Write", () => {
     const result = await writeExif(testImage, {
       imageDescription: "Test image for AI content",
       artist: "Test Artist",
-      software: "bun-image-turbo test",
+      software: "imgkit test",
       userComment: JSON.stringify({ model: "test-model", seed: 12345 }),
     });
 
@@ -112,7 +112,7 @@ describe("EXIF Write", () => {
       imageDescription: "Full test image",
       artist: "John Doe",
       copyright: "Copyright 2025 John Doe",
-      software: "bun-image-turbo v1.2.0",
+      software: "imgkit v1.2.0",
       dateTime: "2025:01:07 12:30:00",
       dateTimeOriginal: "2025:01:07 12:00:00",
       userComment: "This is a test comment with JSON: {\"key\": \"value\"}",

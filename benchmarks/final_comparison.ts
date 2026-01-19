@@ -1,8 +1,8 @@
 /**
- * FINAL BENCHMARK: bun-image-turbo vs sharp
+ * FINAL BENCHMARK: imgkit vs sharp
  *
  * This benchmark compares real-world performance for common image operations.
- * Includes HEIC support benchmarks (exclusive to bun-image-turbo).
+ * Includes HEIC support benchmarks (exclusive to imgkit).
  */
 
 import * as imageTurbo from "../src/index";
@@ -109,7 +109,7 @@ function benchmarkSync(
 async function main() {
   console.log("=".repeat(100));
   console.log(
-    "                           bun-image-turbo vs sharp - FINAL BENCHMARK"
+    "                           imgkit vs sharp - FINAL BENCHMARK"
   );
   console.log("=".repeat(100));
   console.log(
@@ -236,7 +236,7 @@ async function main() {
     );
   }
 
-  // HEIC Metadata (exclusive to bun-image-turbo)
+  // HEIC Metadata (exclusive to imgkit)
   if (heicImage) {
     await benchmark(
       "HEIC Metadata (iPhone Photo)",
@@ -477,12 +477,12 @@ async function main() {
   }
 
   // ============================================
-  // HEIC BENCHMARKS (Exclusive to bun-image-turbo)
+  // HEIC BENCHMARKS (Exclusive to imgkit)
   // ============================================
   if (heicImage) {
     console.log(`\n${"─".repeat(100)}`);
     console.log(
-      "📊 HEIC OPERATIONS (iPhone Photo - EXCLUSIVE to bun-image-turbo)"
+      "📊 HEIC OPERATIONS (iPhone Photo - EXCLUSIVE to imgkit)"
     );
     console.log("─".repeat(100));
 
@@ -562,7 +562,7 @@ async function main() {
   const slower = compared.filter((r) => r.speedup <= 1 && r.speedup > 0);
 
   if (compared.length > 0) {
-    console.log(`\n✅ bun-image-turbo vs sharp (${compared.length} benchmarks):`);
+    console.log(`\n✅ imgkit vs sharp (${compared.length} benchmarks):`);
     faster.sort((a, b) => b.speedup - a.speedup);
     for (const r of faster) {
       console.log(`   🚀 ${r.name}: ${r.speedup.toFixed(2)}x faster`);
@@ -577,7 +577,7 @@ async function main() {
   }
 
   if (exclusive.length > 0) {
-    console.log(`\n✨ EXCLUSIVE to bun-image-turbo (${exclusive.length} operations):`);
+    console.log(`\n✨ EXCLUSIVE to imgkit (${exclusive.length} operations):`);
     for (const r of exclusive) {
       console.log(`   📱 ${r.name}: ${r.turboMs.toFixed(1)}ms`);
     }
@@ -599,7 +599,7 @@ async function main() {
   }
 
   console.log("\n" + "=".repeat(100));
-  console.log("🎉 bun-image-turbo: Fast image processing + HEIC support!");
+  console.log("🎉 imgkit: Fast image processing + HEIC support!");
   console.log("=".repeat(100));
 }
 

@@ -17,7 +17,7 @@ Process multiple images efficiently with parallel execution.
 import { readdir, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join, extname, basename } from 'path';
-import { metadata, transform } from 'bun-image-turbo';
+import { metadata, transform } from 'imgkit';
 
 // Supported input formats
 const SUPPORTED_FORMATS = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.bmp', '.heic', '.heif'];

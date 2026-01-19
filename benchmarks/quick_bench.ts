@@ -28,7 +28,7 @@ async function main() {
   const sharpTime = (performance.now() - sharpStart) / 10;
 
   console.log("\nResize to 800px:");
-  console.log("  bun-image-turbo:", turboTime.toFixed(1), "ms");
+  console.log("  imgkit:", turboTime.toFixed(1), "ms");
   console.log("  sharp:", sharpTime.toFixed(1), "ms");
 
   const speedup = sharpTime / turboTime;
@@ -61,7 +61,7 @@ async function main() {
   const sharp10Time = (performance.now() - sharp10Start) / 5;
 
   console.log("\nResize to 800px:");
-  console.log("  bun-image-turbo:", turbo10Time.toFixed(1), "ms");
+  console.log("  imgkit:", turbo10Time.toFixed(1), "ms");
   console.log("  sharp:", sharp10Time.toFixed(1), "ms");
 
   const speedup10 = sharp10Time / turbo10Time;

@@ -14,7 +14,7 @@ Unlike cryptographic hashes (MD5, SHA), perceptual hashes allow **similar images
 ## Basic Usage
 
 ```typescript
-import { imageHash, imageHashDistance } from 'bun-image-turbo';
+import { imageHash, imageHashDistance } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -32,7 +32,7 @@ console.log(`Hash size: ${result.hashSize}x${result.hashSize}`);
 Compare two images to determine if they're similar:
 
 ```typescript
-import { imageHash, imageHashDistance } from 'bun-image-turbo';
+import { imageHash, imageHashDistance } from 'imgkit';
 
 async function areSimilar(image1: Buffer, image2: Buffer): Promise<boolean> {
   const hash1 = await imageHash(image1);
@@ -65,7 +65,7 @@ if (await areSimilar(image1, image2)) {
 Build a system to detect near-duplicate uploads:
 
 ```typescript
-import { imageHash, imageHashDistance, imageHashSync } from 'bun-image-turbo';
+import { imageHash, imageHashDistance, imageHashSync } from 'imgkit';
 
 interface ImageRecord {
   id: string;
@@ -116,7 +116,7 @@ if (duplicates.length > 0) {
 Choose the right algorithm for your use case:
 
 ```typescript
-import { imageHash } from 'bun-image-turbo';
+import { imageHash } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -160,7 +160,7 @@ console.log('BlockHash:', blockHash.hash);
 Larger hash sizes provide more accuracy but use more memory:
 
 ```typescript
-import { imageHash } from 'bun-image-turbo';
+import { imageHash } from 'imgkit';
 
 // 8x8 (64 bits) - Default, fastest, good for most cases
 const hash8 = await imageHash(buffer, { size: 'Size8' });
@@ -181,7 +181,7 @@ console.log('32x32 hash length:', hash32.hash.length);
 Process multiple images efficiently:
 
 ```typescript
-import { imageHashSync, imageHashDistanceSync } from 'bun-image-turbo';
+import { imageHashSync, imageHashDistanceSync } from 'imgkit';
 import { readdir } from 'fs/promises';
 
 async function findAllDuplicates(directory: string) {
@@ -237,7 +237,7 @@ console.log('Duplicate groups:', duplicates);
 ## API Endpoint for Similarity Check
 
 ```typescript
-import { imageHash, imageHashDistance } from 'bun-image-turbo';
+import { imageHash, imageHashDistance } from 'imgkit';
 
 // Store of known image hashes (in production, use a database)
 const hashDatabase: Map<string, string> = new Map();
@@ -309,7 +309,7 @@ Bun.serve({
 Build a simple reverse image search:
 
 ```typescript
-import { imageHash, imageHashDistance } from 'bun-image-turbo';
+import { imageHash, imageHashDistance } from 'imgkit';
 
 interface IndexedImage {
   id: string;

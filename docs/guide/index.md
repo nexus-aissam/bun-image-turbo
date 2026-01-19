@@ -1,8 +1,8 @@
 # Introduction
 
-**bun-image-turbo** is a high-performance image processing library for Bun and Node.js, built with Rust and napi-rs.
+**imgkit** is a high-performance image processing library for Bun and Node.js, built with Rust and napi-rs.
 
-## Why bun-image-turbo?
+## Why imgkit?
 
 ### Performance
 
@@ -32,7 +32,7 @@ The **only** high-performance image library with native HEIC/HEIF support:
 
 ## Comparison with sharp
 
-| Feature | bun-image-turbo | sharp |
+| Feature | imgkit | sharp |
 |---------|:---------------:|:-----:|
 | HEIC Support | ✅ | ❌ |
 | Blurhash | ✅ | ❌ |
@@ -57,6 +57,6 @@ The **only** high-performance image library with native HEIC/HEIF support:
 
 ## Next Steps
 
-- [Installation](/guide/installation) - Get started with bun-image-turbo
+- [Installation](/guide/installation) - Get started with imgkit
 - [Quick Start](/guide/quick-start) - Learn the basics
 - [API Reference](/api/) - Explore all functions

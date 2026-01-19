@@ -1,6 +1,51 @@
 # Changelog
 
-All notable changes to bun-image-turbo.
+All notable changes to imgkit.
+
+## [2.0.0] - 2026-01-19
+
+### BREAKING CHANGES
+
+- **Package Renamed** - `bun-image-turbo` is now `imgkit`
+  ```bash
+  npm uninstall bun-image-turbo && npm install imgkit
+  ```
+  - All imports change from `'bun-image-turbo'` to `'imgkit'`
+  - API is 100% compatible - no code changes needed beyond import path
+
+### Added
+
+- **Fast Thumbnail Generation** - Optimized thumbnail pipeline with shrink-on-load
+  - `thumbnail()` / `thumbnailSync()` - Generate thumbnails with full metadata
+  - `thumbnailBuffer()` / `thumbnailBufferSync()` - Generate thumbnails (buffer only)
+  - **Shrink-on-Load:** JPEG decodes at 1/2, 1/4, 1/8 scale; WebP scales during decode
+  - **Fast Mode:** Maximum speed with 2-4x improvement over normal mode
+  - **4-10x faster** than standard resize for large images
+
+### Performance
+
+| Method | 1MB JPEG | 10MB JPEG | vs Sharp |
+|--------|----------|-----------|----------|
+| thumbnail (shrinkOnLoad) | 9.1ms | 100ms | **1.2x faster** |
+| thumbnail (fastMode) | 9.1ms | 107ms | **1.2x faster** |
+| sharp | 10.9ms | 119ms | baseline |
+
+**Concurrent (100 images):** 157ms total (1.6ms/img) - **1.9x faster than sharp**
+
+### Test Results
+
+- **176 tests pass**
+- All shrink-on-load optimizations verified
+
+---
+
+## [1.9.1] - 2026-01-15
+
+### Added
+
+- **GitHub Community Standards** - CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, issue templates
+
+---
 
 ## [1.9.0] - 2026-01-15
 
@@ -383,5 +428,5 @@ Benchmarks on Apple M3 Pro (800x600 JPEG input):
 
 ## Links
 
-- [GitHub Releases](https://github.com/nexus-aissam/bun-image-turbo/releases)
-- [npm Package](https://www.npmjs.com/package/bun-image-turbo)
+- [GitHub Releases](https://github.com/nexus-aissam/imgkit/releases)
+- [npm Package](https://www.npmjs.com/package/imgkit)

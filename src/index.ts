@@ -1,12 +1,12 @@
 /**
- * bun-image-turbo - High-performance image processing for Bun and Node.js
+ * imgkit - High-performance image processing for Bun and Node.js
  *
- * @module bun-image-turbo
+ * @module imgkit
  * @author Aissam Irhir <aissamirhir@gmail.com>
  *
  * @example
  * ```typescript
- * import { resize, toWebp, metadata } from 'bun-image-turbo';
+ * import { resize, toWebp, metadata } from 'imgkit';
  *
  * // Read image
  * const input = await Bun.file('input.jpg').arrayBuffer();
@@ -57,6 +57,9 @@ export type {
   SmartCropAnalysis,
   DominantColor,
   DominantColorsResult,
+  ThumbnailFormat,
+  ThumbnailOptions,
+  ThumbnailResult,
 } from "./types";
 export type { EnhancedTensorResult } from "./api";
 
@@ -99,6 +102,10 @@ export {
   smartCropAnalyzeSync,
   dominantColors,
   dominantColorsSync,
+  thumbnail,
+  thumbnailSync,
+  thumbnailBuffer,
+  thumbnailBufferSync,
 } from "./api";
 
 // Import for version and default export
@@ -150,6 +157,10 @@ import {
   smartCropAnalyzeSync,
   dominantColors,
   dominantColorsSync,
+  thumbnail,
+  thumbnailSync,
+  thumbnailBuffer,
+  thumbnailBufferSync,
 } from "./api";
 
 // Default export for convenience
@@ -191,5 +202,9 @@ export default {
   smartCropAnalyzeSync,
   dominantColors,
   dominantColorsSync,
+  thumbnail,
+  thumbnailSync,
+  thumbnailBuffer,
+  thumbnailBufferSync,
   version,
 };

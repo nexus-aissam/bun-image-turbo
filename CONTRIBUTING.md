@@ -1,6 +1,6 @@
-# Contributing to bun-image-turbo
+# Contributing to imgkit
 
-Thank you for your interest in contributing to bun-image-turbo! This document provides guidelines and instructions for contributing to this high-performance native image processing library.
+Thank you for your interest in contributing to imgkit! This document provides guidelines and instructions for contributing to this high-performance native image processing library.
 
 ## Table of Contents
 
@@ -62,8 +62,8 @@ Feature suggestions are welcome! Please:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/nexus-aissam/bun-image-turbo.git
-   cd bun-image-turbo
+   git clone https://github.com/nexus-aissam/imgkit.git
+   cd imgkit
    ```
 
 2. **Install dependencies**
@@ -91,7 +91,7 @@ Feature suggestions are welcome! Please:
 ### Project Structure
 
 ```
-bun-image-turbo/
+imgkit/
 ├── rust/src/           # Rust source code
 │   ├── lib.rs          # Main library entry point & napi bindings
 │   ├── resize.rs       # Image resizing (fast_image_resize)
@@ -320,13 +320,13 @@ Closes #123
 
 ## Getting Help
 
-- **Documentation**: Check the [README.md](README.md) and [online docs](https://nexus-aissam.github.io/bun-image-turbo/)
-- **API Reference**: See [API docs](https://nexus-aissam.github.io/bun-image-turbo/api/)
-- **Issues**: Search [existing issues](https://github.com/nexus-aissam/bun-image-turbo/issues) or create a new one
+- **Documentation**: Check the [README.md](README.md) and [online docs](https://nexus-aissam.github.io/imgkit/)
+- **API Reference**: See [API docs](https://nexus-aissam.github.io/imgkit/api/)
+- **Issues**: Search [existing issues](https://github.com/nexus-aissam/imgkit/issues) or create a new one
 - **Discussions**: Use GitHub Discussions for questions and ideas
 
 ## License
 
-By contributing to bun-image-turbo, you agree that your contributions will be licensed under the MIT License.
+By contributing to imgkit, you agree that your contributions will be licensed under the MIT License.
 
 Thank you for contributing! 🚀

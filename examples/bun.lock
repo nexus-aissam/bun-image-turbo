@@ -3,27 +3,27 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "bun-image-turbo-examples",
+      "name": "imgkit-examples",
       "dependencies": {
-        "bun-image-turbo": "latest",
+        "imgkit": "latest",
       },
     },
   },
   "packages": {
-    "bun-image-turbo": ["bun-image-turbo@1.2.0", "", { "optionalDependencies": { "bun-image-turbo-darwin-arm64": "1.2.0", "bun-image-turbo-darwin-x64": "1.2.0", "bun-image-turbo-linux-arm64-gnu": "1.2.0", "bun-image-turbo-linux-x64-gnu": "1.2.0", "bun-image-turbo-linux-x64-musl": "1.2.0", "bun-image-turbo-win32-arm64-msvc": "1.2.0", "bun-image-turbo-win32-x64-msvc": "1.2.0" } }, "sha512-UW1+XM8lSiwoV1y3XtRz02ruIaUXvV8OdbIljAs/WeQvD1pkm8VZrPKAZPTG6Cccv1yxsV1CW0dN7iLAe4zY+Q=="],
+    "imgkit": ["imgkit@1.2.0", "", { "optionalDependencies": { "imgkit-darwin-arm64": "1.2.0", "imgkit-darwin-x64": "1.2.0", "imgkit-linux-arm64-gnu": "1.2.0", "imgkit-linux-x64-gnu": "1.2.0", "imgkit-linux-x64-musl": "1.2.0", "imgkit-win32-arm64-msvc": "1.2.0", "imgkit-win32-x64-msvc": "1.2.0" } }, "sha512-UW1+XM8lSiwoV1y3XtRz02ruIaUXvV8OdbIljAs/WeQvD1pkm8VZrPKAZPTG6Cccv1yxsV1CW0dN7iLAe4zY+Q=="],
 
-    "bun-image-turbo-darwin-arm64": ["bun-image-turbo-darwin-arm64@1.2.0", "", { "os": "darwin", "cpu": "arm64" }, "sha512-OUzwHnkFA6kJ46d3VYz2pMFnKn1cjO0bZGx/qnnfMCPRzXlq8IyfHxOCMeGJiNkUflny2HpjIY2d7jOaR9kFnw=="],
+    "imgkit-darwin-arm64": ["imgkit-darwin-arm64@1.2.0", "", { "os": "darwin", "cpu": "arm64" }, "sha512-OUzwHnkFA6kJ46d3VYz2pMFnKn1cjO0bZGx/qnnfMCPRzXlq8IyfHxOCMeGJiNkUflny2HpjIY2d7jOaR9kFnw=="],
 
-    "bun-image-turbo-darwin-x64": ["bun-image-turbo-darwin-x64@1.2.0", "", { "os": "darwin", "cpu": "x64" }, "sha512-sSOBDPgbKSLMwAzUrZUhYQxm0rBIQiJtt0qvV8Slr1LOK1yzHU3KpgqKpP7rdmewpYPp0THpZ5aJPWFdnKl6uA=="],
+    "imgkit-darwin-x64": ["imgkit-darwin-x64@1.2.0", "", { "os": "darwin", "cpu": "x64" }, "sha512-sSOBDPgbKSLMwAzUrZUhYQxm0rBIQiJtt0qvV8Slr1LOK1yzHU3KpgqKpP7rdmewpYPp0THpZ5aJPWFdnKl6uA=="],
 
-    "bun-image-turbo-linux-arm64-gnu": ["bun-image-turbo-linux-arm64-gnu@1.2.0", "", { "os": "linux", "cpu": "none" }, "sha512-KOAO8CmcurQt0QDda5wZaRV+n3ucf/B28sgMaX9IOQmCgsFSjCf7kmeOCFAKDi4vjzb/usnt+NddrNpgnDkUuQ=="],
+    "imgkit-linux-arm64-gnu": ["imgkit-linux-arm64-gnu@1.2.0", "", { "os": "linux", "cpu": "none" }, "sha512-KOAO8CmcurQt0QDda5wZaRV+n3ucf/B28sgMaX9IOQmCgsFSjCf7kmeOCFAKDi4vjzb/usnt+NddrNpgnDkUuQ=="],
 
-    "bun-image-turbo-linux-x64-gnu": ["bun-image-turbo-linux-x64-gnu@1.2.0", "", { "os": "linux", "cpu": "none" }, "sha512-4Lyq40cakUbDQ5erm003zWP4vUXIexBJ4ScEQxitAyPlB1wCiRajs5QZGArSGARF/8RdHDy+5X1GzBRniXoaGA=="],
+    "imgkit-linux-x64-gnu": ["imgkit-linux-x64-gnu@1.2.0", "", { "os": "linux", "cpu": "none" }, "sha512-4Lyq40cakUbDQ5erm003zWP4vUXIexBJ4ScEQxitAyPlB1wCiRajs5QZGArSGARF/8RdHDy+5X1GzBRniXoaGA=="],
 
-    "bun-image-turbo-linux-x64-musl": ["bun-image-turbo-linux-x64-musl@1.2.0", "", { "os": "linux", "cpu": "none" }, "sha512-12VAKSfjo07FAsO9IWBKxtQ37G+cS+Qe5VG7EsRY++S8Dp6i9NbuBaI5PqAvjS+7Bw7051lM73ibOLeCFsayPw=="],
+    "imgkit-linux-x64-musl": ["imgkit-linux-x64-musl@1.2.0", "", { "os": "linux", "cpu": "none" }, "sha512-12VAKSfjo07FAsO9IWBKxtQ37G+cS+Qe5VG7EsRY++S8Dp6i9NbuBaI5PqAvjS+7Bw7051lM73ibOLeCFsayPw=="],
 
-    "bun-image-turbo-win32-arm64-msvc": ["bun-image-turbo-win32-arm64-msvc@1.2.0", "", { "os": "win32", "cpu": "none" }, "sha512-pIKwDSNihIlljMIhLZ88rQRINZJ+cDqLcMGt626Shd9jOZ4Ks+/oSGLlBghdidge+54FL+vGWpQilC2vZMprPg=="],
+    "imgkit-win32-arm64-msvc": ["imgkit-win32-arm64-msvc@1.2.0", "", { "os": "win32", "cpu": "none" }, "sha512-pIKwDSNihIlljMIhLZ88rQRINZJ+cDqLcMGt626Shd9jOZ4Ks+/oSGLlBghdidge+54FL+vGWpQilC2vZMprPg=="],
 
-    "bun-image-turbo-win32-x64-msvc": ["bun-image-turbo-win32-x64-msvc@1.2.0", "", { "os": "win32", "cpu": "none" }, "sha512-xCAhI9DWfcCTEH8/hxaPSQkPpmtUpKMUgjdOWOGFkdjPU3PJ3NqbdMjmYA4t/TKAe260FYgb/hIQgiwIP6yqJw=="],
+    "imgkit-win32-x64-msvc": ["imgkit-win32-x64-msvc@1.2.0", "", { "os": "win32", "cpu": "none" }, "sha512-xCAhI9DWfcCTEH8/hxaPSQkPpmtUpKMUgjdOWOGFkdjPU3PJ3NqbdMjmYA4t/TKAe260FYgb/hIQgiwIP6yqJw=="],
   }
 }

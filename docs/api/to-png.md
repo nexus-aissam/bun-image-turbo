@@ -33,7 +33,7 @@ interface PngOptions {
 ### Basic Conversion
 
 ```typescript
-import { toPng } from 'bun-image-turbo';
+import { toPng } from 'imgkit';
 
 const png = await toPng(buffer);
 await Bun.write('output.png', png);
@@ -55,7 +55,7 @@ const max = await toPng(buffer, { compression: 9 });
 ### Sync Version
 
 ```typescript
-import { toPngSync } from 'bun-image-turbo';
+import { toPngSync } from 'imgkit';
 
 const png = toPngSync(buffer, { compression: 6 });
 ```

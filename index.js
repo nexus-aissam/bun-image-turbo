@@ -75,10 +75,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-android-arm64')
-        const bindingPackageVersion = require('bun-image-turbo-android-arm64/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-android-arm64')
+        const bindingPackageVersion = require('imgkit-android-arm64/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -91,10 +91,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-android-arm-eabi')
-        const bindingPackageVersion = require('bun-image-turbo-android-arm-eabi/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-android-arm-eabi')
+        const bindingPackageVersion = require('imgkit-android-arm-eabi/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -112,10 +112,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-win32-x64-gnu')
-        const bindingPackageVersion = require('bun-image-turbo-win32-x64-gnu/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-win32-x64-gnu')
+        const bindingPackageVersion = require('imgkit-win32-x64-gnu/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -128,10 +128,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-win32-x64-msvc')
-        const bindingPackageVersion = require('bun-image-turbo-win32-x64-msvc/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-win32-x64-msvc')
+        const bindingPackageVersion = require('imgkit-win32-x64-msvc/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -145,10 +145,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-win32-ia32-msvc')
-        const bindingPackageVersion = require('bun-image-turbo-win32-ia32-msvc/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-win32-ia32-msvc')
+        const bindingPackageVersion = require('imgkit-win32-ia32-msvc/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -161,10 +161,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-win32-arm64-msvc')
-        const bindingPackageVersion = require('bun-image-turbo-win32-arm64-msvc/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-win32-arm64-msvc')
+        const bindingPackageVersion = require('imgkit-win32-arm64-msvc/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -180,10 +180,10 @@ function requireNative() {
       loadErrors.push(e)
     }
     try {
-      const binding = require('bun-image-turbo-darwin-universal')
-      const bindingPackageVersion = require('bun-image-turbo-darwin-universal/package.json').version
-      if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-        throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+      const binding = require('imgkit-darwin-universal')
+      const bindingPackageVersion = require('imgkit-darwin-universal/package.json').version
+      if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+        throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
       }
       return binding
     } catch (e) {
@@ -196,10 +196,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-darwin-x64')
-        const bindingPackageVersion = require('bun-image-turbo-darwin-x64/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-darwin-x64')
+        const bindingPackageVersion = require('imgkit-darwin-x64/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -212,10 +212,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-darwin-arm64')
-        const bindingPackageVersion = require('bun-image-turbo-darwin-arm64/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-darwin-arm64')
+        const bindingPackageVersion = require('imgkit-darwin-arm64/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -232,10 +232,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-freebsd-x64')
-        const bindingPackageVersion = require('bun-image-turbo-freebsd-x64/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-freebsd-x64')
+        const bindingPackageVersion = require('imgkit-freebsd-x64/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -248,10 +248,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-freebsd-arm64')
-        const bindingPackageVersion = require('bun-image-turbo-freebsd-arm64/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-freebsd-arm64')
+        const bindingPackageVersion = require('imgkit-freebsd-arm64/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -269,10 +269,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-x64-musl')
-          const bindingPackageVersion = require('bun-image-turbo-linux-x64-musl/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-x64-musl')
+          const bindingPackageVersion = require('imgkit-linux-x64-musl/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -285,10 +285,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-x64-gnu')
-          const bindingPackageVersion = require('bun-image-turbo-linux-x64-gnu/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-x64-gnu')
+          const bindingPackageVersion = require('imgkit-linux-x64-gnu/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -303,10 +303,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-arm64-musl')
-          const bindingPackageVersion = require('bun-image-turbo-linux-arm64-musl/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-arm64-musl')
+          const bindingPackageVersion = require('imgkit-linux-arm64-musl/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -319,10 +319,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-arm64-gnu')
-          const bindingPackageVersion = require('bun-image-turbo-linux-arm64-gnu/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-arm64-gnu')
+          const bindingPackageVersion = require('imgkit-linux-arm64-gnu/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -337,10 +337,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-arm-musleabihf')
-          const bindingPackageVersion = require('bun-image-turbo-linux-arm-musleabihf/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-arm-musleabihf')
+          const bindingPackageVersion = require('imgkit-linux-arm-musleabihf/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -353,10 +353,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-arm-gnueabihf')
-          const bindingPackageVersion = require('bun-image-turbo-linux-arm-gnueabihf/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-arm-gnueabihf')
+          const bindingPackageVersion = require('imgkit-linux-arm-gnueabihf/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -371,10 +371,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-loong64-musl')
-          const bindingPackageVersion = require('bun-image-turbo-linux-loong64-musl/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-loong64-musl')
+          const bindingPackageVersion = require('imgkit-linux-loong64-musl/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -387,10 +387,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-loong64-gnu')
-          const bindingPackageVersion = require('bun-image-turbo-linux-loong64-gnu/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-loong64-gnu')
+          const bindingPackageVersion = require('imgkit-linux-loong64-gnu/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -405,10 +405,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-riscv64-musl')
-          const bindingPackageVersion = require('bun-image-turbo-linux-riscv64-musl/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-riscv64-musl')
+          const bindingPackageVersion = require('imgkit-linux-riscv64-musl/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -421,10 +421,10 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('bun-image-turbo-linux-riscv64-gnu')
-          const bindingPackageVersion = require('bun-image-turbo-linux-riscv64-gnu/package.json').version
-          if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-            throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+          const binding = require('imgkit-linux-riscv64-gnu')
+          const bindingPackageVersion = require('imgkit-linux-riscv64-gnu/package.json').version
+          if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+            throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
           return binding
         } catch (e) {
@@ -438,10 +438,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-linux-ppc64-gnu')
-        const bindingPackageVersion = require('bun-image-turbo-linux-ppc64-gnu/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-linux-ppc64-gnu')
+        const bindingPackageVersion = require('imgkit-linux-ppc64-gnu/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -454,10 +454,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-linux-s390x-gnu')
-        const bindingPackageVersion = require('bun-image-turbo-linux-s390x-gnu/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-linux-s390x-gnu')
+        const bindingPackageVersion = require('imgkit-linux-s390x-gnu/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -474,10 +474,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-openharmony-arm64')
-        const bindingPackageVersion = require('bun-image-turbo-openharmony-arm64/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-openharmony-arm64')
+        const bindingPackageVersion = require('imgkit-openharmony-arm64/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -490,10 +490,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-openharmony-x64')
-        const bindingPackageVersion = require('bun-image-turbo-openharmony-x64/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-openharmony-x64')
+        const bindingPackageVersion = require('imgkit-openharmony-x64/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -506,10 +506,10 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('bun-image-turbo-openharmony-arm')
-        const bindingPackageVersion = require('bun-image-turbo-openharmony-arm/package.json').version
-        if (bindingPackageVersion !== '1.9.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
-          throw new Error(`Native binding package version mismatch, expected 1.9.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
+        const binding = require('imgkit-openharmony-arm')
+        const bindingPackageVersion = require('imgkit-openharmony-arm/package.json').version
+        if (bindingPackageVersion !== '2.0.0' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
+          throw new Error(`Native binding package version mismatch, expected 2.0.0 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
         return binding
       } catch (e) {
@@ -538,7 +538,7 @@ if (!nativeBinding || process.env.NAPI_RS_FORCE_WASI) {
   }
   if (!nativeBinding || process.env.NAPI_RS_FORCE_WASI) {
     try {
-      wasiBinding = require('bun-image-turbo-wasm32-wasi')
+      wasiBinding = require('imgkit-wasm32-wasi')
       nativeBinding = wasiBinding
     } catch (err) {
       if (process.env.NAPI_RS_FORCE_WASI) {
@@ -609,6 +609,11 @@ module.exports.thumbhash = nativeBinding.thumbhash
 module.exports.thumbhashSync = nativeBinding.thumbhashSync
 module.exports.thumbhashToRgba = nativeBinding.thumbhashToRgba
 module.exports.thumbhashToRgbaSync = nativeBinding.thumbhashToRgbaSync
+module.exports.thumbnail = nativeBinding.thumbnail
+module.exports.thumbnailBuffer = nativeBinding.thumbnailBuffer
+module.exports.thumbnailBufferSync = nativeBinding.thumbnailBufferSync
+module.exports.ThumbnailFormat = nativeBinding.ThumbnailFormat
+module.exports.thumbnailSync = nativeBinding.thumbnailSync
 module.exports.toJpeg = nativeBinding.toJpeg
 module.exports.toJpegSync = nativeBinding.toJpegSync
 module.exports.toPng = nativeBinding.toPng

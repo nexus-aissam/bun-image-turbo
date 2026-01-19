@@ -12,13 +12,13 @@ Machine learning models require images in a specific tensor format:
 
 Traditional approaches require multiple steps:
 ```typescript
-// Without bun-image-turbo (slow, multiple libraries)
+// Without imgkit (slow, multiple libraries)
 const sharp = require('sharp');
 const pixels = await sharp(buffer).resize(224, 224).raw().toBuffer();
 // Then manually normalize, reshape, convert to Float32...
 ```
 
-With `bun-image-turbo`:
+With `imgkit`:
 ```typescript
 // Single call, SIMD-optimized, ready for ML
 const tensor = await toTensor(buffer, {
@@ -140,7 +140,7 @@ Memory: [R0, G0, B0, R1, G1, B1, ...]
 ### PyTorch / ONNX Runtime
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as ort from 'onnxruntime-node';
 
 const imageBuffer = await Bun.file('image.jpg').arrayBuffer();
@@ -166,7 +166,7 @@ const results = await session.run({ input: ortTensor });
 ### TensorFlow.js
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 import * as tf from '@tensorflow/tfjs-node';
 
 const tensor = await toTensor(imageBuffer, {
@@ -190,7 +190,7 @@ const predictions = model.predict(tfTensor);
 ### CLIP Model Preprocessing
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 
 // CLIP models use specific normalization
 const tensor = await toTensor(imageBuffer, {
@@ -208,7 +208,7 @@ const tensor = await toTensor(imageBuffer, {
 ### Batch Processing
 
 ```typescript
-import { toTensorSync } from 'bun-image-turbo';
+import { toTensorSync } from 'imgkit';
 
 const images = ['img1.jpg', 'img2.jpg', 'img3.jpg'];
 const tensors = [];

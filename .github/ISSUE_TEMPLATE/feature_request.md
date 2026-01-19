@@ -27,7 +27,7 @@ How would you like to use this feature? Provide code examples:
 
 ```typescript
 // Example usage
-import { yourNewFeature } from 'bun-image-turbo';
+import { yourNewFeature } from 'imgkit';
 
 const result = await yourNewFeature(input, {
   option1: 'value',

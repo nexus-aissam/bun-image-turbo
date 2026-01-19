@@ -31,7 +31,7 @@ function smartCropSync(input: Buffer, options: SmartCropOptions): Buffer
 #### Example
 
 ```typescript
-import { smartCrop } from 'bun-image-turbo';
+import { smartCrop } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -78,7 +78,7 @@ function smartCropAnalyzeSync(input: Buffer, options: SmartCropOptions): SmartCr
 #### Example
 
 ```typescript
-import { smartCropAnalyze, crop } from 'bun-image-turbo';
+import { smartCropAnalyze, crop } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 

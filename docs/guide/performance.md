@@ -1,12 +1,12 @@
 # Performance
 
-bun-image-turbo is built for maximum performance. Here's how to get the best results.
+imgkit is built for maximum performance. Here's how to get the best results.
 
 ## Benchmarks
 
 Tested on Apple M1 Pro with Bun 1.3.3:
 
-| Operation | bun-image-turbo | sharp | Speedup |
+| Operation | imgkit | sharp | Speedup |
 |-----------|---------------:|------:|:-------:|
 | WebP Metadata | 0.004ms | 3.4ms | **950x** |
 | JPEG Metadata | 0.003ms | 0.1ms | **38x** |
@@ -17,7 +17,7 @@ Tested on Apple M1 Pro with Bun 1.3.3:
 
 ### WebP Resize (NEW in v1.4.0)
 
-| Source Size | Target | bun-image-turbo | sharp | Speedup |
+| Source Size | Target | imgkit | sharp | Speedup |
 |-------------|--------|---------------:|------:|:-------:|
 | 800x600 | 200px | **3.1ms** | 4.3ms | **1.40x** |
 | 1600x1200 | 200px | **6.4ms** | 8.0ms | **1.24x** |
@@ -198,7 +198,7 @@ const results = await Promise.all(
 
 ### Buffer Handling
 
-bun-image-turbo uses zero-copy where possible:
+imgkit uses zero-copy where possible:
 
 ```typescript
 // Input buffer is not copied
@@ -240,8 +240,8 @@ console.log(`Transform took ${duration.toFixed(2)}ms`);
 
 ```bash
 # Clone the repo and run benchmarks
-git clone https://github.com/nexus-aissam/bun-image-turbo
-cd bun-image-turbo
+git clone https://github.com/nexus-aissam/imgkit
+cd imgkit
 bun run benchmarks/final_comparison.ts
 ```
 
@@ -250,7 +250,7 @@ bun run benchmarks/final_comparison.ts
 ### Recommended Settings
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 // Use async API
 // Limit concurrent operations

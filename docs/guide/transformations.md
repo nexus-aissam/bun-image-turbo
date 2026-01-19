@@ -7,7 +7,7 @@ Apply multiple image transformations efficiently in a single operation.
 The `transform()` function applies multiple operations in one call:
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 const result = await transform(buffer, {
   resize: { width: 800 },
@@ -210,7 +210,7 @@ Transformations are applied in this order:
 ## Complete Example
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 // Photo editing pipeline
 const edited = await transform(photoBuffer, {
@@ -241,7 +241,7 @@ await Bun.write('edited.webp', edited);
 All transformations have synchronous versions:
 
 ```typescript
-import { transformSync } from 'bun-image-turbo';
+import { transformSync } from 'imgkit';
 
 const result = transformSync(buffer, {
   resize: { width: 400 },

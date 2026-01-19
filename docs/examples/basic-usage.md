@@ -1,13 +1,13 @@
 # Basic Usage
 
-This example demonstrates the core functionality of bun-image-turbo.
+This example demonstrates the core functionality of imgkit.
 
 ## Source Code
 
 ```typescript
 /**
  * Basic Usage Example
- * Demonstrates core functionality of bun-image-turbo
+ * Demonstrates core functionality of imgkit
  */
 
 import {
@@ -19,10 +19,10 @@ import {
   transform,
   blurhash,
   version
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 async function main() {
-  console.log(`bun-image-turbo v${version()}\n`);
+  console.log(`imgkit v${version()}\n`);
 
   // Download a test image
   console.log('Downloading test image...');
@@ -110,7 +110,7 @@ bun run basic
 ## Output
 
 ```text
-bun-image-turbo v1.2.0
+imgkit v1.2.0
 
 Downloading test image...
 

@@ -7,7 +7,7 @@ Proper error handling ensures your application gracefully handles invalid images
 ### Invalid Image Data
 
 ```typescript
-import { metadata } from 'bun-image-turbo';
+import { metadata } from 'imgkit';
 
 try {
   const info = await metadata(Buffer.from('not an image'));
@@ -57,7 +57,7 @@ try {
 ### Basic Try-Catch
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 async function processImage(buffer: Buffer) {
   try {
@@ -93,7 +93,7 @@ async function processWithFallback(buffer: Buffer) {
 ### Validation Before Processing
 
 ```typescript
-import { metadata, transform } from 'bun-image-turbo';
+import { metadata, transform } from 'imgkit';
 
 async function safeProcess(buffer: Buffer) {
   // Validate first
@@ -120,7 +120,7 @@ async function safeProcess(buffer: Buffer) {
 ### HTTP Endpoint Error Handling
 
 ```typescript
-import { transform, metadata } from 'bun-image-turbo';
+import { transform, metadata } from 'imgkit';
 
 app.post('/resize', async (req) => {
   try {
@@ -268,7 +268,7 @@ function getUserMessage(error: Error): string {
 Sync functions throw the same errors:
 
 ```typescript
-import { transformSync } from 'bun-image-turbo';
+import { transformSync } from 'imgkit';
 
 try {
   const result = transformSync(buffer, options);

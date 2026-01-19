@@ -45,7 +45,7 @@ function dominantColorsSync(input: Buffer, count?: number): DominantColorsResult
 #### Example
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -67,7 +67,7 @@ palette.colors.forEach(color => {
 ### UI Theming (Spotify-style)
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 async function getAlbumTheme(albumArt: Buffer) {
   const { primary, colors } = await dominantColors(albumArt, 3);
@@ -89,7 +89,7 @@ function isLight(color: { r: number; g: number; b: number }) {
 ### Image Placeholder
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 async function getPlaceholderStyle(imageBuffer: Buffer) {
   const { primary } = await dominantColors(imageBuffer, 1);
@@ -104,7 +104,7 @@ async function getPlaceholderStyle(imageBuffer: Buffer) {
 ### Color Palette Generator
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 async function generatePalette(imageBuffer: Buffer) {
   const { colors } = await dominantColors(imageBuffer, 6);

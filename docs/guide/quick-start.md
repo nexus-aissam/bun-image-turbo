@@ -1,11 +1,11 @@
 # Quick Start
 
-Learn the basics of bun-image-turbo in 5 minutes.
+Learn the basics of imgkit in 5 minutes.
 
 ## Basic Usage
 
 ```typescript
-import { metadata, resize, toWebp, transform } from 'bun-image-turbo';
+import { metadata, resize, toWebp, transform } from 'imgkit';
 
 // Read an image file
 const input = await Bun.file('photo.jpg').arrayBuffer();
@@ -53,7 +53,7 @@ const resized = await resize(buffer, {
 Convert between image formats:
 
 ```typescript
-import { toJpeg, toPng, toWebp } from 'bun-image-turbo';
+import { toJpeg, toPng, toWebp } from 'imgkit';
 
 // Convert to JPEG
 const jpeg = await toJpeg(buffer, { quality: 85 });
@@ -108,7 +108,7 @@ Create compact image placeholders for progressive loading:
 ### BlurHash
 
 ```typescript
-import { blurhash } from 'bun-image-turbo';
+import { blurhash } from 'imgkit';
 
 const { hash, width, height } = await blurhash(buffer, 4, 3);
 console.log(hash); // "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
@@ -119,7 +119,7 @@ console.log(hash); // "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
 ThumbHash produces better quality placeholders with alpha channel support:
 
 ```typescript
-import { thumbhash } from 'bun-image-turbo';
+import { thumbhash } from 'imgkit';
 
 const { dataUrl, hash, width, height, hasAlpha } = await thumbhash(buffer);
 
@@ -144,7 +144,7 @@ await db.save({ id: 1, thumbhash: hash });
 Convert iPhone photos:
 
 ```typescript
-import { toJpeg, metadata } from 'bun-image-turbo';
+import { toJpeg, metadata } from 'imgkit';
 
 // Read HEIC file
 const heic = await Bun.file('IMG_1234.HEIC').arrayBuffer();
@@ -169,7 +169,7 @@ import {
   resizeSync,
   toJpegSync,
   transformSync
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 // Synchronous operations (blocks event loop)
 const info = metadataSync(buffer);

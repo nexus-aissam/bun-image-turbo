@@ -1,10 +1,10 @@
 {
-  "name": "bun-image-turbo",
-  "version": "1.9.0",
+  "name": "imgkit",
+  "version": "2.0.0",
   "author": "Aissam Irhir <aissamirhir@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nexus-aissam/bun-image-turbo.git"
+    "url": "git+https://github.com/nexus-aissam/imgkit.git"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -28,7 +28,7 @@
     }
   },
   "bugs": {
-    "url": "https://github.com/nexus-aissam/bun-image-turbo/issues"
+    "url": "https://github.com/nexus-aissam/imgkit/issues"
   },
   "description": "High-performance image processing for Bun and Node.js - resize, convert, compress with HEIC, WebP, AVIF, PNG, JPEG support",
   "engines": {
@@ -37,7 +37,7 @@
   "files": [
     "dist"
   ],
-  "homepage": "https://nexus-aissam.github.io/bun-image-turbo/",
+  "homepage": "https://nexus-aissam.github.io/imgkit/",
   "keywords": [
     "image",
     "resize",
@@ -65,17 +65,17 @@
   ],
   "license": "MIT",
   "optionalDependencies": {
-    "bun-image-turbo-darwin-x64": "^1.9.0",
-    "bun-image-turbo-darwin-arm64": "^1.9.0",
-    "bun-image-turbo-win32-x64-msvc": "^1.9.0",
-    "bun-image-turbo-win32-arm64-msvc": "^1.9.0",
-    "bun-image-turbo-linux-x64-gnu": "^1.9.0",
-    "bun-image-turbo-linux-arm64-gnu": "^1.9.0",
-    "bun-image-turbo-linux-x64-musl": "^1.9.0"
+    "imgkit-darwin-x64": "^2.0.0",
+    "imgkit-darwin-arm64": "^2.0.0",
+    "imgkit-win32-x64-msvc": "^2.0.0",
+    "imgkit-win32-arm64-msvc": "^2.0.0",
+    "imgkit-linux-x64-gnu": "^2.0.0",
+    "imgkit-linux-arm64-gnu": "^2.0.0",
+    "imgkit-linux-x64-musl": "^2.0.0"
   },
   "napi": {
     "binaryName": "image-turbo",
-    "packageName": "bun-image-turbo",
+    "packageName": "imgkit",
     "targets": [
       "x86_64-apple-darwin",
       "aarch64-apple-darwin",

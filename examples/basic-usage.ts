@@ -1,5 +1,5 @@
 /**
- * Basic Usage Examples for bun-image-turbo
+ * Basic Usage Examples for imgkit
  */
 
 import {
@@ -11,10 +11,10 @@ import {
   transform,
   blurhash,
   version
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 async function main() {
-  console.log(`bun-image-turbo v${version()}\n`);
+  console.log(`imgkit v${version()}\n`);
 
   // Download sample image
   console.log('Downloading sample image...');

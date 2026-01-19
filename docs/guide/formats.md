@@ -1,6 +1,6 @@
 # Image Formats
 
-bun-image-turbo supports a wide range of image formats for both reading and writing.
+imgkit supports a wide range of image formats for both reading and writing.
 
 ## Format Support Matrix
 
@@ -21,7 +21,7 @@ bun-image-turbo supports a wide range of image formats for both reading and writ
 High-quality lossy compression using TurboJPEG with SIMD acceleration.
 
 ```typescript
-import { toJpeg } from 'bun-image-turbo';
+import { toJpeg } from 'imgkit';
 
 const jpeg = await toJpeg(buffer, {
   quality: 85  // 1-100, default: 80
@@ -42,7 +42,7 @@ const jpeg = await toJpeg(buffer, {
 Lossless compression with configurable compression level.
 
 ```typescript
-import { toPng } from 'bun-image-turbo';
+import { toPng } from 'imgkit';
 
 const png = await toPng(buffer, {
   compression: 6  // 0-9, default: 6
@@ -62,7 +62,7 @@ const png = await toPng(buffer, {
 Modern format with excellent compression for both lossy and lossless.
 
 ```typescript
-import { toWebp } from 'bun-image-turbo';
+import { toWebp } from 'imgkit';
 
 // Lossy (default)
 const lossy = await toWebp(buffer, {
@@ -89,7 +89,7 @@ WebP typically produces 25-35% smaller files than JPEG at equivalent quality.
 Apple's modern image format, used by iPhones. Read-only support on macOS ARM64.
 
 ```typescript
-import { metadata, toJpeg } from 'bun-image-turbo';
+import { metadata, toJpeg } from 'imgkit';
 
 // Read HEIC metadata
 const info = await metadata(heicBuffer);
@@ -124,7 +124,7 @@ const jpeg = await toJpeg(avifBuffer);
 Supports both static and animated GIFs for reading. GIF output is available through `transform()`.
 
 ```typescript
-import { metadata, transform } from 'bun-image-turbo';
+import { metadata, transform } from 'imgkit';
 
 // Read GIF metadata
 const info = await metadata(gifBuffer);
@@ -145,7 +145,7 @@ When reading animated GIFs, metadata includes frame count (`pages`), loop count,
 The `transform()` function accepts output format options:
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 // JPEG output
 const jpeg = await transform(buffer, {

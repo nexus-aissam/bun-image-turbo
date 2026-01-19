@@ -1,15 +1,15 @@
 # Examples
 
-Practical examples showing how to use bun-image-turbo in real applications.
+Practical examples showing how to use imgkit in real applications.
 
 ## Runnable Examples
 
-The repository includes complete, runnable examples in the [`examples/`](https://github.com/nexus-aissam/bun-image-turbo/tree/main/examples) folder:
+The repository includes complete, runnable examples in the [`examples/`](https://github.com/nexus-aissam/imgkit/tree/main/examples) folder:
 
 ```bash
 # Clone and run examples
-git clone https://github.com/nexus-aissam/bun-image-turbo
-cd bun-image-turbo/examples
+git clone https://github.com/nexus-aissam/imgkit
+cd imgkit/examples
 
 # Install dependencies
 bun install
@@ -39,7 +39,7 @@ bun run batch    # Batch processing
 ### Get Image Info
 
 ```typescript
-import { metadata } from 'bun-image-turbo';
+import { metadata } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 const info = await metadata(buffer);
@@ -49,7 +49,7 @@ console.log(`${info.width}x${info.height} ${info.format}`);
 ### Resize Image
 
 ```typescript
-import { resize } from 'bun-image-turbo';
+import { resize } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 const resized = await resize(buffer, { width: 800 });
@@ -60,7 +60,7 @@ await Bun.write('resized.png', resized);
 ### Crop Image
 
 ```typescript
-import { crop } from 'bun-image-turbo';
+import { crop } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -77,7 +77,7 @@ const region = await crop(buffer, { x: 100, y: 50, width: 400, height: 300 });
 ### Convert to WebP
 
 ```typescript
-import { toWebp } from 'bun-image-turbo';
+import { toWebp } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 const webp = await toWebp(buffer, { quality: 80 });
@@ -87,7 +87,7 @@ await Bun.write('photo.webp', webp);
 ### Apply Transformations
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -104,7 +104,7 @@ await Bun.write('output.webp', result);
 ### Generate BlurHash
 
 ```typescript
-import { blurhash } from 'bun-image-turbo';
+import { blurhash } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 const { hash, width, height } = await blurhash(buffer, 4, 3);
@@ -115,7 +115,7 @@ console.log(`Original: ${width}x${height}`);
 ### Generate ThumbHash (Recommended)
 
 ```typescript
-import { thumbhash } from 'bun-image-turbo';
+import { thumbhash } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 const { dataUrl, hash, hasAlpha } = await thumbhash(buffer);
@@ -130,7 +130,7 @@ console.log(`Hash size: ${hash.length} bytes`);
 ### Add EXIF Metadata
 
 ```typescript
-import { writeExif, toWebp } from 'bun-image-turbo';
+import { writeExif, toWebp } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('ai-generated.png').arrayBuffer());
 const webp = await toWebp(buffer, { quality: 90 });
@@ -151,7 +151,7 @@ await Bun.write('with-metadata.webp', withExif);
 ### Convert HEIC (macOS ARM64)
 
 ```typescript
-import { toJpeg } from 'bun-image-turbo';
+import { toJpeg } from 'imgkit';
 
 const heic = Buffer.from(await Bun.file('IMG_1234.HEIC').arrayBuffer());
 const jpeg = await toJpeg(heic, { quality: 90 });
@@ -161,7 +161,7 @@ await Bun.write('photo.jpg', jpeg);
 ### Convert to ML Tensor
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 

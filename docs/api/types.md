@@ -1,6 +1,6 @@
 # Types
 
-TypeScript type definitions for bun-image-turbo.
+TypeScript type definitions for imgkit.
 
 ## ImageMetadata
 
@@ -213,7 +213,7 @@ import type {
   OutputOptions,
   BlurhashResult,
   ExifOptions
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 // Function signatures
 declare function metadata(input: Buffer): Promise<ImageMetadata>;
@@ -261,7 +261,7 @@ import {
   transform,
   type TransformOptions,
   type ImageMetadata
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 const options: TransformOptions = {
   resize: { width: 800, fit: 'cover' },

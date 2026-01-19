@@ -29,7 +29,7 @@ beforeAll(async () => {
   testImage = Buffer.from(await response.arrayBuffer());
 });
 
-describe("bun-image-turbo", () => {
+describe("imgkit", () => {
   describe("version", () => {
     it("should return version string", () => {
       const v = version();

@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-We actively support the following versions of bun-image-turbo with security updates:
+We actively support the following versions of imgkit with security updates:
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -15,7 +15,7 @@ We actively support the following versions of bun-image-turbo with security upda
 
 ### Image Processing Vulnerabilities
 
-As an image processing library that handles untrusted input, bun-image-turbo takes security seriously. Common attack vectors in image processing include:
+As an image processing library that handles untrusted input, imgkit takes security seriously. Common attack vectors in image processing include:
 
 - **Malformed Images**: Crafted images designed to exploit parser vulnerabilities
 - **Memory Exhaustion**: Extremely large images or decompression bombs
@@ -77,7 +77,7 @@ Reproduction:
 Attached: poc.heic (malicious sample)
 
 Environment:
-- bun-image-turbo v1.2.3
+- imgkit v1.2.3
 - Bun v1.0.20
 - Ubuntu 22.04
 ```
@@ -151,7 +151,7 @@ Stay informed about security updates:
 
 ## Security Best Practices
 
-### For Users of bun-image-turbo
+### For Users of imgkit
 
 1. **Keep Updated**: Always use the latest stable version
 2. **Validate Input**: Validate and sanitize user uploads
@@ -163,7 +163,7 @@ Stay informed about security updates:
 ### Example Secure Usage
 
 ```typescript
-import { resizeImage } from 'bun-image-turbo';
+import { resizeImage } from 'imgkit';
 
 async function processUserUpload(file: Buffer) {
   // Validate file size
@@ -237,4 +237,4 @@ For general questions and support, please use GitHub Issues or Discussions.
 
 ---
 
-Thank you for helping keep bun-image-turbo and its users safe! 🔒
+Thank you for helping keep imgkit and its users safe! 🔒

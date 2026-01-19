@@ -17,7 +17,7 @@ use crate::metadata;
 
 pub use generic::decode_with_image_crate_safe;
 pub use heic::decode_heic_with_target;
-pub use jpeg::{decode_jpeg_fast, decode_jpeg_with_shrink};
+pub use jpeg::{decode_jpeg_fast, decode_jpeg_with_shrink, decode_jpeg_with_shrink_mode};
 pub use webp::{decode_webp_fast, decode_webp_with_target};
 
 // Re-export metadata functions for backward compatibility
@@ -37,6 +37,18 @@ pub fn decode_image_with_target(
   target_width: Option<u32>,
   target_height: Option<u32>,
 ) -> Result<DynamicImage, ImageError> {
+  decode_image_with_target_fast(data, target_width, target_height, false)
+}
+
+/// Decode image with target dimensions and fast mode option
+/// Fast mode uses more aggressive shrink-on-load for maximum speed
+#[inline]
+pub fn decode_image_with_target_fast(
+  data: &[u8],
+  target_width: Option<u32>,
+  target_height: Option<u32>,
+  fast_mode: bool,
+) -> Result<DynamicImage, ImageError> {
   // Check for HEIC first - use shrink-on-decode if target provided
   if is_heic(data) {
     return decode_heic_with_target(data, target_width, target_height);
@@ -46,9 +58,9 @@ pub fn decode_image_with_target(
 
   match format {
     ImageFormat::Jpeg => {
-      // Use mozjpeg with shrink-on-load when we have target dimensions
+      // Use turbojpeg with shrink-on-load when we have target dimensions
       if target_width.is_some() || target_height.is_some() {
-        decode_jpeg_with_shrink(data, target_width, target_height)
+        decode_jpeg_with_shrink_mode(data, target_width, target_height, fast_mode)
       } else {
         decode_jpeg_fast(data)
       }

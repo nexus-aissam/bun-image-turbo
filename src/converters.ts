@@ -1,5 +1,5 @@
 /**
- * Option conversion utilities for bun-image-turbo
+ * Option conversion utilities for imgkit
  *
  * Converts TypeScript options to NAPI-compatible format for Rust bindings.
  */

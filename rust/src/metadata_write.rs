@@ -327,7 +327,7 @@ mod tests {
         let options = ExifWriteOptions {
             image_description: Some("Test image".to_string()),
             artist: Some("Test Artist".to_string()),
-            software: Some("bun-image-turbo".to_string()),
+            software: Some("imgkit".to_string()),
             ..Default::default()
         };
 

@@ -1,4 +1,4 @@
-//! Type definitions for bun-image-turbo
+//! Type definitions for imgkit
 //!
 //! All NAPI-compatible types (enums, structs) for the public API.
 
@@ -480,4 +480,67 @@ pub struct DominantColorsResult {
   pub colors: Vec<DominantColor>,
   /// The most dominant color (same as colors[0])
   pub primary: DominantColor,
+}
+
+// ============================================
+// FAST THUMBNAIL TYPES
+// ============================================
+
+/// Output format for thumbnail
+#[derive(Clone)]
+#[napi(string_enum)]
+pub enum ThumbnailFormat {
+  /// JPEG output (smallest, lossy)
+  Jpeg,
+  /// PNG output (larger, lossless)
+  Png,
+  /// WebP output (best compression)
+  Webp,
+}
+
+/// Options for fast thumbnail generation
+/// Uses optimized decode pipeline with shrink-on-load
+#[napi(object)]
+#[derive(Clone)]
+pub struct ThumbnailOptions {
+  /// Target width (required)
+  pub width: u32,
+  /// Target height (optional, maintains aspect ratio if not set)
+  pub height: Option<u32>,
+  /// Output format (default: same as input, or JPEG for best speed)
+  pub format: Option<ThumbnailFormat>,
+  /// JPEG quality 1-100 (default: 80, or 70 in fast mode)
+  pub quality: Option<u8>,
+  /// Enable shrink-on-load optimization (default: true)
+  /// When true, decodes image at reduced resolution before resize
+  /// This is 4-10x faster for large images
+  pub shrink_on_load: Option<bool>,
+  /// Resize filter (default: auto-select based on scale factor)
+  pub filter: Option<ResizeFilter>,
+  /// Enable fast mode for maximum speed (default: false)
+  /// When true:
+  /// - Uses more aggressive shrink-on-load (1/8 instead of 1/4)
+  /// - Skips final resize if within 15% of target dimensions
+  /// - Uses Nearest neighbor filter for any remaining resize
+  /// - Uses lower quality (70 instead of 80)
+  /// This can be 2-4x faster than normal mode with slight quality tradeoff
+  pub fast_mode: Option<bool>,
+}
+
+/// Fast thumbnail result with metadata
+#[napi(object)]
+pub struct ThumbnailResult {
+  /// The thumbnail image data
+  pub data: Vec<u8>,
+  /// Output width
+  pub width: u32,
+  /// Output height
+  pub height: u32,
+  /// Output format used
+  pub format: String,
+  /// Whether shrink-on-load was used
+  pub shrink_on_load_used: bool,
+  /// Original image dimensions
+  pub original_width: u32,
+  pub original_height: u32,
 }

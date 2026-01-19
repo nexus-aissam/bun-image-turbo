@@ -5,19 +5,19 @@
 ::: code-group
 
 ```bash [bun]
-bun add bun-image-turbo
+bun add imgkit
 ```
 
 ```bash [npm]
-npm install bun-image-turbo
+npm install imgkit
 ```
 
 ```bash [yarn]
-yarn add bun-image-turbo
+yarn add imgkit
 ```
 
 ```bash [pnpm]
-pnpm add bun-image-turbo
+pnpm add imgkit
 ```
 
 :::
@@ -48,10 +48,10 @@ All platforms listed above are fully supported. HEIC/HEIF support is only availa
 ## Verifying Installation
 
 ```typescript
-import { version, metadata } from 'bun-image-turbo';
+import { version, metadata } from 'imgkit';
 
 // Check version
-console.log(`bun-image-turbo v${version()}`);
+console.log(`imgkit v${version()}`);
 
 // Test with an image
 const buffer = await Bun.file('image.jpg').arrayBuffer();
@@ -65,8 +65,8 @@ If you need to build from source (requires Rust 1.70+):
 
 ```bash
 # Clone the repository
-git clone https://github.com/nexus-aissam/bun-image-turbo.git
-cd bun-image-turbo
+git clone https://github.com/nexus-aissam/imgkit.git
+cd imgkit
 
 # Install dependencies
 bun install

@@ -36,3 +36,9 @@ export {
   dominantColors,
   dominantColorsSync,
 } from "./dominant-colors";
+export {
+  thumbnail,
+  thumbnailSync,
+  thumbnailBuffer,
+  thumbnailBufferSync,
+} from "./thumbnail";

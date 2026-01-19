@@ -13,7 +13,7 @@
  *
  * @example
  * ```typescript
- * import { dominantColors } from 'bun-image-turbo';
+ * import { dominantColors } from 'imgkit';
  *
  * const result = await dominantColors(buffer);
  * console.log(result.primary.hex); // "#3498DB"

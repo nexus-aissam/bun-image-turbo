@@ -29,7 +29,7 @@ A clear description of what actually happened.
 
 ```typescript
 // Minimal code to reproduce the issue
-import { resizeImage } from 'bun-image-turbo';
+import { resizeImage } from 'imgkit';
 
 const result = await resizeImage(buffer, 800, 600);
 // Error occurs here
@@ -43,7 +43,7 @@ If applicable, paste the full error message here
 
 ## Environment
 
-**bun-image-turbo version:**
+**imgkit version:**
 - Version: [e.g., 1.2.3]
 
 **Runtime:**

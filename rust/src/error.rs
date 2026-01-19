@@ -1,4 +1,4 @@
-//! Error handling for bun-image-turbo
+//! Error handling for imgkit
 
 use napi::Error;
 use thiserror::Error;

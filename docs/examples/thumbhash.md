@@ -5,7 +5,7 @@ Generate compact, visually pleasing image placeholders with ThumbHash.
 ## Basic Usage
 
 ```typescript
-import { thumbhash } from 'bun-image-turbo';
+import { thumbhash } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -25,7 +25,7 @@ const html = `<img src="${dataUrl}" alt="placeholder" />`;
 Show a blurred placeholder while the full image loads:
 
 ```typescript
-import { thumbhash } from 'bun-image-turbo';
+import { thumbhash } from 'imgkit';
 
 // On image upload/processing
 async function processImage(file: File) {
@@ -97,7 +97,7 @@ function ProgressiveImage({ src, placeholder, alt }: ImageProps) {
 Store compact hash in database, restore when needed:
 
 ```typescript
-import { thumbhash, thumbhashToDataUrl } from 'bun-image-turbo';
+import { thumbhash, thumbhashToDataUrl } from 'imgkit';
 
 // On upload: generate and store hash
 async function saveImage(buffer: Buffer, db: Database) {
@@ -126,7 +126,7 @@ async function getImageWithPlaceholder(id: string, db: Database) {
 Serve placeholders via HTTP:
 
 ```typescript
-import { thumbhash, thumbhashToRgba } from 'bun-image-turbo';
+import { thumbhash, thumbhashToRgba } from 'imgkit';
 
 Bun.serve({
   port: 3000,
@@ -181,7 +181,7 @@ Bun.serve({
 Generate placeholders for multiple images:
 
 ```typescript
-import { thumbhash } from 'bun-image-turbo';
+import { thumbhash } from 'imgkit';
 import { readdir } from 'fs/promises';
 
 async function generatePlaceholders(directory: string) {

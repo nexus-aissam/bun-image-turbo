@@ -1,6 +1,6 @@
 /**
  * WebP Shrink-on-Load Performance Benchmark
- * Compares bun-image-turbo vs sharp for WebP resize operations
+ * Compares imgkit vs sharp for WebP resize operations
  * Uses consistent test images for reliable measurements
  */
 
@@ -50,7 +50,7 @@ async function benchmarkSize(
     await sharp(webpBuffer).resize(targetWidth).webp().toBuffer();
   }
 
-  // Benchmark bun-image-turbo (output WebP for fair comparison)
+  // Benchmark imgkit (output WebP for fair comparison)
   const turboStart = performance.now();
   for (let i = 0; i < iterations; i++) {
     await transform(webpBuffer, {
@@ -116,7 +116,7 @@ async function benchmark() {
   console.log("Average speedup: " + avgSpeedup.toFixed(2) + "x");
 
   if (avgSpeedup > 1) {
-    console.log("✅ bun-image-turbo is faster on average!");
+    console.log("✅ imgkit is faster on average!");
   } else {
     console.log("⚠️ sharp is faster on average");
   }

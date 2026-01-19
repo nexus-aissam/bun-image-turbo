@@ -21,7 +21,7 @@ import {
   writeExifSync,
   stripExif,
   stripExifSync,
-} from "bun-image-turbo";
+} from "imgkit";
 
 let jpegImage: Buffer;
 let pngImage: Buffer;
@@ -38,7 +38,7 @@ beforeAll(async () => {
   console.log("Test images ready!");
 });
 
-describe("bun-image-turbo - Complete Test Suite", () => {
+describe("imgkit - Complete Test Suite", () => {
   // ============================================
   // VERSION
   // ============================================
@@ -414,7 +414,7 @@ describe("bun-image-turbo - Complete Test Suite", () => {
       const withExif = await writeExif(jpegImage, {
         artist: "Test Artist",
         copyright: "Test Copyright 2024",
-        software: "bun-image-turbo test",
+        software: "imgkit test",
       });
       expect(withExif.length).toBeGreaterThan(0);
     });
@@ -448,7 +448,7 @@ describe("bun-image-turbo - Complete Test Suite", () => {
       const withExif = await writeExif(jpegImage, {
         artist: "AI Generator",
         copyright: "2024 Test Suite",
-        software: "bun-image-turbo v1.4.0",
+        software: "imgkit v1.4.0",
         userComment: JSON.stringify({
           model: "test-model",
           prompt: "test prompt",

@@ -16,7 +16,7 @@ async function main() {
     });
   }
   const turboJpeg = (performance.now() - start) / 10;
-  console.log("bun-image-turbo (resize -> JPEG):", turboJpeg.toFixed(1), "ms");
+  console.log("imgkit (resize -> JPEG):", turboJpeg.toFixed(1), "ms");
 
   // Sharp resize to JPEG
   start = performance.now();
@@ -28,9 +28,9 @@ async function main() {
 
   const speedup = sharpJpeg / turboJpeg;
   if (speedup > 1) {
-    console.log("\n🚀 bun-image-turbo is", speedup.toFixed(2) + "x FASTER!");
+    console.log("\n🚀 imgkit is", speedup.toFixed(2) + "x FASTER!");
   } else {
-    console.log("\n🐢 bun-image-turbo is", (1/speedup).toFixed(2) + "x slower");
+    console.log("\n🐢 imgkit is", (1/speedup).toFixed(2) + "x slower");
   }
 
   // Now test 10MB
@@ -47,7 +47,7 @@ async function main() {
     });
   }
   const turbo10 = (performance.now() - start) / 5;
-  console.log("bun-image-turbo (resize -> JPEG):", turbo10.toFixed(1), "ms");
+  console.log("imgkit (resize -> JPEG):", turbo10.toFixed(1), "ms");
 
   start = performance.now();
   for (let i = 0; i < 5; i++) {
@@ -58,9 +58,9 @@ async function main() {
 
   const speedup10 = sharp10 / turbo10;
   if (speedup10 > 1) {
-    console.log("\n🚀 bun-image-turbo is", speedup10.toFixed(2) + "x FASTER!");
+    console.log("\n🚀 imgkit is", speedup10.toFixed(2) + "x FASTER!");
   } else {
-    console.log("\n🐢 bun-image-turbo is", (1/speedup10).toFixed(2) + "x slower");
+    console.log("\n🐢 imgkit is", (1/speedup10).toFixed(2) + "x slower");
   }
 }
 

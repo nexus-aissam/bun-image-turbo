@@ -1,37 +1,46 @@
 /**
- * bun-image-turbo Types
+ * imgkit Types
  */
 
 /** Supported image formats */
-export type ImageFormat = 'jpeg' | 'png' | 'webp' | 'gif' | 'bmp' | 'ico' | 'tiff' | 'heic' | 'avif';
+export type ImageFormat =
+  | "jpeg"
+  | "png"
+  | "webp"
+  | "gif"
+  | "bmp"
+  | "ico"
+  | "tiff"
+  | "heic"
+  | "avif";
 
 /** Resize filter/algorithm */
 export type ResizeFilter =
-  | 'nearest'   // Fastest, lowest quality
-  | 'bilinear'  // Fast, good quality
-  | 'catmullRom' // Balanced speed and quality
-  | 'mitchell'  // Good for downscaling
-  | 'lanczos3'; // Highest quality, slower
+  | "nearest" // Fastest, lowest quality
+  | "bilinear" // Fast, good quality
+  | "catmullRom" // Balanced speed and quality
+  | "mitchell" // Good for downscaling
+  | "lanczos3"; // Highest quality, slower
 
 /** Image fit mode for resize */
 export type FitMode =
-  | 'cover'   // Resize to cover target dimensions (may crop)
-  | 'contain' // Resize to fit within target (may have padding)
-  | 'fill'    // Resize to exact dimensions (may distort)
-  | 'inside'  // Resize only if larger than target
-  | 'outside'; // Resize only if smaller than target
+  | "cover" // Resize to cover target dimensions (may crop)
+  | "contain" // Resize to fit within target (may have padding)
+  | "fill" // Resize to exact dimensions (may distort)
+  | "inside" // Resize only if larger than target
+  | "outside"; // Resize only if smaller than target
 
 /** Crop gravity/anchor point */
 export type CropGravity =
-  | 'center'    // Center of image (default)
-  | 'north'     // Top center
-  | 'south'     // Bottom center
-  | 'east'      // Right center
-  | 'west'      // Left center
-  | 'northWest' // Top left corner
-  | 'northEast' // Top right corner
-  | 'southWest' // Bottom left corner
-  | 'southEast'; // Bottom right corner
+  | "center" // Center of image (default)
+  | "north" // Top center
+  | "south" // Bottom center
+  | "east" // Right center
+  | "west" // Left center
+  | "northWest" // Top left corner
+  | "northEast" // Top right corner
+  | "southWest" // Bottom left corner
+  | "southEast"; // Bottom right corner
 
 /** Crop options */
 export interface CropOptions {
@@ -292,18 +301,18 @@ export interface NapiTransformOptions {
 // ============================================
 
 /** Tensor data type */
-export type TensorDtype = 'Float32' | 'Uint8';
+export type TensorDtype = "Float32" | "Uint8";
 
 /** Tensor memory layout */
-export type TensorLayout = 'Chw' | 'Hwc';
+export type TensorLayout = "Chw" | "Hwc";
 
 /** Normalization preset */
 export type TensorNormalization =
-  | 'Imagenet'   // mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225]
-  | 'Clip'       // mean=[0.481,0.458,0.408], std=[0.269,0.261,0.276]
-  | 'ZeroOne'    // Scale to [0, 1] range
-  | 'NegOneOne'  // Scale to [-1, 1] range
-  | 'None';      // No normalization (raw 0-255)
+  | "Imagenet" // mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225]
+  | "Clip" // mean=[0.481,0.458,0.408], std=[0.269,0.261,0.276]
+  | "ZeroOne" // Scale to [0, 1] range
+  | "NegOneOne" // Scale to [-1, 1] range
+  | "None"; // No normalization (raw 0-255)
 
 /** Tensor conversion options */
 export interface TensorOptions {
@@ -355,16 +364,16 @@ export interface NapiTensorOptions {
 
 /** Perceptual hash algorithm */
 export type HashAlgorithm =
-  | 'PHash'     // Perceptual hash using DCT (best for most use cases)
-  | 'DHash'     // Difference hash using gradients (fast, good for similar images)
-  | 'AHash'     // Average hash (fastest, least robust)
-  | 'BlockHash'; // Block hash (good balance of speed and accuracy)
+  | "PHash" // Perceptual hash using DCT (best for most use cases)
+  | "DHash" // Difference hash using gradients (fast, good for similar images)
+  | "AHash" // Average hash (fastest, least robust)
+  | "BlockHash"; // Block hash (good balance of speed and accuracy)
 
 /** Hash size (dimensions of the hash grid) */
 export type HashSize =
-  | 'Size8'   // 8x8 hash (64 bits) - fastest, good for most cases
-  | 'Size16'  // 16x16 hash (256 bits) - more accurate
-  | 'Size32'; // 32x32 hash (1024 bits) - highest accuracy
+  | "Size8" // 8x8 hash (64 bits) - fastest, good for most cases
+  | "Size16" // 16x16 hash (256 bits) - more accurate
+  | "Size32"; // 32x32 hash (1024 bits) - highest accuracy
 
 /** Perceptual hash options */
 export interface ImageHashOptions {
@@ -394,13 +403,13 @@ export interface ImageHashResult {
 
 /** Common aspect ratios for smart crop */
 export type AspectRatio =
-  | '1:1'     // Square (Instagram, profile pics)
-  | '16:9'   // Landscape (YouTube, Twitter)
-  | '9:16'   // Portrait (Stories, TikTok)
-  | '4:3'    // Classic photo
-  | '3:2'    // DSLR standard
-  | '21:9'   // Ultrawide
-  | string;  // Custom ratio like "5:4"
+  | "1:1" // Square (Instagram, profile pics)
+  | "16:9" // Landscape (YouTube, Twitter)
+  | "9:16" // Portrait (Stories, TikTok)
+  | "4:3" // Classic photo
+  | "3:2" // DSLR standard
+  | "21:9" // Ultrawide
+  | string; // Custom ratio like "5:4"
 
 /** Boost region for smart crop (prioritize specific areas) */
 export interface SmartCropBoostRegion {
@@ -464,4 +473,77 @@ export interface DominantColorsResult {
   colors: DominantColor[];
   /** The most dominant color (same as colors[0]) */
   primary: DominantColor;
+}
+
+// ============================================
+// FAST THUMBNAIL TYPES
+// ============================================
+
+/** Output format for thumbnail */
+export type ThumbnailFormat = "Jpeg" | "Png" | "Webp";
+
+/** Options for fast thumbnail generation */
+export interface ThumbnailOptions {
+  /** Target width (required) */
+  width: number;
+  /** Target height (optional, maintains aspect ratio if not set) */
+  height?: number;
+  /** Output format (default: same as input, or JPEG for best speed) */
+  format?: ThumbnailFormat;
+  /** JPEG/WebP quality 1-100 (default: 80, or 70 in fast mode) */
+  quality?: number;
+  /**
+   * Enable shrink-on-load optimization (default: true)
+   *
+   * When true, decodes image at reduced resolution before resize.
+   * This is 2-10x faster for large images being downscaled.
+   *
+   * - JPEG: Uses libjpeg-turbo scale factors (1/2, 1/4, 1/8)
+   * - WebP: Uses libwebp native scaling during decode
+   */
+  shrinkOnLoad?: boolean;
+  /** Resize filter (default: auto-select based on scale factor) */
+  filter?: ResizeFilter;
+  /**
+   * Enable fast mode for maximum speed (default: false)
+   *
+   * When true, applies aggressive optimizations:
+   * - More aggressive shrink-on-load (1/8 instead of 1/4 when possible)
+   * - Skips final resize if within 15% of target dimensions
+   * - Uses Nearest neighbor filter for any remaining resize
+   * - Uses lower quality (70 instead of 80)
+   *
+   * This can be 2-4x faster than normal mode with slight quality tradeoff.
+   * Best for generating preview thumbnails where exact dimensions don't matter.
+   */
+  fastMode?: boolean;
+}
+
+/** Fast thumbnail result with metadata */
+export interface ThumbnailResult {
+  /** The thumbnail image data */
+  data: Buffer;
+  /** Output width */
+  width: number;
+  /** Output height */
+  height: number;
+  /** Output format used */
+  format: string;
+  /** Whether shrink-on-load was used */
+  shrinkOnLoadUsed: boolean;
+  /** Original image width */
+  originalWidth: number;
+  /** Original image height */
+  originalHeight: number;
+}
+
+/** Native thumbnail options (internal) */
+export interface NapiThumbnailOptions {
+  width: number;
+  height?: number;
+  format?: string;
+  quality?: number;
+  shrinkOnLoad?: boolean;
+  filter?: string;
+  fastMode?: boolean;
 }

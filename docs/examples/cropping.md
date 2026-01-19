@@ -1,6 +1,6 @@
 # Cropping Examples
 
-This example demonstrates the powerful cropping capabilities of bun-image-turbo, including aspect ratio cropping, coordinate-based cropping, and the crop+resize pipeline.
+This example demonstrates the powerful cropping capabilities of imgkit, including aspect ratio cropping, coordinate-based cropping, and the crop+resize pipeline.
 
 ## Source Code
 
@@ -16,10 +16,10 @@ import {
   transform,
   metadata,
   version
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 async function main() {
-  console.log(`bun-image-turbo v${version()}\n`);
+  console.log(`imgkit v${version()}\n`);
 
   // Download a test image
   console.log('Downloading test image...');
@@ -182,7 +182,7 @@ bun run crop
 ## Output
 
 ```text
-bun-image-turbo v1.6.0
+imgkit v1.6.0
 
 Downloading test image...
 Original: 1920x1080
@@ -223,7 +223,7 @@ Sync crop (4:3): 1440x1080
 ### Social Media Image Preparation
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 // Prepare images for multiple platforms from a single source
 async function prepareSocialMedia(input: Buffer) {
@@ -271,7 +271,7 @@ async function prepareSocialMedia(input: Buffer) {
 ### AI Training Data Preparation
 
 ```typescript
-import { crop, transform } from 'bun-image-turbo';
+import { crop, transform } from 'imgkit';
 
 // Prepare images for AI/ML training
 async function prepareTrainingData(input: Buffer) {
@@ -315,7 +315,7 @@ async function augmentWithCrops(input: Buffer) {
 ### E-commerce Product Images
 
 ```typescript
-import { transform, crop } from 'bun-image-turbo';
+import { transform, crop } from 'imgkit';
 
 // Generate multiple product image sizes
 async function generateProductImages(input: Buffer) {
@@ -357,7 +357,7 @@ async function generateProductImages(input: Buffer) {
 ### Face/Region Extraction
 
 ```typescript
-import { crop, transform } from 'bun-image-turbo';
+import { crop, transform } from 'imgkit';
 
 // Extract detected face region (coordinates from face detection API)
 async function extractFace(

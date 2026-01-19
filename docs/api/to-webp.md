@@ -34,7 +34,7 @@ interface WebpOptions {
 ### Basic Conversion
 
 ```typescript
-import { toWebp } from 'bun-image-turbo';
+import { toWebp } from 'imgkit';
 
 const webp = await toWebp(buffer);
 await Bun.write('output.webp', webp);
@@ -63,7 +63,7 @@ const lossless = await toWebp(buffer, { lossless: true });
 ### Sync Version
 
 ```typescript
-import { toWebpSync } from 'bun-image-turbo';
+import { toWebpSync } from 'imgkit';
 
 const webp = toWebpSync(buffer, { quality: 85 });
 ```

@@ -1,11 +1,11 @@
 # Resizing
 
-bun-image-turbo provides high-quality image resizing with multiple algorithms and fit modes.
+imgkit provides high-quality image resizing with multiple algorithms and fit modes.
 
 ## Basic Resizing
 
 ```typescript
-import { resize } from 'bun-image-turbo';
+import { resize } from 'imgkit';
 
 // Resize by width (maintains aspect ratio)
 const resized = await resize(buffer, { width: 800 });
@@ -134,7 +134,7 @@ const hq = await resize(buffer, {
 Use `transform()` for resize + other operations:
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 const result = await transform(buffer, {
   resize: {

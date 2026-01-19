@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "bun-image-turbo-docs",
+      "name": "imgkit-docs",
       "devDependencies": {
         "vitepress": "^1.5.0",
       },

@@ -1,5 +1,5 @@
 /**
- * bun-image-turbo Benchmarks
+ * imgkit Benchmarks
  *
  * Comprehensive performance comparison against sharp
  *
@@ -73,7 +73,7 @@ function createMinimalPng(
   height: number,
   pixels: Buffer
 ): Buffer {
-  // For simplicity, use BMP as fallback (bun-image-turbo supports it)
+  // For simplicity, use BMP as fallback (imgkit supports it)
   const rowSize = Math.ceil((width * 3) / 4) * 4;
   const imageSize = rowSize * height;
   const fileSize = 54 + imageSize;
@@ -189,12 +189,12 @@ function formatComparison(ours: BenchResult, theirs: BenchResult): string {
   const comparison = faster
     ? `${speedup.toFixed(2)}x faster`
     : `${(1 / speedup).toFixed(2)}x slower`;
-  return `${emoji} bun-image-turbo is ${comparison} than sharp`;
+  return `${emoji} imgkit is ${comparison} than sharp`;
 }
 
 async function main() {
   console.log("=".repeat(80));
-  console.log("                    bun-image-turbo Benchmarks");
+  console.log("                    imgkit Benchmarks");
   console.log("=".repeat(80));
   console.log(`Platform: ${process.platform}-${process.arch}`);
   console.log(`Runtime: Bun ${Bun.version}`);
@@ -225,7 +225,7 @@ async function main() {
   const metaResults: BenchResult[] = [];
 
   const turboMeta = benchmarkSync(
-    "bun-image-turbo metadataSync()",
+    "imgkit metadataSync()",
     () => {
       imageTurbo.metadataSync(testImages.medium);
     },
@@ -262,7 +262,7 @@ async function main() {
   const resizeSmallResults: BenchResult[] = [];
 
   const turboResizeSmall = await benchmark(
-    "bun-image-turbo resize()",
+    "imgkit resize()",
     async () => {
       await imageTurbo.resize(testImages.medium, { width: 200, height: 150 });
     },
@@ -302,7 +302,7 @@ async function main() {
   const resizeLargeResults: BenchResult[] = [];
 
   const turboResizeLarge = await benchmark(
-    "bun-image-turbo resize()",
+    "imgkit resize()",
     async () => {
       await imageTurbo.resize(testImages.large, { width: 800, height: 600 });
     },
@@ -342,7 +342,7 @@ async function main() {
   const jpegResults: BenchResult[] = [];
 
   const turboJpeg = await benchmark(
-    "bun-image-turbo toJpeg()",
+    "imgkit toJpeg()",
     async () => {
       await imageTurbo.toJpeg(testImages.medium, { quality: 80 });
     },
@@ -379,7 +379,7 @@ async function main() {
   const pngResults: BenchResult[] = [];
 
   const turboPng = await benchmark(
-    "bun-image-turbo toPng()",
+    "imgkit toPng()",
     async () => {
       await imageTurbo.toPng(testImages.medium);
     },
@@ -416,7 +416,7 @@ async function main() {
   const webpResults: BenchResult[] = [];
 
   const turboWebp = await benchmark(
-    "bun-image-turbo toWebp()",
+    "imgkit toWebp()",
     async () => {
       await imageTurbo.toWebp(testImages.medium, { quality: 80 });
     },
@@ -453,7 +453,7 @@ async function main() {
   const transformResults: BenchResult[] = [];
 
   const turboTransform = await benchmark(
-    "bun-image-turbo transform()",
+    "imgkit transform()",
     async () => {
       await imageTurbo.transform(testImages.medium, {
         resize: { width: 400, height: 300 },
@@ -503,7 +503,7 @@ async function main() {
   const blurhashResults: BenchResult[] = [];
 
   const turboBlurhash = await benchmark(
-    "bun-image-turbo blurhash()",
+    "imgkit blurhash()",
     async () => {
       await imageTurbo.blurhash(testImages.small, 4, 3);
     },
@@ -521,7 +521,7 @@ async function main() {
   const syncAsync: BenchResult[] = [];
 
   const turboSync = benchmarkSync(
-    "bun-image-turbo resizeSync()",
+    "imgkit resizeSync()",
     () => {
       imageTurbo.resizeSync(testImages.medium, { width: 200 });
     },
@@ -531,7 +531,7 @@ async function main() {
   console.log(formatResult(turboSync));
 
   const turboAsync = await benchmark(
-    "bun-image-turbo resize()",
+    "imgkit resize()",
     async () => {
       await imageTurbo.resize(testImages.medium, { width: 200 });
     },
@@ -545,7 +545,7 @@ async function main() {
   // ============================================
   console.log("\n📊 Stress Test (Concurrent Operations)\n");
 
-  // bun-image-turbo stress test
+  // imgkit stress test
   const stressStart = performance.now();
   const stressPromises = Array.from({ length: CONCURRENT_OPS }, (_, i) =>
     imageTurbo.resize(testImages.medium, { width: 200 + (i % 10) * 10 })
@@ -554,7 +554,7 @@ async function main() {
   const turboStressTime = performance.now() - stressStart;
   const turboStressThroughput = (CONCURRENT_OPS / turboStressTime) * 1000;
   console.log(
-    `bun-image-turbo (${CONCURRENT_OPS} concurrent)`.padEnd(40) +
+    `imgkit (${CONCURRENT_OPS} concurrent)`.padEnd(40) +
       `${turboStressTime.toFixed(2).padStart(8)} ms total  ` +
       `${turboStressThroughput.toFixed(2).padStart(8)} ops/sec`
   );
@@ -582,7 +582,7 @@ async function main() {
       ? `${stressSpeedup.toFixed(2)}x faster`
       : `${(1 / stressSpeedup).toFixed(2)}x slower`;
     console.log(
-      `\n${stressEmoji} bun-image-turbo is ${stressComparison} under stress`
+      `\n${stressEmoji} imgkit is ${stressComparison} under stress`
     );
   }
 
@@ -633,7 +633,7 @@ async function main() {
     // Metadata
     console.log("\n📊 Metadata (1MB JPEG)\n");
     const turbo1mbMeta = benchmarkSync(
-      "bun-image-turbo metadata",
+      "imgkit metadata",
       () => {
         imageTurbo.metadataSync(jpeg1mb);
       },
@@ -656,7 +656,7 @@ async function main() {
     // Resize
     console.log("\n📊 Resize 1MB JPEG → 800px\n");
     const turbo1mbResize = await benchmark(
-      "bun-image-turbo resize",
+      "imgkit resize",
       async () => {
         await imageTurbo.resize(jpeg1mb, { width: 800 });
       },
@@ -679,7 +679,7 @@ async function main() {
     // Transform pipeline
     console.log("\n📊 Transform Pipeline (1MB JPEG)\n");
     const turbo1mbTransform = await benchmark(
-      "bun-image-turbo transform",
+      "imgkit transform",
       async () => {
         await imageTurbo.transform(jpeg1mb, {
           resize: { width: 600 },
@@ -723,7 +723,7 @@ async function main() {
     // Metadata
     console.log("\n📊 Metadata (1MB PNG)\n");
     const turboPngMeta = benchmarkSync(
-      "bun-image-turbo metadata",
+      "imgkit metadata",
       () => {
         imageTurbo.metadataSync(png1mb);
       },
@@ -746,7 +746,7 @@ async function main() {
     // Resize
     console.log("\n📊 Resize 1MB PNG → 400px\n");
     const turboPngResize = await benchmark(
-      "bun-image-turbo resize",
+      "imgkit resize",
       async () => {
         await imageTurbo.resize(png1mb, { width: 400 });
       },
@@ -780,7 +780,7 @@ async function main() {
     // Metadata
     console.log("\n📊 Metadata (10MB JPEG)\n");
     const turbo10mbMeta = benchmarkSync(
-      "bun-image-turbo metadata",
+      "imgkit metadata",
       () => {
         imageTurbo.metadataSync(jpeg10mb);
       },
@@ -803,7 +803,7 @@ async function main() {
     // Resize
     console.log("\n📊 Resize 10MB JPEG → 800px\n");
     const turbo10mbResize = await benchmark(
-      "bun-image-turbo resize",
+      "imgkit resize",
       async () => {
         await imageTurbo.resize(jpeg10mb, { width: 800 });
       },
@@ -826,7 +826,7 @@ async function main() {
     // To WebP
     console.log("\n📊 Convert 10MB JPEG → WebP\n");
     const turbo10mbWebp = await benchmark(
-      "bun-image-turbo toWebp",
+      "imgkit toWebp",
       async () => {
         await imageTurbo.toWebp(jpeg10mb, { quality: 80 });
       },
@@ -860,7 +860,7 @@ async function main() {
     // Metadata
     console.log("\n📊 Metadata (10MB PNG)\n");
     const turboPng10mbMeta = benchmarkSync(
-      "bun-image-turbo metadata",
+      "imgkit metadata",
       () => {
         imageTurbo.metadataSync(png10mb);
       },
@@ -883,7 +883,7 @@ async function main() {
     // Resize
     console.log("\n📊 Resize 10MB PNG → 800px\n");
     const turboPng10mbResize = await benchmark(
-      "bun-image-turbo resize",
+      "imgkit resize",
       async () => {
         await imageTurbo.resize(png10mb, { width: 800 });
       },
@@ -919,7 +919,7 @@ async function main() {
     // Metadata
     console.log("\n📊 Metadata (10MB WebP)\n");
     const turboWebp10mbMeta = benchmarkSync(
-      "bun-image-turbo metadata",
+      "imgkit metadata",
       () => {
         imageTurbo.metadataSync(webp10mb);
       },
@@ -944,7 +944,7 @@ async function main() {
     // Resize
     console.log("\n📊 Resize 10MB WebP → 800px\n");
     const turboWebp10mbResize = await benchmark(
-      "bun-image-turbo resize",
+      "imgkit resize",
       async () => {
         await imageTurbo.resize(webp10mb, { width: 800 });
       },
@@ -987,7 +987,7 @@ async function main() {
       // HEIC Metadata
       console.log("\n📊 Metadata (HEIC)\n");
       const turboHeicMeta = benchmarkSync(
-        "bun-image-turbo metadata",
+        "imgkit metadata",
         () => {
           imageTurbo.metadataSync(heicBuffer!);
         },
@@ -1004,7 +1004,7 @@ async function main() {
       // HEIC to JPEG
       console.log("\n📊 Convert HEIC → JPEG\n");
       const turboHeicJpeg = await benchmark(
-        "bun-image-turbo toJpeg",
+        "imgkit toJpeg",
         async () => {
           await imageTurbo.toJpeg(heicBuffer!, { quality: 85 });
         },
@@ -1015,7 +1015,7 @@ async function main() {
       // HEIC to WebP
       console.log("\n📊 Convert HEIC → WebP\n");
       const turboHeicWebp = await benchmark(
-        "bun-image-turbo toWebp",
+        "imgkit toWebp",
         async () => {
           await imageTurbo.toWebp(heicBuffer!, { quality: 80 });
         },
@@ -1026,7 +1026,7 @@ async function main() {
       // HEIC Resize
       console.log("\n📊 Resize HEIC → 800px\n");
       const turboHeicResize = await benchmark(
-        "bun-image-turbo resize",
+        "imgkit resize",
         async () => {
           await imageTurbo.resize(heicBuffer!, { width: 800 });
         },
@@ -1037,7 +1037,7 @@ async function main() {
       // HEIC Transform Pipeline
       console.log("\n📊 Transform HEIC (resize + grayscale → WebP)\n");
       const turboHeicTransform = await benchmark(
-        "bun-image-turbo transform",
+        "imgkit transform",
         async () => {
           await imageTurbo.transform(heicBuffer!, {
             resize: { width: 600 },
@@ -1052,7 +1052,7 @@ async function main() {
       // HEIC Blurhash
       console.log("\n📊 Blurhash from HEIC\n");
       const turboHeicBlurhash = await benchmark(
-        "bun-image-turbo blurhash",
+        "imgkit blurhash",
         async () => {
           await imageTurbo.blurhash(heicBuffer!, 4, 3);
         },
@@ -1063,7 +1063,7 @@ async function main() {
       // HEIC Thumbnail generation (common use case)
       console.log("\n📊 Generate Thumbnail from HEIC (200px)\n");
       const turboHeicThumb = await benchmark(
-        "bun-image-turbo thumbnail",
+        "imgkit thumbnail",
         async () => {
           const resized = await imageTurbo.resize(heicBuffer!, { width: 200 });
           await imageTurbo.toJpeg(resized, { quality: 80 });
@@ -1091,7 +1091,7 @@ async function main() {
   }
   const memoryStressTime = performance.now() - memoryStressStart;
   console.log(
-    `bun-image-turbo (20x large resize)`.padEnd(40) +
+    `imgkit (20x large resize)`.padEnd(40) +
       `${memoryStressTime.toFixed(2).padStart(8)} ms total  ` +
       `${((20 / memoryStressTime) * 1000).toFixed(2).padStart(8)} ops/sec`
   );
@@ -1111,7 +1111,7 @@ async function main() {
     const memSpeedup = sharpMemoryTime / memoryStressTime;
     const memFaster = memSpeedup > 1;
     console.log(
-      `\n${memFaster ? "🚀" : "🐢"} bun-image-turbo is ${
+      `\n${memFaster ? "🚀" : "🐢"} imgkit is ${
         memFaster
           ? memSpeedup.toFixed(2) + "x faster"
           : (1 / memSpeedup).toFixed(2) + "x slower"
@@ -1126,7 +1126,7 @@ async function main() {
   console.log("                              Summary");
   console.log("=".repeat(80));
 
-  console.log("\n| Operation | bun-image-turbo | sharp | Difference |");
+  console.log("\n| Operation | imgkit | sharp | Difference |");
   console.log("|-----------|-----------------|-------|------------|");
 
   for (const { category, results } of allResults) {

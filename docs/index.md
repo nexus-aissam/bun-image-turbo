@@ -2,12 +2,12 @@
 layout: home
 
 hero:
-  name: bun-image-turbo
+  name: imgkit
   text: High-Performance Image Processing
   tagline: Native Rust library for Bun and Node.js. Up to 950x faster than alternatives.
   image:
     src: /logo.svg
-    alt: bun-image-turbo
+    alt: imgkit
   actions:
     - theme: brand
       text: Get Started
@@ -17,7 +17,7 @@ hero:
       link: /api/
     - theme: alt
       text: GitHub
-      link: https://github.com/nexus-aissam/bun-image-turbo
+      link: https://github.com/nexus-aissam/imgkit
 
 features:
   - icon: ⚡
@@ -64,9 +64,9 @@ features:
 
 <div class="vp-doc" style="padding: 0 24px;">
 
-## Why bun-image-turbo?
+## Why imgkit?
 
-Built from the ground up for **maximum performance**, bun-image-turbo uses native Rust with carefully optimized codepaths for each operation.
+Built from the ground up for **maximum performance**, imgkit uses native Rust with carefully optimized codepaths for each operation.
 
 ### Architecture Highlights
 
@@ -82,7 +82,7 @@ Built from the ground up for **maximum performance**, bun-image-turbo uses nativ
 
 Tested on Apple M1 Pro with Bun 1.3.3:
 
-| Operation | bun-image-turbo | sharp | Speedup |
+| Operation | imgkit | sharp | Speedup |
 |-----------|---------------:|------:|:-------:|
 | **WebP Metadata** | 0.004ms | 3.4ms | **950x** |
 | **JPEG Metadata** | 0.003ms | 0.1ms | **38x** |
@@ -93,7 +93,7 @@ Tested on Apple M1 Pro with Bun 1.3.3:
 
 ### WebP Resize
 
-| Source Size | Target | bun-image-turbo | sharp | Speedup |
+| Source Size | Target | imgkit | sharp | Speedup |
 |-------------|--------|---------------:|------:|:-------:|
 | 800x600 | 200px | **3.1ms** | 4.3ms | **1.40x** |
 | 1600x1200 | 200px | **6.4ms** | 8.0ms | **1.24x** |
@@ -105,7 +105,7 @@ Tested on Apple M1 Pro with Bun 1.3.3:
 
 ### HEIC Support (Exclusive Feature)
 
-bun-image-turbo is the **only** high-performance image library with native HEIC support:
+imgkit is the **only** high-performance image library with native HEIC support:
 
 | Operation | Time | Notes |
 |-----------|-----:|:------|
@@ -119,11 +119,11 @@ bun-image-turbo is the **only** high-performance image library with native HEIC 
 ## Quick Start
 
 ```bash
-bun add bun-image-turbo
+bun add imgkit
 ```
 
 ```typescript
-import { metadata, resize, crop, transform, thumbhash, toTensor } from 'bun-image-turbo';
+import { metadata, resize, crop, transform, thumbhash, toTensor } from 'imgkit';
 
 // Read image
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
@@ -190,11 +190,11 @@ Prebuilt binaries are available for all major platforms:
 ## Links
 
 <div style="display: flex; gap: 16px; margin-top: 16px;">
-  <a href="https://www.npmjs.com/package/bun-image-turbo" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #cb3837; color: white; border-radius: 6px; text-decoration: none; font-weight: 500;">
+  <a href="https://www.npmjs.com/package/imgkit" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #cb3837; color: white; border-radius: 6px; text-decoration: none; font-weight: 500;">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M0 0v16h16V0H0zm13 13H8v-2H5v2H3V3h10v10z"/><path d="M5 5h3v6H5V5z"/></svg>
     npm
   </a>
-  <a href="https://github.com/nexus-aissam/bun-image-turbo" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #24292f; color: white; border-radius: 6px; text-decoration: none; font-weight: 500;">
+  <a href="https://github.com/nexus-aissam/imgkit" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #24292f; color: white; border-radius: 6px; text-decoration: none; font-weight: 500;">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
     GitHub
   </a>

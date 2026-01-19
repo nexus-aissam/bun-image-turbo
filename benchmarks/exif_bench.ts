@@ -25,7 +25,7 @@ async function main() {
   const simpleExif = {
     imageDescription: "Test image",
     artist: "Test Artist",
-    software: "bun-image-turbo"
+    software: "imgkit"
   };
 
   // Full EXIF options (AI-style)

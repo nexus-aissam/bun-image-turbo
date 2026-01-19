@@ -173,7 +173,7 @@ All enum values are **PascalCase**:
 ### Basic Transform
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 const result = await transform(buffer, {
   resize: { width: 800 },
@@ -407,7 +407,7 @@ const png = await transform(buffer, {
 ### Sync Version
 
 ```typescript
-import { transformSync } from 'bun-image-turbo';
+import { transformSync } from 'imgkit';
 
 const result = transformSync(buffer, {
   resize: { width: 400 },

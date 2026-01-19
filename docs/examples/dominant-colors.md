@@ -7,7 +7,7 @@ Extract prominent colors from images for UI theming, placeholders, and color pal
 ### Extract Primary Color
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -32,7 +32,7 @@ palette.colors.forEach((color, i) => {
 Auto-theme UI based on album artwork:
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 interface Theme {
   background: string;
@@ -69,7 +69,7 @@ document.documentElement.style.setProperty('--text-color', theme.text);
 Create colored placeholders while images load:
 
 ```typescript
-import { dominantColors, thumbhash } from 'bun-image-turbo';
+import { dominantColors, thumbhash } from 'imgkit';
 
 async function generatePlaceholder(imageBuffer: Buffer) {
   // Get primary color for instant placeholder
@@ -99,7 +99,7 @@ img.style.backgroundColor = placeholder.solidColor;
 Match card backgrounds to product images:
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 interface ProductCard {
   productId: string;
@@ -130,7 +130,7 @@ async function generateProductTheme(productImage: Buffer): Promise<ProductCard['
 Create an API that returns color palettes:
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 Bun.serve({
   port: 3000,
@@ -177,7 +177,7 @@ Bun.serve({
 Choose contrasting text color based on background:
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 
 function getContrastColor(hex: string): string {
   // Remove # if present
@@ -210,7 +210,7 @@ async function getAccessibleTheme(imageBuffer: Buffer) {
 Extract colors from multiple images:
 
 ```typescript
-import { dominantColors } from 'bun-image-turbo';
+import { dominantColors } from 'imgkit';
 import { readdir } from 'fs/promises';
 
 async function batchExtractColors(inputDir: string) {

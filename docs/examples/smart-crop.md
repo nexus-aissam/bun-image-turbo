@@ -7,7 +7,7 @@ Content-aware image cropping that automatically finds the most interesting regio
 ### Square Crop (Instagram)
 
 ```typescript
-import { smartCrop } from 'bun-image-turbo';
+import { smartCrop } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -40,7 +40,7 @@ await Bun.write('story.png', portrait);
 Generate thumbnails for all major platforms:
 
 ```typescript
-import { smartCrop, resize, toJpeg } from 'bun-image-turbo';
+import { smartCrop, resize, toJpeg } from 'imgkit';
 
 async function generateSocialThumbnails(imagePath: string) {
   const buffer = Buffer.from(await Bun.file(imagePath).arrayBuffer());
@@ -77,7 +77,7 @@ await Bun.write('youtube.png', thumbs.youtube);
 Create profile pictures in multiple sizes:
 
 ```typescript
-import { smartCrop, resize } from 'bun-image-turbo';
+import { smartCrop, resize } from 'imgkit';
 
 async function generateProfilePictures(uploadBuffer: Buffer) {
   // Smart crop to square (face detection built into saliency)
@@ -111,7 +111,7 @@ async function generateProfilePictures(uploadBuffer: Buffer) {
 Generate product images for different views:
 
 ```typescript
-import { smartCrop, resize, toWebp } from 'bun-image-turbo';
+import { smartCrop, resize, toWebp } from 'imgkit';
 
 async function generateProductImages(productImage: Buffer) {
   // Different aspect ratios for different uses
@@ -137,7 +137,7 @@ async function generateProductImages(productImage: Buffer) {
 Get crop coordinates without cropping:
 
 ```typescript
-import { smartCropAnalyze } from 'bun-image-turbo';
+import { smartCropAnalyze } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -158,7 +158,7 @@ console.log(`  Quality Score: ${analysis.score.toFixed(2)}`);
 Create an image cropping API:
 
 ```typescript
-import { smartCrop, toJpeg } from 'bun-image-turbo';
+import { smartCrop, toJpeg } from 'imgkit';
 
 Bun.serve({
   port: 3000,
@@ -207,7 +207,7 @@ Bun.serve({
 Process multiple images efficiently:
 
 ```typescript
-import { smartCrop } from 'bun-image-turbo';
+import { smartCrop } from 'imgkit';
 import { readdir } from 'fs/promises';
 
 async function batchSmartCrop(inputDir: string, outputDir: string, aspectRatio: string) {
@@ -235,7 +235,7 @@ await batchSmartCrop('./uploads', './thumbnails', '1:1');
 ## Comparison: Manual vs Smart Crop
 
 ```typescript
-import { crop, smartCrop } from 'bun-image-turbo';
+import { crop, smartCrop } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 

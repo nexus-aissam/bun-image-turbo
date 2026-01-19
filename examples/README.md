@@ -1,6 +1,6 @@
-# bun-image-turbo Examples
+# imgkit Examples
 
-Standalone examples using the `bun-image-turbo` npm package.
+Standalone examples using the `imgkit` npm package.
 
 ## Setup
 
@@ -57,7 +57,7 @@ import {
   transform,     // Resize + convert + effects
   blurhash,      // Generate placeholder hash
   version        // Get library version
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 // All functions have sync versions: metadataSync, resizeSync, etc.
 ```

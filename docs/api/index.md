@@ -1,6 +1,6 @@
 # API Reference
 
-Complete API documentation for bun-image-turbo.
+Complete API documentation for imgkit.
 
 ## Functions Overview
 
@@ -60,7 +60,7 @@ import {
   imageHash,
   imageHashDistance,
   version
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 // Check version
 console.log(version()); // "1.8.0"

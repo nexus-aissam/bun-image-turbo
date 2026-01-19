@@ -16,12 +16,23 @@ pub fn decode_jpeg_with_shrink(
   target_width: Option<u32>,
   target_height: Option<u32>,
 ) -> Result<DynamicImage, ImageError> {
+  decode_jpeg_with_shrink_mode(data, target_width, target_height, false)
+}
+
+/// JPEG shrink-on-load with fast mode option
+/// Fast mode uses more aggressive scaling for maximum speed
+pub fn decode_jpeg_with_shrink_mode(
+  data: &[u8],
+  target_width: Option<u32>,
+  target_height: Option<u32>,
+  fast_mode: bool,
+) -> Result<DynamicImage, ImageError> {
   // First, get original dimensions using fast header parsing
   let (src_width, src_height) = get_jpeg_dimensions_fast(data)?;
 
-  // Calculate optimal shrink factor (like sharp does)
+  // Calculate optimal shrink factor (more aggressive in fast mode)
   let (scale_num, scale_denom) =
-    calculate_jpeg_scale_factor(src_width, src_height, target_width, target_height);
+    calculate_jpeg_scale_factor_with_mode(src_width, src_height, target_width, target_height, fast_mode);
 
   // Use turbojpeg with SIMD-accelerated shrink-on-load
   let mut decompressor = turbojpeg::Decompressor::new()
@@ -75,6 +86,18 @@ pub fn calculate_jpeg_scale_factor(
   target_width: Option<u32>,
   target_height: Option<u32>,
 ) -> (i32, i32) {
+  calculate_jpeg_scale_factor_with_mode(src_width, src_height, target_width, target_height, false)
+}
+
+/// Calculate JPEG scale factor with optional fast mode
+/// Fast mode uses more aggressive scaling for maximum speed
+pub fn calculate_jpeg_scale_factor_with_mode(
+  src_width: u32,
+  src_height: u32,
+  target_width: Option<u32>,
+  target_height: Option<u32>,
+  fast_mode: bool,
+) -> (i32, i32) {
   // Calculate target dimensions
   let (tw, th) = match (target_width, target_height) {
     (Some(w), Some(h)) => (w, h),
@@ -94,21 +117,34 @@ pub fn calculate_jpeg_scale_factor(
   let vshrink = src_height as f64 / th as f64;
   let shrink = hshrink.min(vshrink); // Use minimum to ensure we have enough pixels
 
-  // Sharp uses fastShrinkOnLoad with aggressive shrinking
-  // We use a factor of 1.0 for speed, accepting minor quality tradeoff
-  // This matches sharp's behavior with fastShrinkOnLoad: true (default)
-  //
   // Scale factors available: 1/8, 1/4, 3/8, 1/2, 5/8, 3/4, 7/8, 1/1
-  // We pick the smallest that gives us enough pixels for final resize
+  // SIMD-accelerated: 1/2, 1/4 (fastest)
 
-  if shrink >= 8.0 {
-    (1, 8) // 1/8 = 12.5% - for massive downscales
-  } else if shrink >= 4.0 {
-    (1, 4) // 1/4 = 25% - for large downscales
-  } else if shrink >= 2.0 {
-    (1, 2) // 1/2 = 50% - for medium downscales
+  if fast_mode {
+    // FAST MODE: Be more aggressive - use smaller scale factor
+    // This decodes fewer pixels, trading quality for speed
+    // Accept that we may need to upscale slightly at the end
+    if shrink >= 4.0 {
+      (1, 8) // 1/8 = 12.5% - ultra aggressive
+    } else if shrink >= 2.0 {
+      (1, 4) // 1/4 = 25% - aggressive
+    } else if shrink >= 1.5 {
+      (1, 2) // 1/2 = 50%
+    } else {
+      (1, 1) // 1/1 = full resolution
+    }
   } else {
-    (1, 1) // 1/1 = 100% - full resolution
+    // NORMAL MODE: Conservative shrinking for best quality
+    // Ensure we have enough pixels for high-quality final resize
+    if shrink >= 8.0 {
+      (1, 8) // 1/8 = 12.5% - for massive downscales
+    } else if shrink >= 4.0 {
+      (1, 4) // 1/4 = 25% - for large downscales
+    } else if shrink >= 2.0 {
+      (1, 2) // 1/2 = 50% - for medium downscales
+    } else {
+      (1, 1) // 1/1 = 100% - full resolution
+    }
   }
 }
 

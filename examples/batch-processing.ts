@@ -4,7 +4,7 @@
  * Process multiple images in parallel
  */
 
-import { transform, metadata, blurhash, version } from 'bun-image-turbo';
+import { transform, metadata, blurhash, version } from 'imgkit';
 import { readdir } from 'fs/promises';
 import { join, extname, basename } from 'path';
 
@@ -49,7 +49,7 @@ async function main() {
   const inputDir = process.argv[2] || './input';
   const outputDir = process.argv[3] || './output';
 
-  console.log(`bun-image-turbo v${version()}`);
+  console.log(`imgkit v${version()}`);
   console.log(`Batch Processing\n`);
   console.log(`Input: ${inputDir}`);
   console.log(`Output: ${outputDir}\n`);

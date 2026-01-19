@@ -13,7 +13,7 @@
  *
  * @example
  * ```typescript
- * import { imageHash, imageHashDistance } from 'bun-image-turbo';
+ * import { imageHash, imageHashDistance } from 'imgkit';
  *
  * // Generate hashes
  * const hash1 = await imageHash(image1Buffer, { algorithm: 'PHash' });

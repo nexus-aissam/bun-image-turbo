@@ -1,13 +1,13 @@
 {
-  "name": "bun-image-turbo-pnpm-test",
+  "name": "imgkit-pnpm-test",
   "version": "1.0.0",
-  "description": "Complete test suite for bun-image-turbo using pnpm/Node.js",
+  "description": "Complete test suite for imgkit using pnpm/Node.js",
   "type": "module",
   "scripts": {
     "test": "node --test test.spec.js",
     "test:run": "node test.js"
   },
   "dependencies": {
-    "bun-image-turbo": "latest"
+    "imgkit": "latest"
   }
 }

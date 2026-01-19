@@ -7,7 +7,7 @@ ThumbHash produces smoother, more visually pleasing placeholders compared to Blu
 ## Usage
 
 ```typescript
-import { thumbhash, thumbhashSync, thumbhashToRgba, thumbhashToDataUrl } from 'bun-image-turbo';
+import { thumbhash, thumbhashSync, thumbhashToRgba, thumbhashToDataUrl } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -117,7 +117,7 @@ interface ThumbHashDecodeResult {
 ### Basic Placeholder Generation
 
 ```typescript
-import { thumbhash } from 'bun-image-turbo';
+import { thumbhash } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 const { dataUrl } = await thumbhash(buffer);
@@ -129,7 +129,7 @@ const html = `<img src="${dataUrl}" />`;
 ### Store and Restore Hash
 
 ```typescript
-import { thumbhash, thumbhashToDataUrl } from 'bun-image-turbo';
+import { thumbhash, thumbhashToDataUrl } from 'imgkit';
 
 // Generate and store
 const { hash } = await thumbhash(buffer);
@@ -143,7 +143,7 @@ const dataUrl = thumbhashToDataUrl(record.thumbhash);
 ### Progressive Image Loading
 
 ```typescript
-import { thumbhash } from 'bun-image-turbo';
+import { thumbhash } from 'imgkit';
 
 // On upload: generate placeholder
 const { hash, dataUrl } = await thumbhash(uploadedImage);
@@ -178,7 +178,7 @@ function ImageWithPlaceholder({ src, placeholder }) {
 ### Get RGBA Pixels
 
 ```typescript
-import { thumbhash, thumbhashToRgba } from 'bun-image-turbo';
+import { thumbhash, thumbhashToRgba } from 'imgkit';
 
 const { hash } = await thumbhash(buffer);
 const { rgba, width, height } = await thumbhashToRgba(hash);

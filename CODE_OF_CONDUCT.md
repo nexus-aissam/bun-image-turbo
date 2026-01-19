@@ -2,7 +2,7 @@
 
 ## Our Commitment
 
-We are committed to providing a welcoming, inclusive, and harassment-free environment for everyone who participates in the bun-image-turbo project, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
+We are committed to providing a welcoming, inclusive, and harassment-free environment for everyone who participates in the imgkit project, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
 ## Our Standards
 

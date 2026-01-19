@@ -11,10 +11,10 @@ import {
   toPng,
   transform,
   version
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 async function main() {
-  console.log(`bun-image-turbo v${version()}`);
+  console.log(`imgkit v${version()}`);
   console.log('HEIC Conversion Examples\n');
 
   // Check if HEIC file exists

@@ -1,6 +1,6 @@
 # Architecture
 
-Deep dive into how bun-image-turbo achieves its performance.
+Deep dive into how imgkit achieves its performance.
 
 ## Tech Stack
 
@@ -252,7 +252,7 @@ rust/src/
 
 ## Contributing
 
-See the [GitHub repository](https://github.com/nexus-aissam/bun-image-turbo) for:
+See the [GitHub repository](https://github.com/nexus-aissam/imgkit) for:
 - Build instructions
 - Development setup
 - Pull request guidelines

@@ -1,14 +1,14 @@
 blank_issues_enabled: true
 contact_links:
   - name: 💬 GitHub Discussions
-    url: https://github.com/nexus-aissam/bun-image-turbo/discussions
+    url: https://github.com/nexus-aissam/imgkit/discussions
     about: Ask questions and discuss ideas with the community
   - name: 📖 Documentation
-    url: https://github.com/nexus-aissam/bun-image-turbo#readme
+    url: https://github.com/nexus-aissam/imgkit#readme
     about: Read the documentation for usage guides and API reference
   - name: 🔒 Security Issue
-    url: https://github.com/nexus-aissam/bun-image-turbo/security/policy
+    url: https://github.com/nexus-aissam/imgkit/security/policy
     about: Report security vulnerabilities privately (do not create public issues)
   - name: 💡 Feature Ideas & RFCs
-    url: https://github.com/nexus-aissam/bun-image-turbo/discussions/categories/ideas
+    url: https://github.com/nexus-aissam/imgkit/discussions/categories/ideas
     about: Share and discuss feature ideas before creating formal feature requests

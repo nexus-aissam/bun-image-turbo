@@ -90,7 +90,7 @@ const result = await transform(buffer, {
 ### Basic Resize
 
 ```typescript
-import { resize } from 'bun-image-turbo';
+import { resize } from 'imgkit';
 
 // Resize by width (maintains aspect ratio)
 const resized = await resize(buffer, { width: 800 });
@@ -198,7 +198,7 @@ const transparent = await resize(buffer, {
 ### Sync Version
 
 ```typescript
-import { resizeSync } from 'bun-image-turbo';
+import { resizeSync } from 'imgkit';
 
 const resized = resizeSync(buffer, { width: 400 });
 ```

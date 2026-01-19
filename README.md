@@ -1,19 +1,26 @@
+> [!IMPORTANT]
+> **Package Renamed:** `bun-image-turbo` is now `imgkit`
+> ```bash
+> npm uninstall bun-image-turbo && npm install imgkit
+> ```
+> The API is 100% compatible - just update your imports.
+
 <div align="center">
 
-# bun-image-turbo
+# imgkit
 
 **High-performance image processing for Bun and Node.js**
 
 *Built with Rust and napi-rs for maximum speed*
 
-[![npm version](https://img.shields.io/npm/v/bun-image-turbo?style=flat-square&color=f97316)](https://www.npmjs.com/package/bun-image-turbo)
-[![downloads](https://img.shields.io/npm/dm/bun-image-turbo?style=flat-square&color=10b981)](https://www.npmjs.com/package/bun-image-turbo)
-[![CI](https://img.shields.io/github/actions/workflow/status/nexus-aissam/bun-image-turbo/ci.yml?style=flat-square&label=CI)](https://github.com/nexus-aissam/bun-image-turbo/actions)
+[![npm version](https://img.shields.io/npm/v/imgkit?style=flat-square&color=f97316)](https://www.npmjs.com/package/imgkit)
+[![downloads](https://img.shields.io/npm/dm/imgkit?style=flat-square&color=10b981)](https://www.npmjs.com/package/imgkit)
+[![CI](https://img.shields.io/github/actions/workflow/status/nexus-aissam/imgkit/ci.yml?style=flat-square&label=CI)](https://github.com/nexus-aissam/imgkit/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
 <br />
 
-[Documentation](https://nexus-aissam.github.io/bun-image-turbo/) · [API Reference](https://nexus-aissam.github.io/bun-image-turbo/api/) · [Examples](https://nexus-aissam.github.io/bun-image-turbo/examples/) · [Changelog](https://nexus-aissam.github.io/bun-image-turbo/changelog)
+[Documentation](https://nexus-aissam.github.io/imgkit/) · [API Reference](https://nexus-aissam.github.io/imgkit/api/) · [Examples](https://nexus-aissam.github.io/imgkit/examples/) · [Changelog](https://nexus-aissam.github.io/imgkit/changelog)
 
 </div>
 
@@ -28,6 +35,7 @@
 ### Performance
 
 - **950x faster** metadata extraction
+- **1.9x faster** thumbnail generation
 - **2.6x faster** concurrent operations
 - **SIMD-accelerated** JPEG codec
 - **Zero-copy** cropping & buffer handling
@@ -37,6 +45,7 @@
 
 ### Features
 
+- **Fast Thumbnails** (shrink-on-load)
 - **Native HEIC/HEIF** support
 - **Smart Crop** (content-aware)
 - **Dominant Colors** (UI theming)
@@ -55,10 +64,10 @@
 
 ```bash
 # Bun (recommended)
-bun add bun-image-turbo
+bun add imgkit
 
 # npm / yarn / pnpm
-npm install bun-image-turbo
+npm install imgkit
 ```
 
 <details>
@@ -90,7 +99,7 @@ import {
   toTensor,
   imageHash,
   imageHashDistance
-} from 'bun-image-turbo';
+} from 'imgkit';
 
 // Load image
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
@@ -160,6 +169,7 @@ const distance = await imageHashDistance(hash1.hash, hash2.hash);
 <tr><td><code>crop()</code></td><td>Crop image region (zero-copy, ultra-fast)</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>smartCrop()</code></td><td>Content-aware crop (saliency detection)</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>dominantColors()</code></td><td>Extract dominant colors for UI theming</td><td align="center">✅</td><td align="center">✅</td></tr>
+<tr><td><code>thumbnail()</code></td><td>Fast thumbnail with shrink-on-load</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>transform()</code></td><td>Multi-operation pipeline with crop support</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>toJpeg()</code></td><td>Convert to JPEG</td><td align="center">✅</td><td align="center">✅</td></tr>
 <tr><td><code>toPng()</code></td><td>Convert to PNG</td><td align="center">✅</td><td align="center">✅</td></tr>
@@ -215,6 +225,7 @@ console.log(hash);
 <td>
 
 **Advantages:**
+
 - Alpha channel support
 - Aspect ratio preserved
 - Better color accuracy
@@ -224,6 +235,7 @@ console.log(hash);
 <td>
 
 **Advantages:**
+
 - Widely supported
 - Compact string format
 - Good for simple images
@@ -288,7 +300,7 @@ console.log(hash);
 <details open>
 <summary><strong>Metadata Extraction</strong></summary>
 
-| Format | bun-image-turbo | sharp | Speedup |
+| Format | imgkit | sharp | Speedup |
 |--------|----------------:|------:|:-------:|
 | WebP | 0.004ms | 3.4ms | **950x** |
 | JPEG | 0.003ms | 0.1ms | **38x** |
@@ -299,7 +311,7 @@ console.log(hash);
 <details>
 <summary><strong>Image Processing</strong></summary>
 
-| Operation | bun-image-turbo | sharp | Speedup |
+| Operation | imgkit | sharp | Speedup |
 |-----------|----------------:|------:|:-------:|
 | 50 Concurrent Ops | 62ms | 160ms | **2.6x** |
 | Transform Pipeline | 12.2ms | 19.1ms | **1.6x** |
@@ -310,11 +322,29 @@ console.log(hash);
 <details>
 <summary><strong>WebP Resize</strong></summary>
 
-| Source → Target | bun-image-turbo | sharp | Speedup |
+| Source → Target | imgkit | sharp | Speedup |
 |-----------------|----------------:|------:|:-------:|
 | 800x600 → 200px | 3.1ms | 4.3ms | **1.40x** |
 | 1600x1200 → 200px | 6.4ms | 8.0ms | **1.24x** |
 | 4000x3000 → 400px | 32.4ms | 33.1ms | **1.02x** |
+
+</details>
+
+<details>
+<summary><strong>Thumbnail Generation (Shrink-on-Load)</strong></summary>
+
+| Source → Target | imgkit | sharp | Speedup |
+|-----------------|----------------:|------:|:-------:|
+| 2205x1240 → 200px | 9.1ms | 10.9ms | **1.2x** |
+| 11384x4221 → 200px | 100ms | 119ms | **1.2x** |
+
+**Concurrent (100 images, 2205x1240 JPEG):**
+
+| Method | Total | Per Image | vs Sharp |
+|--------|-------|-----------|:--------:|
+| thumbnail | 167ms | 1.7ms | **1.8x** |
+| fastMode | 157ms | 1.6ms | **1.9x** |
+| sharp | 295ms | 2.9ms | baseline |
 
 </details>
 
@@ -326,7 +356,7 @@ console.log(hash);
 <summary><strong>Basic Usage</strong></summary>
 
 ```typescript
-import { metadata, resize, toWebp } from 'bun-image-turbo';
+import { metadata, resize, toWebp } from 'imgkit';
 
 const input = Buffer.from(await Bun.file('input.jpg').arrayBuffer());
 
@@ -348,7 +378,7 @@ await Bun.write('output.webp', webp);
 <summary><strong>HEIC Conversion (macOS ARM64)</strong></summary>
 
 ```typescript
-import { metadata, transform } from 'bun-image-turbo';
+import { metadata, transform } from 'imgkit';
 
 const heic = Buffer.from(await Bun.file('IMG_1234.HEIC').arrayBuffer());
 
@@ -368,7 +398,7 @@ const jpeg = await transform(heic, {
 <summary><strong>EXIF Metadata for AI Images</strong></summary>
 
 ```typescript
-import { writeExif, toWebp } from 'bun-image-turbo';
+import { writeExif, toWebp } from 'imgkit';
 
 const webp = await toWebp(aiGeneratedImage, { quality: 90 });
 
@@ -391,7 +421,7 @@ const withMetadata = await writeExif(webp, {
 <summary><strong>ML Tensor Conversion</strong></summary>
 
 ```typescript
-import { toTensor } from 'bun-image-turbo';
+import { toTensor } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -423,7 +453,7 @@ const tfTensor = await toTensor(buffer, {
 <summary><strong>Perceptual Hashing (Duplicate Detection)</strong></summary>
 
 ```typescript
-import { imageHash, imageHashDistance } from 'bun-image-turbo';
+import { imageHash, imageHashDistance } from 'imgkit';
 
 // Generate perceptual hash
 const hash1 = await imageHash(image1Buffer, { algorithm: 'PHash' });
@@ -452,10 +482,41 @@ if (distance < 5) {
 </details>
 
 <details>
+<summary><strong>Fast Thumbnails (Shrink-on-Load)</strong></summary>
+
+```typescript
+import { thumbnail, thumbnailBuffer } from 'imgkit';
+
+const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
+
+// Generate thumbnail with metadata
+const result = await thumbnail(buffer, {
+  width: 200,
+  format: 'Webp',
+  quality: 85,
+});
+console.log(`${result.width}x${result.height}`);
+console.log(`Shrink-on-load: ${result.shrinkOnLoadUsed}`);
+
+// Simple buffer-only API
+const thumb = await thumbnailBuffer(buffer, { width: 200 });
+
+// Fast mode for maximum speed (2x faster)
+const fast = await thumbnailBuffer(buffer, {
+  width: 200,
+  fastMode: true,
+});
+```
+
+**Use cases:** Image galleries, preview generation, CDN thumbnails, batch processing.
+
+</details>
+
+<details>
 <summary><strong>Smart Crop (Content-Aware)</strong></summary>
 
 ```typescript
-import { smartCrop, smartCropAnalyze } from 'bun-image-turbo';
+import { smartCrop, smartCropAnalyze } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -483,7 +544,7 @@ console.log(`Score: ${analysis.score}`);
 <summary><strong>HTTP Image Server</strong></summary>
 
 ```typescript
-import { resize, toWebp } from 'bun-image-turbo';
+import { resize, toWebp } from 'imgkit';
 
 Bun.serve({
   port: 3000,
@@ -533,8 +594,8 @@ Bun.serve({
 
 ```bash
 # Clone repository
-git clone https://github.com/nexus-aissam/bun-image-turbo.git
-cd bun-image-turbo
+git clone https://github.com/nexus-aissam/imgkit.git
+cd imgkit
 
 # Install dependencies
 bun install
@@ -561,6 +622,6 @@ bun run test:all          # All tests
 
 <div align="center">
 
-**[Documentation](https://nexus-aissam.github.io/bun-image-turbo/)** · **[npm](https://www.npmjs.com/package/bun-image-turbo)** · **[GitHub](https://github.com/nexus-aissam/bun-image-turbo)** · **[Issues](https://github.com/nexus-aissam/bun-image-turbo/issues)**
+**[Documentation](https://nexus-aissam.github.io/imgkit/)** · **[npm](https://www.npmjs.com/package/imgkit)** · **[GitHub](https://github.com/nexus-aissam/imgkit)** · **[Issues](https://github.com/nexus-aissam/imgkit/issues)**
 
 </div>

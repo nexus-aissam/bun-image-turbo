@@ -489,6 +489,116 @@ export declare function thumbhashToRgba(hash: Buffer): Promise<ThumbHashDecodeRe
 /** Decode thumbhash back to RGBA pixels synchronously */
 export declare function thumbhashToRgbaSync(hash: Buffer): ThumbHashDecodeResult
 
+/**
+ * Generate a fast thumbnail asynchronously
+ * Uses shrink-on-load optimization for 4-10x faster processing of large images
+ *
+ * Optimizations:
+ * - JPEG: Decodes at 1/2, 1/4, or 1/8 scale using libjpeg-turbo SIMD
+ * - WebP: Decodes directly at target resolution using libwebp scaling
+ * - Multi-step resize for remaining scale reduction
+ *
+ * Example:
+ * ```javascript
+ * const thumb = await thumbnail(buffer, { width: 200 });
+ * // For a 4000x3000 JPEG -> 200px thumbnail:
+ * // - Without shrink-on-load: ~15ms
+ * // - With shrink-on-load: ~2ms (7.5x faster)
+ * ```
+ */
+export declare function thumbnail(input: Buffer, options: ThumbnailOptions): Promise<ThumbnailResult>
+
+/**
+ * Generate a fast thumbnail and return just the buffer asynchronously
+ * Same optimizations as thumbnail() but returns only the image data
+ */
+export declare function thumbnailBuffer(input: Buffer, options: ThumbnailOptions): Promise<Buffer>
+
+/**
+ * Generate a fast thumbnail and return just the buffer (simpler API)
+ * Same optimizations as thumbnail() but returns only the image data
+ */
+export declare function thumbnailBufferSync(input: Buffer, options: ThumbnailOptions): Buffer
+
+/** Output format for thumbnail */
+export declare const enum ThumbnailFormat {
+  /** JPEG output (smallest, lossy) */
+  Jpeg = 'Jpeg',
+  /** PNG output (larger, lossless) */
+  Png = 'Png',
+  /** WebP output (best compression) */
+  Webp = 'Webp'
+}
+
+/**
+ * Options for fast thumbnail generation
+ * Uses optimized decode pipeline with shrink-on-load
+ */
+export interface ThumbnailOptions {
+  /** Target width (required) */
+  width: number
+  /** Target height (optional, maintains aspect ratio if not set) */
+  height?: number
+  /** Output format (default: same as input, or JPEG for best speed) */
+  format?: ThumbnailFormat
+  /** JPEG quality 1-100 (default: 80, or 70 in fast mode) */
+  quality?: number
+  /**
+   * Enable shrink-on-load optimization (default: true)
+   * When true, decodes image at reduced resolution before resize
+   * This is 4-10x faster for large images
+   */
+  shrinkOnLoad?: boolean
+  /** Resize filter (default: auto-select based on scale factor) */
+  filter?: ResizeFilter
+  /**
+   * Enable fast mode for maximum speed (default: false)
+   * When true:
+   * - Uses more aggressive shrink-on-load (1/8 instead of 1/4)
+   * - Skips final resize if within 15% of target dimensions
+   * - Uses Nearest neighbor filter for any remaining resize
+   * - Uses lower quality (70 instead of 80)
+   * This can be 2-4x faster than normal mode with slight quality tradeoff
+   */
+  fastMode?: boolean
+}
+
+/** Fast thumbnail result with metadata */
+export interface ThumbnailResult {
+  /** The thumbnail image data */
+  data: Array<number>
+  /** Output width */
+  width: number
+  /** Output height */
+  height: number
+  /** Output format used */
+  format: string
+  /** Whether shrink-on-load was used */
+  shrinkOnLoadUsed: boolean
+  /** Original image dimensions */
+  originalWidth: number
+  originalHeight: number
+}
+
+/**
+ * Generate a fast thumbnail synchronously
+ * Uses shrink-on-load optimization for 4-10x faster processing of large images
+ *
+ * Optimizations:
+ * - JPEG: Decodes at 1/2, 1/4, or 1/8 scale using libjpeg-turbo SIMD
+ * - WebP: Decodes directly at target resolution using libwebp scaling
+ * - Multi-step resize for remaining scale reduction
+ *
+ * Example:
+ * ```javascript
+ * const thumb = thumbnailSync(buffer, { width: 200 });
+ * // For a 4000x3000 JPEG -> 200px thumbnail:
+ * // - Without shrink-on-load: ~15ms
+ * // - With shrink-on-load: ~2ms (7.5x faster)
+ * ```
+ */
+export declare function thumbnailSync(input: Buffer, options: ThumbnailOptions): ThumbnailResult
+
 /** Convert image to JPEG asynchronously */
 export declare function toJpeg(input: Buffer, options?: JpegOptions | undefined | null): Promise<Buffer>
 

@@ -83,7 +83,7 @@ interface ImageMetadata {
 ### Basic Usage
 
 ```typescript
-import { metadata } from 'bun-image-turbo';
+import { metadata } from 'imgkit';
 
 const buffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 const info = await metadata(buffer);
@@ -107,7 +107,7 @@ console.log(info);
 ### Sync Version
 
 ```typescript
-import { metadataSync } from 'bun-image-turbo';
+import { metadataSync } from 'imgkit';
 
 const info = metadataSync(buffer);
 console.log(`${info.width}x${info.height} ${info.format}`);

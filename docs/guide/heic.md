@@ -1,6 +1,6 @@
 # HEIC Support
 
-bun-image-turbo is the **only** high-performance image library with native HEIC/HEIF support.
+imgkit is the **only** high-performance image library with native HEIC/HEIF support.
 
 ## What is HEIC?
 
@@ -29,7 +29,7 @@ HEIC support requires macOS with Apple Silicon due to libheif library requiremen
 ## Reading HEIC Files
 
 ```typescript
-import { metadata } from 'bun-image-turbo';
+import { metadata } from 'imgkit';
 
 // Read HEIC file
 const heic = await Bun.file('IMG_1234.HEIC').arrayBuffer();
@@ -52,7 +52,7 @@ console.log(info);
 ### To JPEG
 
 ```typescript
-import { toJpeg } from 'bun-image-turbo';
+import { toJpeg } from 'imgkit';
 
 const jpeg = await toJpeg(heicBuffer, { quality: 90 });
 await Bun.write('photo.jpg', jpeg);
@@ -61,7 +61,7 @@ await Bun.write('photo.jpg', jpeg);
 ### To WebP
 
 ```typescript
-import { toWebp } from 'bun-image-turbo';
+import { toWebp } from 'imgkit';
 
 const webp = await toWebp(heicBuffer, { quality: 85 });
 await Bun.write('photo.webp', webp);
@@ -70,7 +70,7 @@ await Bun.write('photo.webp', webp);
 ### To PNG
 
 ```typescript
-import { toPng } from 'bun-image-turbo';
+import { toPng } from 'imgkit';
 
 const png = await toPng(heicBuffer);
 await Bun.write('photo.png', png);
@@ -79,7 +79,7 @@ await Bun.write('photo.png', png);
 ## Resizing HEIC Images
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 // Create thumbnail from HEIC
 const thumb = await transform(heicBuffer, {
@@ -93,7 +93,7 @@ const thumb = await transform(heicBuffer, {
 ```typescript
 import { readdir } from 'fs/promises';
 import { join } from 'path';
-import { toJpeg } from 'bun-image-turbo';
+import { toJpeg } from 'imgkit';
 
 async function convertHeicFolder(inputDir: string, outputDir: string) {
   const files = await readdir(inputDir);
@@ -128,7 +128,7 @@ HEIC operations are optimized with shrink-on-decode:
 ## Checking HEIC Support
 
 ```typescript
-import { metadata } from 'bun-image-turbo';
+import { metadata } from 'imgkit';
 
 async function isHeicSupported(): Promise<boolean> {
   try {
@@ -156,7 +156,7 @@ if (await isHeicSupported()) {
 ## Error Handling
 
 ```typescript
-import { toJpeg } from 'bun-image-turbo';
+import { toJpeg } from 'imgkit';
 
 try {
   const jpeg = await toJpeg(heicBuffer, { quality: 90 });
@@ -186,9 +186,9 @@ const jpeg = await toJpeg(avifBuffer, { quality: 90 });
 
 | Library | HEIC Read | HEIC Write | Performance |
 |---------|:---------:|:----------:|-------------|
-| bun-image-turbo | ✅ | ❌ | Fast |
+| imgkit | ✅ | ❌ | Fast |
 | sharp | ❌ | ❌ | N/A |
 | jimp | ❌ | ❌ | N/A |
 | imagemagick | ✅ | ✅ | Slow |
 
-bun-image-turbo provides the **only** high-performance HEIC support in the Node.js/Bun ecosystem.
+imgkit provides the **only** high-performance HEIC support in the Node.js/Bun ecosystem.

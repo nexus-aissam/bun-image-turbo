@@ -22,7 +22,7 @@ import {
   writeExifSync,
   stripExif,
   stripExifSync,
-} from "bun-image-turbo";
+} from "imgkit";
 
 let jpegImage;
 let pngImage;
@@ -35,7 +35,7 @@ before(async () => {
   console.log("Test images ready!");
 });
 
-describe("bun-image-turbo - Node.js Test Suite", () => {
+describe("imgkit - Node.js Test Suite", () => {
 
   describe("version()", () => {
     it("should return version string", () => {
@@ -282,7 +282,7 @@ describe("bun-image-turbo - Node.js Test Suite", () => {
       const withExif = await writeExif(jpegImage, {
         artist: "Test Artist",
         copyright: "Test Copyright 2024",
-        software: "bun-image-turbo test",
+        software: "imgkit test",
       });
       assert.ok(withExif.length > 0);
     });

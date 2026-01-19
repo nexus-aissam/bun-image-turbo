@@ -58,7 +58,7 @@ Returns a `Buffer` containing the image with embedded EXIF metadata.
 ### Example: Basic Usage
 
 ```typescript
-import { writeExif, toJpeg } from 'bun-image-turbo';
+import { writeExif, toJpeg } from 'imgkit';
 
 const imageBuffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
 
@@ -66,7 +66,7 @@ const withExif = await writeExif(imageBuffer, {
   imageDescription: 'Beautiful sunset over the ocean',
   artist: 'John Doe',
   copyright: 'Copyright 2026 John Doe',
-  software: 'bun-image-turbo v1.4.6'
+  software: 'imgkit v1.4.6'
 });
 
 await Bun.write('photo-with-exif.jpg', withExif);
@@ -75,7 +75,7 @@ await Bun.write('photo-with-exif.jpg', withExif);
 ### Example: AI-Generated Image Metadata
 
 ```typescript
-import { writeExif, toWebp } from 'bun-image-turbo';
+import { writeExif, toWebp } from 'imgkit';
 
 // Convert to WebP first
 const webpBuffer = await toWebp(imageBuffer, { quality: 90 });
@@ -102,7 +102,7 @@ await Bun.write('ai-generated.webp', withMetadata);
 ### Example: Sync Version
 
 ```typescript
-import { writeExifSync } from 'bun-image-turbo';
+import { writeExifSync } from 'imgkit';
 
 const withExif = writeExifSync(imageBuffer, {
   imageDescription: 'Product photo',
@@ -136,7 +136,7 @@ Returns a `Buffer` containing the image without EXIF metadata.
 ### Example: Strip EXIF for Privacy
 
 ```typescript
-import { stripExif } from 'bun-image-turbo';
+import { stripExif } from 'imgkit';
 
 // Remove location and camera data before sharing
 const imageBuffer = Buffer.from(await Bun.file('photo.jpg').arrayBuffer());
@@ -148,7 +148,7 @@ await Bun.write('photo-clean.jpg', stripped);
 ### Example: Sync Version
 
 ```typescript
-import { stripExifSync } from 'bun-image-turbo';
+import { stripExifSync } from 'imgkit';
 
 const stripped = stripExifSync(imageBuffer);
 ```
@@ -160,7 +160,7 @@ const stripped = stripExifSync(imageBuffer);
 You can also add EXIF metadata during image transformation:
 
 ```typescript
-import { transform } from 'bun-image-turbo';
+import { transform } from 'imgkit';
 
 const result = await transform(imageBuffer, {
   resize: { width: 1920, height: 1080 },
@@ -246,7 +246,7 @@ const safeToShare = await stripExif(userUpload);
 ### 4. Batch Processing
 
 ```typescript
-import { writeExif } from 'bun-image-turbo';
+import { writeExif } from 'imgkit';
 
 const files = ['img1.jpg', 'img2.jpg', 'img3.jpg'];
 

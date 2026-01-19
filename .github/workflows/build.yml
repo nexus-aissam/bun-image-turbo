@@ -235,18 +235,18 @@ jobs:
               # Create package.json for the platform package
               cat > "npm/$platform/package.json" << EOF
           {
-            "name": "bun-image-turbo-$platform",
+            "name": "imgkit-$platform",
             "version": "$VERSION",
             "os": ["$os"],
             "cpu": ["$cpu"],
             "main": "$binary",
             "files": ["$binary"],
-            "description": "Platform-specific binary for bun-image-turbo ($platform)",
+            "description": "Platform-specific binary for imgkit ($platform)",
             "license": "MIT",
             "author": "Aissam Irhir <aissamirhir@gmail.com>",
             "repository": {
               "type": "git",
-              "url": "git+https://github.com/nexus-aissam/bun-image-turbo.git"
+              "url": "git+https://github.com/nexus-aissam/imgkit.git"
             }
           }
           EOF
@@ -268,7 +268,7 @@ jobs:
           pkg.optionalDependencies = {};
           const platforms = fs.readdirSync('npm').filter(f => fs.statSync('npm/' + f).isDirectory());
           platforms.forEach(p => {
-            pkg.optionalDependencies['bun-image-turbo-' + p] = pkg.version;
+            pkg.optionalDependencies['imgkit-' + p] = pkg.version;
           });
           fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           console.log('Updated optionalDependencies:', pkg.optionalDependencies);

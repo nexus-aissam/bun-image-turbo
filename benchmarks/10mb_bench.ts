@@ -47,13 +47,13 @@ async function main() {
     console.log(`\n📊 ${format.toUpperCase()} (${(buf.length / 1024 / 1024).toFixed(2)} MB, ${meta.width}x${meta.height})\n`);
 
     // Metadata
-    const turboMeta = benchmarkSync("bun-image-turbo meta", () => imageTurbo.metadataSync(buf), 50);
+    const turboMeta = benchmarkSync("imgkit meta", () => imageTurbo.metadataSync(buf), 50);
     const sharpMeta = await benchmark("sharp meta", async () => { await sharp(buf).metadata(); }, 50);
     console.log(`Metadata: turbo=${turboMeta.avgMs.toFixed(3)}ms vs sharp=${sharpMeta.avgMs.toFixed(3)}ms (${(sharpMeta.avgMs/turboMeta.avgMs).toFixed(1)}x faster)`);
 
     // Resize 800px
     try {
-      const turboResize = await benchmark("bun-image-turbo resize", async () => { await imageTurbo.resize(buf, { width: 800 }); }, 5);
+      const turboResize = await benchmark("imgkit resize", async () => { await imageTurbo.resize(buf, { width: 800 }); }, 5);
       const sharpResize = await benchmark("sharp resize", async () => { await sharp(buf).resize(800).toBuffer(); }, 5);
       const speedup = sharpResize.avgMs / turboResize.avgMs;
       const status = speedup > 1 ? `🚀 ${speedup.toFixed(2)}x faster` : `🐢 ${(1/speedup).toFixed(2)}x slower`;
