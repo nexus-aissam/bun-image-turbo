@@ -2,6 +2,17 @@
 
 All notable changes to imgkit.
 
+## [2.0.1] - 2026-01-24
+
+### Fixed
+
+- **Windows Package Names** - Renamed Windows packages to avoid npm spam detection
+  - `imgkit-win32-x64-msvc` → `imgkit-windows-x64`
+  - `imgkit-win32-arm64-msvc` → `imgkit-windows-arm64`
+  - Windows users can now install imgkit without issues
+
+---
+
 ## [2.0.0] - 2026-01-19
 
 ### BREAKING CHANGES

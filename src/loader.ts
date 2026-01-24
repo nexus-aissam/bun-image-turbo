@@ -35,11 +35,14 @@ export function loadNativeBinding(): any {
   const platform = process.platform;
   const arch = process.arch;
 
-  // Map to napi-rs target names
+  // Map to napi-rs target names and package names
+  // Binary names follow napi-rs conventions, package names are simplified
   let targetName: string;
+  let packageSuffix: string;
   switch (platform) {
     case "darwin":
       targetName = arch === "arm64" ? "darwin-arm64" : "darwin-x64";
+      packageSuffix = targetName;
       break;
     case "linux":
       // Check for musl vs glibc
@@ -51,9 +54,12 @@ export function loadNativeBinding(): any {
       } else {
         targetName = isMusl ? "linux-x64-musl" : "linux-x64-gnu";
       }
+      packageSuffix = targetName;
       break;
     case "win32":
+      // Binary uses win32-*-msvc, package uses windows-*
       targetName = arch === "arm64" ? "win32-arm64-msvc" : "win32-x64-msvc";
+      packageSuffix = arch === "arm64" ? "windows-arm64" : "windows-x64";
       break;
     default:
       throw new Error(`Unsupported platform: ${platform}-${arch}`);
@@ -61,7 +67,7 @@ export function loadNativeBinding(): any {
 
   const currentDir = getCurrentDir();
   const binaryName = `image-turbo.${targetName}.node`;
-  const optionalPackageName = `imgkit-${targetName}`;
+  const optionalPackageName = `imgkit-${packageSuffix}`;
 
   // Try loading from different locations
   const possiblePaths = [

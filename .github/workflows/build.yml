@@ -216,14 +216,15 @@ jobs:
 
           # Create npm directories for each platform with correct os/cpu fields
           # Format: platform_name:binary_name:os:cpu
+          # Using shorter names for Windows to avoid npm spam detection
           PLATFORMS=(
             "darwin-arm64:image-turbo.darwin-arm64.node:darwin:arm64"
             "darwin-x64:image-turbo.darwin-x64.node:darwin:x64"
             "linux-arm64-gnu:image-turbo.linux-arm64-gnu.node:linux:arm64"
             "linux-x64-gnu:image-turbo.linux-x64-gnu.node:linux:x64"
             "linux-x64-musl:image-turbo.linux-x64-musl.node:linux:x64"
-            "win32-arm64-msvc:image-turbo.win32-arm64-msvc.node:win32:arm64"
-            "win32-x64-msvc:image-turbo.win32-x64-msvc.node:win32:x64"
+            "windows-arm64:image-turbo.win32-arm64-msvc.node:win32:arm64"
+            "windows-x64:image-turbo.win32-x64-msvc.node:win32:x64"
           )
 
           for entry in "${PLATFORMS[@]}"; do
@@ -250,7 +251,7 @@ jobs:
             }
           }
           EOF
-              echo "Created npm/$platform with $binary (os: $os, cpu: $cpu)"
+              echo "Created npm/$platform with $binary (imgkit-$platform, os: $os, cpu: $cpu)"
             fi
           done
 
