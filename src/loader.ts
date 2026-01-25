@@ -2,20 +2,39 @@
  * Native binding loader for imgkit
  *
  * Handles platform-specific binary loading for different OS/architectures.
+ * Supports both Node.js and Bun runtimes.
  */
+
+// Declare Bun global for TypeScript
+declare const Bun: unknown;
 
 import { existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
 
+// Detect Bun runtime
+const isBun = typeof Bun !== "undefined";
+
 // Create require function that works in both ESM and CJS contexts
-// In ESM (Node.js): import.meta.url exists, use createRequire
-// In CJS: import.meta.url is undefined, use native require
-const nativeRequire =
-  typeof import.meta?.url === "string"
-    ? createRequire(import.meta.url)
-    : (typeof require !== "undefined" ? require : null);
+// Bun: Use globalThis.require which Bun provides for native module loading
+// Node.js ESM: Use createRequire(import.meta.url)
+// Node.js CJS: Use native require
+const nativeRequire: NodeJS.Require | null = (() => {
+  // Bun provides a global require that works with native modules
+  if (isBun && typeof globalThis.require === "function") {
+    return globalThis.require as NodeJS.Require;
+  }
+  // Node.js ESM context
+  if (typeof import.meta?.url === "string") {
+    return createRequire(import.meta.url);
+  }
+  // Node.js CJS context
+  if (typeof require !== "undefined") {
+    return require;
+  }
+  return null;
+})();
 
 /**
  * Get current directory for ESM
@@ -81,26 +100,60 @@ export function loadNativeBinding(): any {
     join(process.cwd(), binaryName),
   ];
 
+  const errors: string[] = [];
+
+  // Strategy 1: Try requiring the optional package directly first (works best in Bun)
+  // Bun's module resolution handles optional dependencies well
+  if (isBun) {
+    try {
+      return nativeRequire!(optionalPackageName);
+    } catch (e) {
+      errors.push(`Package ${optionalPackageName}: ${(e as Error).message}`);
+    }
+  }
+
+  // Strategy 2: Try loading from file paths
   for (const modulePath of possiblePaths) {
     try {
       if (existsSync(modulePath)) {
         return nativeRequire!(modulePath);
       }
-    } catch {
+    } catch (e) {
+      errors.push(`Path ${modulePath}: ${(e as Error).message}`);
       continue;
     }
   }
 
-  // Try requiring the optional package directly (Bun/Node resolution)
-  try {
-    return nativeRequire!(optionalPackageName);
-  } catch {
-    // Ignore and fall through to error
+  // Strategy 3: Try requiring the optional package directly (Node.js fallback)
+  if (!isBun) {
+    try {
+      return nativeRequire!(optionalPackageName);
+    } catch (e) {
+      errors.push(`Package ${optionalPackageName}: ${(e as Error).message}`);
+    }
+  }
+
+  // Strategy 4 (Bun only): Try using Bun's plugin system for native modules
+  if (isBun) {
+    for (const modulePath of possiblePaths) {
+      try {
+        if (existsSync(modulePath)) {
+          // Use dynamic import with file:// URL for Bun
+          const module = require(modulePath);
+          if (module) return module;
+        }
+      } catch (e) {
+        errors.push(`Bun require ${modulePath}: ${(e as Error).message}`);
+        continue;
+      }
+    }
   }
 
   throw new Error(
-    `Failed to load native binding for ${platform}-${arch}. ` +
-      `Tried: ${possiblePaths.join(", ")}`
+    `Failed to load native binding for ${platform}-${arch}.\n` +
+      `Runtime: ${isBun ? "Bun" : "Node.js"}\n` +
+      `Tried paths: ${possiblePaths.join(", ")}\n` +
+      `Errors:\n${errors.map((e) => `  - ${e}`).join("\n")}`
   );
 }
 

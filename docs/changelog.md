@@ -2,6 +2,18 @@
 
 All notable changes to imgkit.
 
+## [2.0.2] - 2026-01-25
+
+### Fixed
+
+- **Bun Native Binding Loading** - Fixed native module loading on Bun runtime (Issue #7)
+  - Added Bun runtime detection
+  - Use `globalThis.require` for Bun's native module loading
+  - Reordered loading strategies for better Bun compatibility
+  - Fixes "Failed to load native binding" error on Bun 1.3.6+ with Apple Silicon
+
+---
+
 ## [2.0.1] - 2026-01-24
 
 ### Fixed

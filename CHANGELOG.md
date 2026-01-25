@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2026-01-25
+
+### Fixed
+
+- **Bun Native Binding Loading** - Fixed native module loading on Bun runtime (Issue #7)
+  - Added Bun runtime detection (`typeof Bun !== "undefined"`)
+  - Use `globalThis.require` for Bun's native module loading (works better than `createRequire`)
+  - Reordered loading strategies: package-first for Bun, path-first for Node.js
+  - Improved error messages showing runtime type and detailed error list
+  - Fixes "Failed to load native binding" error on Bun 1.3.6+ with Apple Silicon
+
+---
+
 ## [2.0.1] - 2026-01-24
 
 ### Fixed
@@ -21,9 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### BREAKING CHANGES
 
 - **Package Renamed** - `bun-image-turbo` is now `imgkit`
+
   ```bash
   npm uninstall bun-image-turbo && npm install imgkit
   ```
+
   - All imports change from `'bun-image-turbo'` to `'imgkit'`
   - API is 100% compatible - no code changes needed beyond import path
   - Old package will be deprecated on npm with redirect message
@@ -80,6 +95,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 The standard `resize()` function decodes the full image before resizing. For large images (4K+), this is slow and memory-intensive.
 
 The `thumbnail()` function uses **shrink-on-load** to decode images at reduced resolution:
+
 - 4000x3000 → 200px: Decodes at 500x375 first (1/8 scale), then resizes to 200px
 - Memory usage reduced by **64x** (1/8 × 1/8)
 - Processing time reduced by **4-10x**
@@ -135,11 +151,13 @@ The `thumbnail()` function uses **shrink-on-load** to decode images at reduced r
 ### Why These Features Matter
 
 **Smart Crop** automatically finds the best region - no manual coordinates needed:
+
 - Works with any aspect ratio
 - Finds faces, objects, and interesting content
 - Native Rust implementation using smartcrop2 crate
 
 **Dominant Colors** enables dynamic UI theming:
+
 - Auto-theme UI based on images (like Spotify album art)
 - Generate color placeholders while images load
 - Create color palettes from photos
@@ -174,6 +192,7 @@ The `thumbnail()` function uses **shrink-on-load** to decode images at reduced r
 ### Why Perceptual Hashing Matters
 
 Unlike cryptographic hashes (MD5, SHA), perceptual hashes allow **similar images to have similar hashes**:
+
 - Resized, compressed, or slightly modified images still match
 - Distance threshold: <5 = very similar, <10 = similar, >10 = different
 - Native Rust implementation is **10-50x faster** than JavaScript alternatives
