@@ -75,10 +75,6 @@ Add any other context about the problem here. For example:
 - Any workarounds you've found?
 - Related issues or PRs?
 
-## Possible Solution
-
-If you have suggestions on how to fix this, please share them here (optional).
-
 ## Screenshots
 
 If applicable, add screenshots to help explain your problem.
